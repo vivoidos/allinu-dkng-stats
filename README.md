@@ -91,3 +91,7 @@ This is an independent, unofficial community project that displays public onchai
   sampling. They can be out of date or simply wrong. Don't rely on them for any decision.
 - **No liability.** The maintainers accept no liability for any loss or damage arising from the use of this page,
   its data or its code.
+
+## License
+
+The code is released under the [MIT License](LICENSE).

@@ -1,6 +1,7 @@
 {
   "name": "allinu-dkng-stats",
   "private": true,
+  "license": "MIT",
   "type": "module",
   "description": "ALLINU × DraftKings onchain: every number recomputed from free, public sources",
   "engines": {
