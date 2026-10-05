@@ -243,12 +243,12 @@ function AheadOfOthers({ d }: { d: Snapshot }) {
   const top = r.topRewardTokens!.map((t, _, all) => ({ ...t, label: all.filter((o) => o.label.toLowerCase() === t.label.toLowerCase()).length > 1 ? `${t.label} (${t.mint.slice(0, 4)}…)` : t.label }));
   const times = Math.floor(r.dkngPaid / r.othersDkngPaid); // rounded down, so it never overstates
   return (
-    <Story id="lead" label="Rewards" stat={`${times}×`} claim="more DKNG paid out by ALLINU than by every other StonkFun token combined."
+    <Story id="lead" label="Rewards" stat={`${times}×`} claim="more DKNG paid out by ALLINU than by every other DKNG-paired StonkFun token combined."
       sources={[r]}
       data={<DataTable caption="The StonkFun tokens that paid out the most DKNG in rewards" headers={["Token", "DKNG paid out", "Payments"]}
         rows={top.map((t) => [t.label, int(t.dkngPaid), int(t.payouts)])} />}
       method={<ul>
-        <li>StonkFun tokens pay their holders rewards in many different assets; {int(r.dkngRewardTokens)} of them pay in DKNG. From StonkFun's public rewards list: the DKNG each of those has paid out, as StonkFun reports it.</li>
+        <li>StonkFun tokens are paired with different assets and pay their holders rewards in it; {int(r.dkngRewardTokens)} are paired with DKNG. From StonkFun's public rewards list: the DKNG each of those has paid out, as StonkFun reports it.</li>
         <li>{times}× is ALLINU's {int(r.dkngPaid)} DKNG divided by the {int(r.othersDkngPaid)} DKNG of every other token that pays in DKNG, together, rounded down.</li>
         <li>Tokens are named by their symbol, or by their name when the symbol is also DKNG.</li>
       </ul>}
@@ -257,7 +257,7 @@ function AheadOfOthers({ d }: { d: Snapshot }) {
         <HBarChart format={int} labelWidth={180}
           data={top.map((t) => ({ label: t.label, value: t.dkngPaid, highlight: t.mint === ADDR.ALLINU, tip: `${int(t.dkngPaid)} DKNG in ${int(t.payouts)} payments` }))} />
       </>}>
-      <p><b className="num">{int(r.dkngPaid)}</b> DKNG, against <span className="num">{int(r.othersDkngPaid)}</span> from the {int(r.dkngRewardTokens - 1)} other tokens that pay in DKNG.</p>
+      <p><b className="num">{int(r.dkngPaid)}</b> DKNG, against <span className="num">{int(r.othersDkngPaid)}</span> from the other {int(r.dkngRewardTokens - 1)}.</p>
     </Story>
   );
 }
