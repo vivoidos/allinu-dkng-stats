@@ -248,7 +248,7 @@ function AheadOfOthers({ d }: { d: Snapshot }) {
       data={<DataTable caption="The StonkFun tokens that paid out the most DKNG in rewards" headers={["Token", "DKNG paid out", "Payments"]}
         rows={top.map((t) => [t.label, int(t.dkngPaid), int(t.payouts)])} />}
       method={<ul>
-        <li>StonkFun tokens are paired with different assets and pay their holders rewards in it; {int(r.dkngRewardTokens)} are paired with DKNG. From StonkFun's public rewards list: the DKNG each of those has paid out, as StonkFun reports it.</li>
+        <li>Each StonkFun token is paired with an asset and pays its holders rewards in that asset; {int(r.dkngRewardTokens)} are paired with DKNG. From StonkFun's public rewards list: the DKNG each of those has paid out, as StonkFun reports it.</li>
         <li>{times}× is ALLINU's {int(r.dkngPaid)} DKNG divided by the {int(r.othersDkngPaid)} DKNG of every other token that pays in DKNG, together, rounded down.</li>
         <li>Tokens are named by their symbol, or by their name when the symbol is also DKNG.</li>
       </ul>}
