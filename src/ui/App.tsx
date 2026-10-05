@@ -243,7 +243,7 @@ function AheadOfOthers({ d }: { d: Snapshot }) {
   const top = r.topRewardTokens!.map((t, _, all) => ({ ...t, label: all.filter((o) => o.label.toLowerCase() === t.label.toLowerCase()).length > 1 ? `${t.label} (${t.mint.slice(0, 4)}…)` : t.label }));
   const times = Math.floor(r.dkngPaid / r.othersDkngPaid); // rounded down, so it never overstates
   return (
-    <Story id="lead" label="Rewards" stat={`${times}×`} claim={`more DKNG paid out by ALLINU than by the ${int(r.dkngRewardTokens - 1)} other StonkFun tokens that pay rewards in DKNG, combined.`}
+    <Story id="lead" label="Rewards" stat={`${times}×`} claim="more DKNG paid out by ALLINU than by every other StonkFun token combined."
       sources={[r]}
       data={<DataTable caption="The StonkFun tokens that paid out the most DKNG in rewards" headers={["Token", "DKNG paid out", "Payments"]}
         rows={top.map((t) => [t.label, int(t.dkngPaid), int(t.payouts)])} />}
@@ -257,7 +257,7 @@ function AheadOfOthers({ d }: { d: Snapshot }) {
         <HBarChart format={int} labelWidth={180}
           data={top.map((t) => ({ label: t.label, value: t.dkngPaid, highlight: t.mint === ADDR.ALLINU, tip: `${int(t.dkngPaid)} DKNG in ${int(t.payouts)} payments` }))} />
       </>}>
-      <p><b className="num">{int(r.dkngPaid)}</b> DKNG, against <span className="num">{int(r.othersDkngPaid)}</span> for all the others together.</p>
+      <p><b className="num">{int(r.dkngPaid)}</b> DKNG, against <span className="num">{int(r.othersDkngPaid)}</span> from the {int(r.dkngRewardTokens - 1)} other tokens that pay in DKNG.</p>
     </Story>
   );
 }
