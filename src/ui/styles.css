@@ -68,6 +68,7 @@ h1 { margin: 0; font-weight: inherit; }
 .dot-note { margin: 6px 0 14px; color: var(--text-muted); font-size: 13.5px; min-height: 1.5em; }
 .dot-note b { color: var(--text-primary); }
 .lede { font-size: clamp(18px, 1.6vw, 21px); line-height: 1.55; color: var(--text-secondary); max-width: 72ch; margin: 0; }
+.hero-note { margin: 14px 0 0; font-size: 13px; color: var(--text-muted); }
 
 /* the tally: the counts behind the number */
 .tally { margin: 36px 0 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }

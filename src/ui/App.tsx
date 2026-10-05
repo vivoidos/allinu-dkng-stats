@@ -90,13 +90,14 @@ function Intro({ d }: { d: Snapshot }) {
           <span className="sr-only"> {headlineUsd(paid)} of DraftKings stock.</span>
         </h1>
         <DotNumber text={headlineUsd(paid)} shares={shares} days={days} tail={<p className="headline-line headline-tail" aria-hidden="true">of DraftKings stock.</p>} />
-        <p className="lede">ALLINU is a StonkFun memecoin: a 1% fee on every $ALLINU transfer buys tokenized DraftKings stock ($DKNG, issued on Solana by Backpack Securities), paid out to ALLINU holders.</p>
+        <p className="lede">A 1% fee on every $ALLINU transfer buys tokenized DraftKings stock for ALLINU holders.</p>
         <dl className="tally">
           <div><dt>of DraftKings stock paid, at today's ${r.dkngPrice.toFixed(2)} a share</dt><dd className="num">${int(shownPaid)}</dd></div>
           <div><dt>tokenized DraftKings shares, in total</dt><dd className="num">{int(shownShares)}</dd></div>
           <div><dt>payments to ALLINU holders</dt><dd className="num">{int(r.payouts * k)}</dd></div>
           <div><dt>since DKNG went live on Solana</dt><dd>{daysLive} days</dd></div>
         </dl>
+        <p className="hero-note">ALLINU is a memecoin launched on StonkFun. DKNG is tokenized DraftKings stock, issued on Solana by Backpack Securities.</p>
       </div>
     </section>
   );
