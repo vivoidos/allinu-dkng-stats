@@ -1,15 +1,16 @@
 {
- "computedAt": "2026-10-05T20:39:47.823Z",
+ "computedAt": "2026-10-05T20:55:12.709Z",
  "rewards": {
   "sources": [
    "https://www.stonkfun.xyz/api/public/v1/rewards",
-   "https://api.geckoterminal.com/api/v2/networks/solana/tokens/DKNGQFNGQmoBdXSRGKJ8tTu7uPDasw5JDcfMmWniNfow"
+   "https://api.geckoterminal.com/api/v2/networks/solana/tokens/DKNGQFNGQmoBdXSRGKJ8tTu7uPDasw5JDcfMmWniNfow",
+   "https://api.geckoterminal.com/api/v2/networks/solana/tokens/{each top reward token} (names)"
   ],
   "dkngPaid": 49373.349032,
   "payouts": 748182,
   "lastPayoutAt": "2026-10-05T18:55:19.012Z",
-  "dkngPrice": 19.5569712529,
-  "usdAtTodaysPrice": 965593.167678222,
+  "dkngPrice": 19.6074576663,
+  "usdAtTodaysPrice": 968085.8509883941,
   "shareOfAllDkngPayouts": 0.8802400070590312,
   "shareOfAllDkngPaid": 0.8619459595129173,
   "dkngRewardTokens": 247,
@@ -262,7 +263,40 @@
    "EstAvJ5FDPBdn9L759MJVecXCATDJiKJxEGdhdsythky",
    "6bDF1k6RxMHMNkV4zdbxKPKiTN43CVgx9CgnmHW9AN1N"
   ],
-  "computedAt": "2026-10-05T20:32:57.290Z"
+  "othersDkngPaid": 7907.909134000001,
+  "topRewardTokens": [
+   {
+    "mint": "4MMQY9bwkxxTtsK3W227Q5ABT6yFY8Pmn9Ze7wmAXKY8",
+    "label": "ALLINU",
+    "dkngPaid": 49373.349032,
+    "payouts": 748182
+   },
+   {
+    "mint": "CdAoD87kYKHbtRFawiSqQJMX1pbKisoG7Ha1oJ47kB26",
+    "label": "donkey kong",
+    "dkngPaid": 3923.467854,
+    "payouts": 73389
+   },
+   {
+    "mint": "7de775HdtwA945CATj9tzvjkmyT151SHrfodXgNbZ6AT",
+    "label": "bet",
+    "dkngPaid": 505.919582,
+    "payouts": 2322
+   },
+   {
+    "mint": "HWMgoYa2XSBsmnNJ5CbzDiEorQpuucTntDjyJsaP1Tyw",
+    "label": "casinu",
+    "dkngPaid": 430.927554,
+    "payouts": 11708
+   },
+   {
+    "mint": "Tqwy8EU5zZ3cmYjMDE9SF46Bz5e5eFuihBhe7nH9iyY",
+    "label": "CASINU",
+    "dkngPaid": 387.493802,
+    "payouts": 5244
+   }
+  ],
+  "computedAt": "2026-10-05T20:55:12.704Z"
  },
  "holders": {
   "sources": [

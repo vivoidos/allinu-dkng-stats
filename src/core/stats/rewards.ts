@@ -25,8 +25,23 @@ export async function getRewards() {
   const token = await gecko<{ data: { attributes: { price_usd: string } } }>(`/tokens/${ADDR.DKNG}`);
   const price = Number(token.data.attributes.price_usd);
   if (!(price > 0)) throw new Error("GeckoTerminal returned no DKNG price");
+  // the reward tokens that paid out the most DKNG, named by their symbol (by their name when the symbol is also DKNG)
+  const top = [...dkngRewardTokens].sort((a, b) => b.distributedTokens - a.distributedTokens).slice(0, 5);
+  const topRewardTokens = [];
+  for (const x of top) {
+    let label = x.mint === ADDR.ALLINU ? "ALLINU" : `${x.mint.slice(0, 4)}…`;
+    if (x.mint !== ADDR.ALLINU) {
+      try {
+        const t = await gecko<{ data?: { attributes?: { name?: string; symbol?: string } } }>(`/tokens/${x.mint}`);
+        const { name, symbol } = t.data?.attributes ?? {};
+        if (symbol) label = symbol.toUpperCase() === "DKNG" && name ? name : symbol;
+      } catch { /* unnamed: shown by its address */ }
+    }
+    topRewardTokens.push({ mint: x.mint, label, dkngPaid: x.distributedTokens, payouts: x.payoutCount });
+  }
+  const allDkngPaid = sum(dkngRewardTokens.map((x) => x.distributedTokens));
   return {
-    sources: [`${STONKFUN}/rewards`, `${GECKO}/tokens/${ADDR.DKNG}`],
+    sources: [`${STONKFUN}/rewards`, `${GECKO}/tokens/${ADDR.DKNG}`, `${GECKO}/tokens/{each top reward token} (names)`],
     dkngPaid: allinu.distributedTokens,
     payouts: allinu.payoutCount,
     lastPayoutAt: allinu.lastPayoutAt,
@@ -36,6 +51,8 @@ export async function getRewards() {
     shareOfAllDkngPaid: allinu.distributedTokens / sum(dkngRewardTokens.map((x) => x.distributedTokens)),
     dkngRewardTokens: dkngRewardTokens.length,
     dkngRewardMints: dkngRewardTokens.map((x) => x.mint),
+    othersDkngPaid: allDkngPaid - allinu.distributedTokens, // every other DKNG reward token together
+    topRewardTokens,
   };
 }
 export type Rewards = Awaited<ReturnType<typeof getRewards>>;

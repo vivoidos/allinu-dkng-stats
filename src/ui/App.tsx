@@ -28,6 +28,7 @@ export function App() {
       <main id="top">
         <Intro d={d} />
         <div className="wrap stories">
+          {d.rewards.topRewardTokens && <AheadOfOthers d={d} />}
           {d.origins ? <FirstDkng d={d} origins={d.origins} /> : <RewardShare d={d} />}
           <VolumeShare d={d} />
           <DeepestPool d={d} />
@@ -235,6 +236,32 @@ const payoutsTable = (reach: NonNullable<Snapshot["reach"]>) => (
     rows={reach.daily.map((x) => [day(x.d), int(x.dkng), int(x.payments)])} />
 );
 
+/** ALLINU against every other token StonkFun pays DKNG rewards for, from StonkFun's own list. */
+function AheadOfOthers({ d }: { d: Snapshot }) {
+  const r = d.rewards;
+  // two tokens can share a ticker (casinu, CASINU): those get their address too
+  const top = r.topRewardTokens!.map((t, _, all) => ({ ...t, label: all.filter((o) => o.label.toLowerCase() === t.label.toLowerCase()).length > 1 ? `${t.label} (${t.mint.slice(0, 4)}…)` : t.label }));
+  const times = Math.floor(r.dkngPaid / r.othersDkngPaid); // rounded down, so it never overstates
+  return (
+    <Story id="lead" label="Rewards" stat={`${times}×`} claim={`more DKNG paid out by ALLINU than by all ${int(r.dkngRewardTokens - 1)} other StonkFun reward tokens combined.`}
+      sources={[r]}
+      data={<DataTable caption="The StonkFun reward tokens that paid out the most DKNG" headers={["Token", "DKNG paid out", "Payments"]}
+        rows={top.map((t) => [t.label, int(t.dkngPaid), int(t.payouts)])} />}
+      method={<ul>
+        <li>From StonkFun's public rewards list: the DKNG each reward token has paid out to its holders, as StonkFun reports it.</li>
+        <li>{times}× is ALLINU's {int(r.dkngPaid)} DKNG divided by the {int(r.othersDkngPaid)} DKNG of every other reward token together, rounded down.</li>
+        <li>Tokens are named by their symbol, or by their name when the symbol is also DKNG.</li>
+      </ul>}
+      figure={<>
+        <FigTitle>DKNG paid out per StonkFun reward token</FigTitle>
+        <HBarChart format={int} labelWidth={180}
+          data={top.map((t) => ({ label: t.label, value: t.dkngPaid, highlight: t.mint === ADDR.ALLINU, tip: `${int(t.dkngPaid)} DKNG in ${int(t.payouts)} payments` }))} />
+      </>}>
+      <p><b className="num">{int(r.dkngPaid)}</b> DKNG, against <span className="num">{int(r.othersDkngPaid)}</span> for every other token together.</p>
+    </Story>
+  );
+}
+
 /**
  * How DraftKings holders on Solana got their first DKNG: nearly all as a StonkFun reward airdrop. An airdrop
  * doesn't say which reward token it pays for, so the story shows ALLINU's share of all reward payments beside
@@ -246,8 +273,6 @@ function FirstDkng({ d, origins: o }: { d: Snapshot; origins: NonNullable<Snapsh
   const trade = o.shares["ALLINU trade"] + o.shares["Another memecoin trade"] + o.shares["Bought DKNG directly"];
   const airdropSquares = Math.round(airdrop * 100), tradeSquares = Math.round(trade * 100);
   const chainPaid = reach ? reach.daily.reduce((a, x) => a + x.dkng, 0) : 0, listPaid = r.dkngPaid / r.shareOfAllDkngPaid;
-  // ALLINU's DKNG paid against every other reward token's combined, rounded down so it never overstates
-  const timesOthers = Math.floor(r.shareOfAllDkngPaid / (1 - r.shareOfAllDkngPaid));
   return (
     <Story id="holders" label="Holders" stat={pct(airdrop)} claim="of DKNG holders on Solana got their first DKNG as a StonkFun reward airdrop."
       sources={[o, r, ...(reach ? [reach] : [])]}
@@ -261,7 +286,7 @@ function FirstDkng({ d, origins: o }: { d: Snapshot; origins: NonNullable<Snapsh
         <ul>
           <li>Airdrop rule: the first DKNG came from StonkFun's fee seller or payout wallet, or in a transfer the wallet didn't sign that paid six or more wallets at once.</li>
           <li>An airdrop doesn't say which reward token it pays for. The page does not attribute airdrop-first holders to ALLINU.</li>
-          <li>Shown beside it instead, a direct count from StonkFun's public rewards list: {pct(r.shareOfAllDkngPayouts)} of all DKNG reward payments are for ALLINU, and {pct(r.shareOfAllDkngPaid)} of the DKNG paid. The "{timesOthers}× all the others combined" is ALLINU's DKNG paid divided by the other reward tokens' total, rounded down.</li>
+          <li>Shown beside it instead, a direct count from StonkFun's public rewards list: {pct(r.shareOfAllDkngPayouts)} of all DKNG reward payments are for ALLINU, and {pct(r.shareOfAllDkngPaid)} of the DKNG paid.</li>
           <li>Of the airdrop-first wallets that held any DKNG reward token when traced, {pct(o.airdropCheck.allinuAmongHolders)} held ALLINU.</li>
           <li>Most hold small amounts: the median wallet holds {o.medianDkng.toFixed(2)} DKNG, and {pct(o.atLeastOneShare)} hold a full share or more.</li>
         </ul>
@@ -284,8 +309,8 @@ function FirstDkng({ d, origins: o }: { d: Snapshot; origins: NonNullable<Snapsh
         ]} />
         {reach && <PayoutsToDate d={d} reach={reach} />}
       </>}>
-      {timesOthers >= 2
-        ? <p>StonkFun pays DKNG rewards for {int(r.dkngRewardTokens)} tokens; ALLINU has paid out <b>{timesOthers}×</b> more DKNG than all the others combined.</p>
+      {reach
+        ? <p>StonkFun has sent DKNG rewards to <b className="num">{int(reach.uniqueRecipients)}</b> wallets; <b>{pct(r.shareOfAllDkngPayouts)}</b> of the payments are for ALLINU.</p>
         : <p><b>{pct(r.shareOfAllDkngPayouts)}</b> of StonkFun's DKNG reward payments are for ALLINU.</p>}
     </Story>
   );
