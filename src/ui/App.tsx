@@ -28,11 +28,11 @@ export function App() {
       <main id="top">
         <Intro d={d} />
         <div className="wrap stories">
-          {d.rewards.topRewardTokens && <AheadOfOthers d={d} />}
           {d.origins ? <FirstDkng d={d} origins={d.origins} /> : <RewardShare d={d} />}
           <VolumeShare d={d} />
           <DeepestPool d={d} />
           <AroundTheClock d={d} />
+          {d.rewards.topRewardTokens && <AheadOfOthers d={d} />}
           {d.supply && <Supply d={d} supply={d.supply} />}
         </div>
         <Proof d={d} />
