@@ -90,7 +90,7 @@ function Intro({ d }: { d: Snapshot }) {
           <span className="sr-only"> {headlineUsd(paid)} of DraftKings stock.</span>
         </h1>
         <DotNumber text={headlineUsd(paid)} shares={shares} days={days} tail={<p className="headline-line headline-tail" aria-hidden="true">of DraftKings stock.</p>} />
-        <p className="lede">A 1% fee on every $ALLINU transfer buys tokenized DraftKings ($DKNG) for ALLINU holders.</p>
+        <p className="lede">ALLINU is a StonkFun memecoin: a 1% fee on every $ALLINU transfer buys tokenized DraftKings stock ($DKNG, issued on Solana by Backpack Securities), paid out to ALLINU holders.</p>
         <dl className="tally">
           <div><dt>of DraftKings stock paid, at today's ${r.dkngPrice.toFixed(2)} a share</dt><dd className="num">${int(shownPaid)}</dd></div>
           <div><dt>tokenized DraftKings shares, in total</dt><dd className="num">{int(shownShares)}</dd></div>
@@ -145,7 +145,7 @@ function AroundTheClock({ d }: { d: Snapshot }) {
         </ul>
       </>}
       figure={v.byHourNewYork && <><FigTitle>DKNG volume on Solana by weekday and hour, New York time</FigTitle><WeekHeatmap grid={v.byHourNewYork} money={(x) => usd(x, 1)} /></>}>
-      <p>Onchain, DraftKings never closes.</p>
+      <p>Onchain, DraftKings never closes: {pct(v.closedShareOfAll)} of DKNG volume so far traded outside Nasdaq hours.</p>
     </Story>
   );
 }
