@@ -249,7 +249,7 @@ function AheadOfOthers({ d }: { d: Snapshot }) {
         rows={top.map((t) => [t.label, int(t.dkngPaid), int(t.payouts)])} />}
       method={<ul>
         <li>StonkFun tokens pay their holders rewards in many different assets; {int(r.dkngRewardTokens)} of them pay in DKNG. From StonkFun's public rewards list: the DKNG each of those has paid out, as StonkFun reports it.</li>
-        <li>{times}× is ALLINU's {int(r.dkngPaid)} DKNG divided by the {int(r.othersDkngPaid)} DKNG of every other reward token together, rounded down.</li>
+        <li>{times}× is ALLINU's {int(r.dkngPaid)} DKNG divided by the {int(r.othersDkngPaid)} DKNG of every other token that pays in DKNG, together, rounded down.</li>
         <li>Tokens are named by their symbol, or by their name when the symbol is also DKNG.</li>
       </ul>}
       figure={<>
@@ -324,7 +324,7 @@ function RewardShare({ d }: { d: Snapshot }) {
       sources={[r, ...(reach ? [reach] : [])]}
       data={reach && payoutsTable(reach)}
       method={<>
-        <p>From StonkFun's public rewards list, which covers every reward token. By DKNG amount, ALLINU's share is {pct(r.shareOfAllDkngPaid)}.</p>
+        <p>From StonkFun's public rewards list, which covers every token that pays rewards in DKNG. By DKNG amount, ALLINU's share is {pct(r.shareOfAllDkngPaid)}.</p>
         <p>The per-day amounts in the headline are estimates. A payout doesn't say which token it is for, so each day's DKNG payouts (every token that pays in DKNG) are scaled to add up to ALLINU's total.</p>
       </>}
       figure={<>
