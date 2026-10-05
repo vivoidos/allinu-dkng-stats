@@ -1,0 +1,88 @@
+# Recomputes every number on GitHub's servers, from public sources only, and commits the new snapshot.
+# The site's host builds and deploys the page on every push to main, so that commit is what publishes it.
+# Runs daily, and by hand (Actions → snapshot → Run workflow). On Mondays, when the SOLANA_RPC_URL secret is set,
+# the scheduled run also recomputes the slow blocks (holder origins, wallets reached, routed volume), so every number
+# on the page comes from a public run. The repository variable SNAPSHOT_EXTRA overrides the extra blocks.
+# Each run's log is public: it shows this repository's code producing the numbers the page displays.
+name: snapshot
+
+on:
+  workflow_dispatch:
+    inputs:
+      extra:
+        description: "Extra blocks, e.g. --with origins (slow) or --with origins,reach (hours)"
+        required: false
+        default: ""
+  schedule:
+    # daily at 00:00 UTC, right after each UTC day closes. GitHub starts scheduled runs late when it is busy
+    # (often 5–30 minutes at midnight), so the page updates once the run and the redeploy finish
+    - cron: "0 0 * * *"
+
+permissions:
+  contents: write # commit the new snapshots/snapshot.json back to the repo
+
+concurrency:
+  group: snapshot
+  cancel-in-progress: false
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 330
+    steps:
+      # GitHub's own actions, pinned to exact commits
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: .node-version
+
+      # what earlier runs read from the chain (routed volume keeps each finished day), so a run reads only new days
+      - uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: snapshots/cache
+          key: chain-cache-${{ github.run_id }}
+          restore-keys: chain-cache-
+
+      - name: Compute every number from public sources
+        # the extra flags arrive as an environment variable, never pasted into the script itself
+        run: |
+          extra="$EXTRA_BLOCKS"
+          if [ -z "$extra" ] && [ "$GITHUB_EVENT_NAME" = schedule ] && [ "$(date -u +%u)" = 1 ] && [ -n "$SOLANA_RPC_URL" ]; then
+            extra="--with origins,reach,routed" # Mondays: the slow blocks too
+          fi
+          echo "extra blocks: ${extra:-none}"
+          node scripts/snapshot.ts $extra
+        env:
+          EXTRA_BLOCKS: ${{ inputs.extra || vars.SNAPSHOT_EXTRA }}
+          # optional: a faster Solana RPC (repository secret); without it the run uses free public endpoints
+          SOLANA_RPC_URL: ${{ secrets.SOLANA_RPC_URL }}
+          SOLANA_RPC_GAP_MS: ${{ vars.SOLANA_RPC_GAP_MS }}
+          SOLANA_RPC_CONCURRENCY: ${{ vars.SOLANA_RPC_CONCURRENCY }}
+          # optional: hourly pool volume from Birdeye instead of GeckoTerminal (repository secret)
+          BIRDEYE_API_KEY: ${{ secrets.BIRDEYE_API_KEY }}
+
+      # saved even when a block failed: the days it finished are kept
+      - uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        if: always()
+        with:
+          path: snapshots/cache
+          key: chain-cache-${{ github.run_id }}
+
+      # a check before committing: the new snapshot must still type-check and build
+      - name: Build the page
+        run: |
+          corepack enable
+          pnpm install --frozen-lockfile
+          pnpm build
+
+      - name: Save the snapshot to the repo
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A snapshots/snapshot.json snapshots/holder-*.csv
+          git diff --cached --quiet && exit 0
+          git commit -m "snapshot from run ${{ github.run_id }}"
+          # main may have moved during a long run: replay the snapshot commit on top of it; if someone else
+          # committed a snapshot meanwhile, this run's is the newer one ("theirs" is the replayed commit)
+          git pull --rebase -X theirs origin main
+          git push

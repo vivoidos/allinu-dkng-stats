@@ -1,0 +1,32 @@
+{
+  "name": "allinu-dkng-stats",
+  "private": true,
+  "type": "module",
+  "description": "ALLINU × DraftKings onchain: every number recomputed from free, public sources",
+  "engines": {
+    "node": ">=22.18"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc",
+    "snapshot": "node scripts/snapshot.ts"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "5.103.2",
+    "html-to-image": "1.11.13",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "recharts": "3.10.1"
+  },
+  "devDependencies": {
+    "@types/node": "22.20.4",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "6.1.1",
+    "typescript": "7.0.2",
+    "vite": "8.3.1"
+  },
+  "packageManager": "pnpm@10.24.0"
+}

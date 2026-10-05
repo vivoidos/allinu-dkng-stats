@@ -1,0 +1,1202 @@
+{
+ "computedAt": "2026-10-05T20:39:47.823Z",
+ "rewards": {
+  "sources": [
+   "https://www.stonkfun.xyz/api/public/v1/rewards",
+   "https://api.geckoterminal.com/api/v2/networks/solana/tokens/DKNGQFNGQmoBdXSRGKJ8tTu7uPDasw5JDcfMmWniNfow"
+  ],
+  "dkngPaid": 49373.349032,
+  "payouts": 748182,
+  "lastPayoutAt": "2026-10-05T18:55:19.012Z",
+  "dkngPrice": 19.5569712529,
+  "usdAtTodaysPrice": 965593.167678222,
+  "shareOfAllDkngPayouts": 0.8802400070590312,
+  "shareOfAllDkngPaid": 0.8619459595129173,
+  "dkngRewardTokens": 247,
+  "dkngRewardMints": [
+   "4MMQY9bwkxxTtsK3W227Q5ABT6yFY8Pmn9Ze7wmAXKY8",
+   "CdAoD87kYKHbtRFawiSqQJMX1pbKisoG7Ha1oJ47kB26",
+   "7de775HdtwA945CATj9tzvjkmyT151SHrfodXgNbZ6AT",
+   "HWMgoYa2XSBsmnNJ5CbzDiEorQpuucTntDjyJsaP1Tyw",
+   "Tqwy8EU5zZ3cmYjMDE9SF46Bz5e5eFuihBhe7nH9iyY",
+   "6jLgqcM61PnSytiEEiWpZVGJu6xEsvCGHJnXtTRt9CUa",
+   "HMoKe5rY95x926DMYP84Y3uHH13jV2CDzKupgTNj7Sj5",
+   "5hdHot8mnpR1hQAxwv9mL2M2LbHLfFgQoyY7dLBtKWEJ",
+   "4dC9AbXj4XSbhmwp5jWt5njS8YBm2HLeQxLxhgvR4Z9k",
+   "HCJUvPPAdizoxtWA1ytYGMpK7LNYqPE1169xLkCWbjty",
+   "DCJfeQsQKhbJZMEgr89B2ajqujGhvTkmaWXaSqgwSsWA",
+   "HmUksYWTdQ8LahsR31q5pYrAvxAw6jj2uoLoXt6wJukR",
+   "GaCB6rfjUGVKdwF8skWYfRW9QGfgF1CsDMPYhpkBNTTv",
+   "GBuutkRWdLKTGQH5EuQKVn4xkC2HNSZoXzyjM8qaQbRN",
+   "DjFBwqXqeNBkRFKzFDVvNrkVm5UTkXmioxQx6pNF1vDg",
+   "Y7YpySXuX9y42GRcBLKdn9fLe7uE333QAGAjnJHdaqY",
+   "DQpFzqnJjipossXEwH68vEwu2aNHPV7hcfEPrbE89CA6",
+   "EVK8F2HqKNr4u7jpJS7CaiMAGFcpwbvLxya5YgAzbJbN",
+   "HarJ1YNixLZSns3cAEJyKXLC9ofdkiRB67hnt48kw4AL",
+   "DhDSW8aC3aEWct7QHNBbKHaGCv3xrzWXyXK3q2hEshRp",
+   "C2PJFTTrv57WYTJMTUhSWR6sU5BridrALQhHtTfBJMpH",
+   "FA3Kd87E5qUPXJsZxLZKDMVqF3FhCTVgp2s47PGSEbsW",
+   "CJTnr5UWkMaF2gnKm9ibQhHZNHbaAcqLjmtRFiLqnMaw",
+   "5Zoi6c4mFBDda1dP2A1Vcg9P5ssVAeDFPvXVt33F2rWD",
+   "FdegZGEfVdMwQr11MkmaNMtGma6J5e3NcTgTfqmiFLsj",
+   "64GXHTw5tj51MNggJ3k4LVmhQKPHNPpn41NT2rvTSTNK",
+   "HGe2afWLmRP12UaXbcE1fDwrVxmhRTVGbKfNTxjfbgW1",
+   "99c8VXaMpjF7DqY3EBy4pbPu7HAbBUusvmHJuS1DDMjg",
+   "42cFuVZYyoUfMLbcvp6HLL9m9VD4VMaRcnSuHbwigPaZ",
+   "Grk13kkgaJATmLCh2iGnVHdn61Von8SxNXsuCfpQwhd8",
+   "EAKgSWS4j6dUjFYSp2BPgrY5dd53notxZhcfrL6fSTNK",
+   "C58fAznWWyhK89RjTjeu5HhaU9xXxCDRgCW19Cc7tuBy",
+   "CLwvuiP7haeYe8amybYwAey8YYV3FeVFqcuYcgFLdQna",
+   "51fmCw8DiDcDPCP77UuioA1kexF129Ak99FNSKgHLX4H",
+   "GVPatarW2qBkV62KADQmWjQuMjxUstMeMjgiYN3VSTNK",
+   "BoMHpaSpUCFAqBrxzNeyHDucQXgNqKSHERGayFLzSTNK",
+   "C1prYoBGnNqpZxnPhExEQoT48raurdpVBio9netf9zPz",
+   "DG2FMH7ERLm7e3bjZKsKnGDqktNA43DFLCoNn3LnpAkA",
+   "5WKG7H4Ay9PUmHpzperssd6xN4BG3piwwpGX7Q1SPUSP",
+   "7EnnpGQRn933ke9wdL8CgbEcgxRtdAEd122pFU3cn774",
+   "JfYfunFRzNaxNXXo7P6bLGGRNesZoaXafWRBsd8PbW6",
+   "2oVvcXXwFdL5NrafpjgYKSgdxT4NvL5yW5kMQVhmv556",
+   "5rst3Ec73p7nshJoCJFL7SeQ5Em71foAWAoxwY4khVF8",
+   "CC1mCN3Tc6zrp1QMVpbGrPwf6kbMZEeNwiTtKQHaPENX",
+   "3pVvhCJDbQp9ob4w4eDsdNXmCXSUZhvFy9dqLz167isU",
+   "CVC6ZxVs7TcxWh98e2vsNpYkRPqkH8gYVJKbqDDV4cEj",
+   "4P39TFHCemZZEpthM2QbNquQJn5uiD7ehUUVC51QSTNK",
+   "HCEZChPgqjpHAabEZQzcBRY3t9j5B3FBEMoP6LycSTNK",
+   "GqBXgGs2KLHVaukXQxaEQAkQAwfikBUqECoyyaHAKH4m",
+   "3QYvyBA5kFsoj7cWubPChkGqQQSxtJzGv9jrYpD38ine",
+   "DbB4rEJDq2T8qd7KG15rvfc83kjjSbARKBgUC1WKYoLm",
+   "Aaus7Vxqpj7DiEVs7CYKX5nteihMyvjGau2mLqXvUS8G",
+   "9Xvehatwk42GCGweqhygsk6qy5MKkiHzXGiK1LFUcWZ5",
+   "FEZkvs4KcJy9bGCRYTcko4XEkaF8144riK8NfDpj6ofi",
+   "B6ijkz1fNgHDPrCm4vSKpsGA4z9MYJoXYyRqNmJuGSbf",
+   "6Kipgz9FiZnizNMGZ8HMZ4KQehwMEekxNc788JjouaS6",
+   "9EmmJJZoF1RHMTL3HvaHFf2WWKdMVqNDh33vUcqGLjC9",
+   "DyXdtyzU4kbwxFQExSTPUZV1DbZt7u6CxH13HE1SSAwW",
+   "C1p9Wjx4RNxsNNexZd6GkBi2waDEmMW2zcEzeBJEVydK",
+   "E184DZs1N4nEgJrTqvmpm6xGZqcX9f6no1MrmpycGG9i",
+   "2CAD3mdzC3buZQgkhdffjE6g8NKz7yfmjKydf4VU4TxN",
+   "DNGo2wYsScrkEuH9LZJ7wQEuNZG4m53FpJSfuEV4CKsT",
+   "DEPcXHaus92YJA48AgYrEmbALSTfD6uaDusyj3hSSgpT",
+   "Cq4coWFu7zLwTBLGAgDKRmfttYLAK6ciuLtA6YWCNs1U",
+   "FDrFqcSu9K2e7FHN2vzVcLd3ZWS55Dihh1m5aae1STNK",
+   "5bNvvCRqzqGcM7enVZgfmbndUoV992qNhALvDim6STNK",
+   "3anNFTJnUfSyBCqPrLb2RWWq2NpmmfLvj1HTgmx4JMVe",
+   "3QabEg7mKn4wnvNbYBC8eaZJ2SQBHG655TKSqCKrZeTL",
+   "8FAB4GbA294EfqZrptZubAc5sAFCJBjn9LG7Hsaii3Uz",
+   "FByeMHAJqtBf6erU16kNfAJwPbrJzKrdeezQ38yBJ4n4",
+   "DaEpVR3fBrhCwebVULNZtY3RYVggrB4WGK7S9QXnbxhJ",
+   "5uQ7aFo9hTyAQ2SsEbKqs58gAECMmu3uzu5xweeFJJLw",
+   "CRNETeqvXGrFcrpL2KZ6SHBiutFLcueRHHHYwJweFuMt",
+   "8PSTs2yzLDsCfTAY6zcY6k6AiXwB8NbkgLypNdMspqsB",
+   "5T7Yx3vivs3NyHVJdRySAEeJYnHWAZaQrAYGvuCNKRAh",
+   "8nDBtKZSLLg4dsBamZ2pVEuLUEQb6CYkQS9pQCujSTNK",
+   "4K6KVxAVoYe94V5rknNYKCNo6SABBwdnLaWic66e5rue",
+   "7UzA3aZETKQokY4ipzo94ude8Wx9MVT53uaqndJrSTNK",
+   "53AFrsbp11cBstysXP8ogUXVu4n9sSHrXGXTo8FJyyu",
+   "G7JtJ1pbHVKXwbvF9nRuum5atgyv1p5TtUiSdgJc1rBx",
+   "8f3vybnKoFEMTVvdgoYVN1uPswpn2wYx5ZTDBh5SwCNS",
+   "AM1n5wFcWvfqK4155MruY1F9LQojaM6TxttNCzqgetTP",
+   "H5DGfXUyPNo1LHmSBCPrpecmf3HZAMBpYtX4TVu7c6om",
+   "3YAQTrWAycmVH99KA6Cov93vaeK6XUSmaU2YWq8dSTNK",
+   "34Ru7jBdqxPcUSyvpTo1YfCPsZKNhExNTfZ6YE9dSTNK",
+   "71RotwENHu8cQSq7gL1PgcFr5oLvcfKgnHpJNNW5TjFU",
+   "6oheigW7SGSgTxPfE3yjhpyshiXzVSGbu52ngc3xShNc",
+   "HtwP1Jr6q8vq9atpsMBybTNSCNVaRxUvzY1sEMfy3SDa",
+   "GPCDJuLeCaARVMN4nXmn47uTBcwmPweaiAGVNdqFu6MK",
+   "3pYXLMfFPy9RTXotfgfbRqpFGKm85UhmiBJ5skgch2mK",
+   "4Yw2TbVCVJVFtZNjyiU2UiByqhe4JwkptW6pv23BSTNK",
+   "2iHZyk8c1Jij4Uz33DFDJzrYBtM3dMwrPiFMoEEi7RtH",
+   "Cr16gHLx8LuaEATbGtdv1koM7N1S4g4ddA1XnnP4zKb9",
+   "3Ut9j4HckkkyWQ7n4nZevRqQM7DH1WWNk8eFVXPKjDE9",
+   "Cow23LzjeSQvpoMykX7oGcxomGs8bX9GFbJ2EaHibkS3",
+   "7AnuKJRjRTeszz58TprXaEHChXtFe9wpcVhnnzxGhsWZ",
+   "9DfgxxGdhZayzZkbyjs3pXmJpAKpH7iLLnYqQZwmURJi",
+   "Hj99E3oMhftH9DPLX7TFwyuECCCZSXDFkXgNR7SzVrD1",
+   "9PAaBCmAZahxskoADrKuk5eTGSkTwHGjqiEvQ8aTgJ3g",
+   "Qp3fbWzJRqJVKk7YttDzWReAXowPrWJc55oZib1vKTo",
+   "6FW2XH9su44z2BLyuzVmMYcdHd9t9hA95Z8nhw7cqftq",
+   "ChHQTz9YZtCvUiAqXZU2tYmRnSCzTcZrMPhsctHRTCN6",
+   "6VK8xtqEScdacEmvDPnW5Wv3dZoZaKBo58kncoGZ7qSN",
+   "CfvGnJcUA8N6zw6B3xKcBfxM5VRsq3K4tYb3xJaFg3Ei",
+   "DupqfYTzV8jZXUtdSYe1NRREBu1yiz9ng12R7AGHuBkp",
+   "5YKoMdcdE1LAaMG1kUctjn1ZsUTR9nPYvfHJVTe8JNZW",
+   "EfMZdjPeLJ8h4WX5TjQi6LPazkuAKLtUvxQeGM7KiKuW",
+   "McyK96AZPSSVocJpgFpDHNGQXA3dSJy7MicBpLXtyUR",
+   "9c1gUKAxmXqc99RXnPhQ9hfznS8GvGFR3V6cmHH28z9i",
+   "AP8ZTEphPGjGKjfG3BuTAk3dyQnq1LWhq6nJURK6F3Wy",
+   "5PA6PkAbFt5P7a1Thgu4AdLh2Jxk4EsFBBR1q1qTbGXk",
+   "ChTSKCipeCT3ZRpbPNLTuJazxLhaV73BSJkbvzSNpp7",
+   "7G5qcJQxfrBUUMfj1bqxMQ3GkCPfcb5HkAyZAQMSpdfU",
+   "AEjhzPcmf9yxBxUE5buXrte3bs3kDWmV2jq4PDKp78oe",
+   "CzPtfPFzVsDLLeXZFZuNDUjKoUMotHknwFUV4Bn2QTfW",
+   "6FuNH7Mj5KAWUJDKVDJRMKb4K62CFQnSexauSNgSJuoB",
+   "BofEJ3TDRVUzBG8KToohfLph2ouT2nsGHbrxpaVnxj47",
+   "9DSneb1sg4z4aSdN9YHGqyDgsb7nJcQ9zT4QFTVQkAts",
+   "7B9r3bEE5mHPrH3VXAMvBuhrjDhNpk2TvRL27QdNFQ8m",
+   "DLQ8hNRC3GiPdbwpuJjogagZQrAacZbTL8keSQ5PLf97",
+   "28BjGBFD6aJebE3TeK5s7dT8uCxrPTnAnJrUqvBoNXSx",
+   "Fo8GRx6mxQpr6oUbdjeNXy1KWDvkG7MXVcQmiAxF2vab",
+   "GVyrKw8ABy8NBWaQTYyb1kgDDW6aLjHzGfEaEmBJJdnD",
+   "G1tnbenXHTJSFHsvBBY5GK6xHSscwZpZLWtKdJNjYpxF",
+   "6Lsho7vJCu8G8Rz3NooTHmtug2VsNvdifM21TPBiDkD3",
+   "HQRMPXrCgPeUfMz9Q2kVNZpWxW3UEoNBD7iEmC24STNK",
+   "6KkhNpE8fo5krb1rMVzo3goGVQwkb1KUjBJj9hTsbqXx",
+   "Fx7X8vXEWGUcj1K8ZEsWzeFy6vDBbiNhAzWiVGiopQ64",
+   "CMuEnchqNhVEugHNTx3L45RxrvGntFAXvU12GtXYJo5i",
+   "Hn9Fg4Xa8CAfmXpptrojCLVYT2phP71NW5RgF9yttDq6",
+   "J6S5Nkms6FwCjs6DkkB8Untx2EDzPHdkHgHCN1MDa2jW",
+   "5krLxqCHLiXvtCyDG3WvT2awLgMwb6HgmQTwwRh7ibmo",
+   "CDZywVSXk8NMyqLZ6Mdkx6DGy62fZFRkcrHyvEPV9R4E",
+   "pFH8XYHioCNQr84Ymq8XJ6J5LpkrCregn7x1zhSCNcL",
+   "3zc7zinRfQJ7arYEwfVZSRLjc464k5udFmv8QioWzUr4",
+   "HuJdFDnKtzhLUgWV5jmz2RW9BsnapHnZB3Kp6NK7STNK",
+   "EUJ1tigEdD9nKjGxozY41rnTHevkiYKqDxpWhZ9LSTNK",
+   "BDz5oNxefGLZDj6a7ru3Q3iG8q1mWcLEz5QsbCqNftvj",
+   "XH2vX6pFCMNBvUDH3gtqFBZYuJhqnySWJYzXzmbSTNK",
+   "EUrjEGHf9BEikLWFoBNmbWmRZYRommxHo6DobZkMMHUy",
+   "2vqeqob4mMDtwWPxPpFii9VrWX2cnB4fBDxC4XtSd7iy",
+   "9U4Z9kBk3GjHqnpKCoaZsDXGQZm2EspHsv2K1b5WKccd",
+   "Fuzsj6bhhaFWaFHVXG8voBH9PbiJ1j1NmCNw4q25vHta",
+   "FthyRot5BzERgm8jfNhQADdtP4xpczQadMQJafzUACPX",
+   "E2bju8QthzAENtvUC1JHid5xEeYYwA63rd7bzFpupuZi",
+   "914cRxfdSFnUmUrduAhz21TDb63sGgJtaFC9UXkWf74d",
+   "9cuDCPj2yCJShYfmEkQTFUjcxkpHZr6KWU217pYDrJ3r",
+   "Ecjk13kXQvNPLwEBdgUoM1MnzT3BMqbyx8xkybSZNjUP",
+   "GVBXvkfMgg9FqUrLpmUBFt2d4QfxEvRRn6hWDwoUp4jf",
+   "HWXnMuJdScqb6FZaBDiiLLAJUgPB86PFrX2iL63BgYLF",
+   "2rqg4qssHttYo75iLD1iEK9C53oGZDo4LUGdamVub7m6",
+   "B6BLBqdZEK5MtL6Z5gEAMTxvysEty6dGLFWZeeaptkW4",
+   "8hhY3GABVzMw63AbJHCy7iF16eKh1gn1YDDAp9qu1Vmd",
+   "FDYWWXN4cpVTnrtfh2eaGeG4XvDSy7dhPcch9pkvjidc",
+   "26bZ2okTrcym9F6wwT1Tt5mfU3C89B258DPxHHSznbrs",
+   "6Yv9b6fJE5XqkhR94TKekAmnxFFv3Gx1DiD2veiccj8R",
+   "6pyi3mR9e2M3K6yGMgCe6kG2em1WE8LjUzm5Gx12hw2h",
+   "4kMWWNNyHwTQWq6UAqRjwabVmuqkW8UubLhBRguwL9ib",
+   "6aA9grAbV1Ho5ULJB6mkRgyeSPsb9P7E7Lx1peUQcgXx",
+   "FMpVqY5jSnzL5zMfmCT7MsLKRyFwuR2Pg5JBcjHt3TZ9",
+   "7eZbgyCbmjBBGVgUjMMKywLudSuvQgu1UEeVfvCeRa3g",
+   "GHV2daSX1GeoPPccwo7Cbyt3NyFxsMvaQbBWJgTaATMy",
+   "BC1me7egNScSbj5d9kChuJxKLxsWKgZQC3jhCT8NysVH",
+   "9TVVC2VdAWWErH9cYf3PpNqg7H6aK4ySHNe5xcKQQQno",
+   "NxirX5gsx7y2V5nH9oJZYz37yBkTZQwbBHgYRLF5kSL",
+   "3bEZdtXhjpxUyWNrkPG1q9GszVH7wTi6Qx3mr4uHn71Z",
+   "8qmVAgSu49hgLfnYVy8nh1WACLgDgRs5pib23ws5gNhY",
+   "FXPbr26x5FCPL7N3qLYNoJsHkuFfSCzyjXQWNAmLYCae",
+   "4DKyCxSY9QWR9TP3vrzTXyrA6kotoyq98tqpwQTzZ3Mp",
+   "C7NNioytEegvdQV8fKV546WpzbKiQW8r4qDYF8QQSTNK",
+   "6KRdgNJ4ENqwvtfTvswQrFrztq43ufjzMhzKqY3fLoB6",
+   "TzhfDTJ6N3CFt6sBj8j2FKp6a7nJhbUynE82PpHWkvA",
+   "JDGaRr7XTTDuuhaF2iAYgRG4d3rYPV4HnveZgSfxGoKe",
+   "FDA2xY52raQ92UrwAPhHNSzKuPK3bnaEQmb5TDp3a6Xn",
+   "2qEdoFRoeLD5Zr98Wr9Emw3FGLcmbfWJsw1Z8B9ttrHP",
+   "GGKE9euYgenaDs5hFzGD1a8seiDAHCkSuZszHd6NZqEB",
+   "FmuxuXHTjZq4MLbC6d8adzbYW1AArygy4NCQ43HTUZRs",
+   "3zDwZaM8mub19dfEupo7ubnrspFLkmQX6BezHGm1pPKU",
+   "F7ajVXYYi14JMxs36zHBPa6kf6Y7GGzytPk3nTSMV3hC",
+   "9LA4p78PRjb43hm19svNssDSgAcHxerNuJobssptSHx1",
+   "9ENJADvz2ne99hVXREy8fJ87NYprfARXuu6W8SU3P4qX",
+   "5LQytL2o5BEYZnxtg3Rjr6Wd9XMy7XHRpKC438b7LwQn",
+   "CAFCWkX5tEnst5jyKqv17v855ofH4t9196nUph44twzJ",
+   "FWGCdh6qFbYpKWhtkCoj9q1VoDdW5NpFoQakzCr4qHCL",
+   "3Xaah5hU7ufSJdoyt2AZbGYw2ayMVjxRqwwSa3amkHVF",
+   "432f8Px5PuSn7BGaWusj9fTAb8BBS6q8StiGbeDKrSgd",
+   "4LojTJnANThgQAkn6GzHAczzoCVs9ZQTpKMZ22UUSTNK",
+   "DQ57JEEqv17J8pT6i1LJA63xpWFUZJqdJGQCk7cMpqHE",
+   "H4u2QMSUSVHfxAwhpz9gtGaLqUfNRrbnkkzkFddFXCqo",
+   "3i1cgZTyMKpZmfUaMZ7p6aGR3dq6dhn9NThti1Ju4iSm",
+   "pKi6sqc5dsn77RvAF87hBNnEnwf178A8WigE3ZTSTNK",
+   "GZRMgp3XLgAqL9sSMz6NYqvjaMsEoviiNFhpUxDBXAG1",
+   "2TVWYzBx8BrR16GHPvpyQde2VJ97bZXuXAYr4CqWBis5",
+   "GnRgtpB24Bhb9UbEEXBXNVd2TpwaFYnq4MYuJP2ySTNK",
+   "ENVXwaQcuJLeKJSRJdpNFVSDT6Z4qxAy14Xm8EBdEuuW",
+   "GMGZvB3NJKyZGRuHote47aPnw8x5Wz51sHJqVyeowPxg",
+   "H6UGCbQP6QNPdqb6vCPPGkzovww5CkPXA661RtZhtfuA",
+   "jPp8XgWHCfGK797QURBQbjQXdMGQL8JfLdcK7ZLkyEC",
+   "DpLzAad71LfxDNkGk93PaZoEyezXmGSv4vftWEYzSTNK",
+   "CifP3BdQU98qZ2RSiXiS8uMGEuvcbtA9ApysZgDmQrku",
+   "3nQr2MzpzN3umS6iUkXZ8gBaEKe3pKn5zwJgDjQbQgsK",
+   "8SueHj25ZYCYKRWZuTfoq6gx3BefG7uhDY1FPjMcSeQF",
+   "9cDwSnPmibGJKfawhAYii97xYqLng61WYrVRkTk52CBQ",
+   "FLP2ArXMwv4EwEb4FBp3nkkYfbTcp3xn622PKcCbk8UD",
+   "EJTU64bTwfgSAUf9xkgUWcWkNbnXi5BnKAt76GP521ed",
+   "XApTmCevYRfr9Kgw82E4W7fSg1mfMkLw8hmMb4bSTNK",
+   "FAbMJPm4pzq35RewVenoJas1TMcUY4Jz2dPNogwykivQ",
+   "Aka1mr8KRMyL2sX7z4iLWUtbTo4YKvoijZPwuSKwfH9Q",
+   "FgRGub5gLsNNzCzAXJgnLe2a42j33BoajqFVB8czejFQ",
+   "BFfCNqEMobNYzuskTUEe2zHnhBXBjadGxBuYpKp5aiAD",
+   "89Z6edLnmrNXWjJA3kiXfTnetwNYnj5G8NGLx29ZNbcY",
+   "EsZPkpbt4ZTNeLiW534mZDotJTc4eHXiHk5wrQyEdbE3",
+   "3oi6zT29HcEGC4WuD9YqdZqrBQTua4fDYT3u6mFpsmHS",
+   "6uM6L6ehygcYJuKrjuBeFwVcSHHfBkxcMtSpVG7VScno",
+   "2WeenHmAiqwH6fYiZ8JuamFvEkVNrwU7tXXxhgRjFiZX",
+   "Gk2hjLEsXkG3W6kVVY2vSzmu7a4sLUTsdA8BH4hvYUB7",
+   "Yh6uVhxM6gKfutP6CnZHzPh271TPGu2M6tcpLHLSTNK",
+   "G3GLHuNrmThDkUiz83B1kgQvxU6fvk1YKrZiNZdWhFhd",
+   "4y5w4L2CNR2CwVogM1w3tR8UH2MzCedfpDjgtw1NWKFp",
+   "8BGn7TpdWdj73bQGCJWYmcgDY5vtt8wkkPaqoomRFDyH",
+   "6pB1KNMZwjHNFdCgazoF3KJtzNJFSmrWfgAX1ABFSTNK",
+   "CuFPNnGw9jeFjgfMZNhQtA5AFoL1sgknSUGsiaRWYZhu",
+   "5CCzUbDb3sS1YxEZWR4rU6Gjoi3uUyEGcegzfJmpdaVV",
+   "AVCmhoVb6sD65ABQykEbtexWFoqRdwMSMSAXeJ4AsT57",
+   "Ecsc5b3KagtvskqRazPipaKnoZKUm2LxrwzzUqizG7y4",
+   "9FcMdd5jx9V4yh1GrpxdpieEwLYNabT81fUwtaKvSTNK",
+   "61zMtyNHeAsVv6TdTrZgi2ueUN68gHfhLg8ZAC575vnp",
+   "Ls7YD5QuMNfTy8ifwc7nQqxnKB7D52DFxCU5izqTbMt",
+   "FmQXC1pdUUEykKpKUX1JSTEgD3UXUbxz6epSFKLYR8CN",
+   "8G9pjaV64jPueKARhnbu3ChAc7N4V8PzKnpZuRJ3pqoM",
+   "6cQUuMe4W8oBNBwaGVrzmFwKvuoswwhokEAWkDHyrZE5",
+   "3hPjSjqxiYfHdHfLVhRvbhmhY5PxvbTYtnQa71AoCas6",
+   "8aFFphCGGCxCqfjuL1jfLqQ9TrFB3thsxqnTCxf2pcmR",
+   "sHxsj99h9zdFQLzf4j7bHPaK8dCBqwpKKcsx1sRNMCh",
+   "8k3GFHZBfteFF7cwgy93N9EARaeaVCFHC3Ektg4jbk3k",
+   "7zm3FEQ54R9JvWqY3umCtQod6mFWASWMUFQBbp6CSTNK",
+   "E32JDbCiy4uBwkMwyTch6aSfXwjxoXhpTZbAEFsZLqMi",
+   "HV6GppK5T1rrxpVe7im5RP9A5wpu5obkubNYMyu4tVBg",
+   "4TkZ5dzHgBzkmehVYSR8hX4dDMwf4i2Aub23RwfbSpns",
+   "6mbDpHPcPpCAtnb86C8kfUb7zh9rVmmU3adeCEG2STNK",
+   "DmG5DzEuTB3SPTsL8wPjo8eXTrnjGMg1aPGdsY5gEMm1",
+   "4gYkLhLxX9c1bEpReUGiekvz8ZtYuYXTqmtzco5qzqH9",
+   "49pJpaNRJwnpN71qCpDh6aG837GSpGTQML8JKyFu7Mig",
+   "D2JKRdf2Fn6wnXiQB3EgWSkALWozFGZwSUBEPnwVrQMg",
+   "GDyJ3UmZi9ithLMnmE1pCxsEHPgk1QH9P2YggXZihTG5",
+   "EstAvJ5FDPBdn9L759MJVecXCATDJiKJxEGdhdsythky",
+   "6bDF1k6RxMHMNkV4zdbxKPKiTN43CVgx9CgnmHW9AN1N"
+  ],
+  "computedAt": "2026-10-05T20:32:57.290Z"
+ },
+ "holders": {
+  "sources": [
+   "Solana RPC: getProgramAccounts (every Token-2022 account whose mint is DKNG)"
+  ],
+  "tokenAccounts": 32349,
+  "holders": 15594,
+  "balanceBuckets": [
+   {
+    "label": "under 0.01",
+    "wallets": 5651,
+    "dkng": 21.057877000000047
+   },
+   {
+    "label": "0.01–0.1",
+    "wallets": 6838,
+    "dkng": 252.5841549999995
+   },
+   {
+    "label": "0.1–1",
+    "wallets": 2294,
+    "dkng": 741.6964880000008
+   },
+   {
+    "label": "1–10",
+    "wallets": 663,
+    "dkng": 1912.6799299999998
+   },
+   {
+    "label": "10+",
+    "wallets": 148,
+    "dkng": 26554.883779999993
+   }
+  ],
+  "computedAt": "2026-10-05T20:04:33.201Z"
+ },
+ "pools": {
+  "sources": [
+   "https://api.geckoterminal.com/api/v2/networks/solana/tokens/DKNGQFNGQmoBdXSRGKJ8tTu7uPDasw5JDcfMmWniNfow/pools"
+  ],
+  "count": 50,
+  "activeCount": 16,
+  "top": [
+   {
+    "address": "5752ia7jC3ZU1c8ycytaSyi5D4nVhApSKvreGbs7pwWL",
+    "name": "ALLINU / DKNG",
+    "pair": "ALLINU",
+    "dex": "raydium",
+    "liquidity": 216728.2635,
+    "volume24h": 213947.087095411
+   },
+   {
+    "address": "f2qSBho9ZzGxAxMbbXwc74PbfTH5F3ZYHJTXC5LuyZ7",
+    "name": "DKNG / USDC",
+    "pair": "USDC",
+    "dex": "raydium-clmm",
+    "liquidity": 86369.1042,
+    "volume24h": 56840.3815161982
+   },
+   {
+    "address": "BCxu8Rp2qVjcXxu7jja5FAyTTXkY8SmYuxrm1vsMTre6",
+    "name": "DKNG / USDC",
+    "pair": "USDC",
+    "dex": "raydium-clmm",
+    "liquidity": 84327.014,
+    "volume24h": 155902.148908725
+   },
+   {
+    "address": "431km7QTYnrbSMJqLqbaDKdsHsSB24v22w9qXYooVjDz",
+    "name": "DKNG / USDC",
+    "pair": "USDC",
+    "dex": "raydium-clmm",
+    "liquidity": 38716.1118,
+    "volume24h": 379246.314643159
+   },
+   {
+    "address": "6zCSdnTE8c3KXWuosxSnBt4wWsN9zTA73umKijP2p6au",
+    "name": "DKNG / DKNG",
+    "pair": "donkey kong",
+    "dex": "raydium",
+    "liquidity": 12297.3719,
+    "volume24h": 397.187000547
+   }
+  ],
+  "allinuLiquidity": 216728.2635,
+  "allinuRank": 1,
+  "usdcPoolsLiquidity": 209412.22999999998,
+  "computedAt": "2026-10-05T20:39:24.237Z"
+ },
+ "volume": {
+  "sources": [
+   "https://api.geckoterminal.com/api/v2/networks/solana/tokens/DKNGQFNGQmoBdXSRGKJ8tTu7uPDasw5JDcfMmWniNfow/pools (the list of DKNG pools)",
+   "https://public-api.birdeye.so/defi/v3/ohlcv/pair (hourly volume of each DKNG pool, and of DKNG markets GeckoTerminal doesn't list)"
+  ],
+  "pools": 51,
+  "unlistedPools": [
+   "DKNG / USDC (Denali)"
+  ],
+  "allinuFrom": "2026-09-11T20:00:00.000Z",
+  "total": 121544974.6743183,
+  "allinu": 34420533.947442025,
+  "share": 0.28319174889519205,
+  "weekendShare": 0.3180499424233899,
+  "allinuShareWhileClosed": 0.2788432437066712,
+  "closedSinceAllinu": 100568809.7146971,
+  "closedAllinu": 28042933.116565123,
+  "marketTotal": 121569408.6327797,
+  "closedTotal": 100568809.7146971,
+  "launchDayTotal": 43462262.390579455,
+  "launchDayClosed": 43437828.43211805,
+  "closedHoursShare": 0.8145973154362416,
+  "byHourNewYork": [
+   [
+    159479,
+    139819,
+    90698,
+    71977,
+    122206,
+    75580,
+    129672,
+    109266,
+    239935,
+    522894,
+    822739,
+    381995,
+    554116,
+    618232,
+    449474,
+    492674,
+    228338,
+    274211,
+    155992,
+    292913,
+    374219,
+    170934,
+    181875,
+    178440
+   ],
+   [
+    91889,
+    150342,
+    230501,
+    43649,
+    34482,
+    42759,
+    310599,
+    224937,
+    257887,
+    978275,
+    432995,
+    774749,
+    1860658,
+    603174,
+    502368,
+    1104045,
+    742424,
+    1238317,
+    1395099,
+    890042,
+    631394,
+    676887,
+    1953514,
+    686229
+   ],
+   [
+    231337,
+    151560,
+    322569,
+    1373157,
+    687101,
+    160274,
+    324155,
+    218950,
+    251198,
+    727922,
+    1076015,
+    1217493,
+    789518,
+    720148,
+    820222,
+    490959,
+    1002926,
+    549424,
+    240650,
+    218512,
+    310693,
+    262442,
+    176325,
+    240357
+   ],
+   [
+    150946,
+    197849,
+    152865,
+    459485,
+    866505,
+    341060,
+    276037,
+    223781,
+    151515,
+    480180,
+    438085,
+    468908,
+    707185,
+    313116,
+    1149954,
+    646372,
+    470043,
+    316196,
+    644895,
+    650103,
+    373191,
+    177336,
+    73014,
+    55861
+   ],
+   [
+    111023,
+    70824,
+    64831,
+    39356,
+    121784,
+    97408,
+    75541,
+    114375,
+    378930,
+    261339,
+    195095,
+    268200,
+    173677,
+    801457,
+    367328,
+    274345,
+    25422091,
+    12374523,
+    3302937,
+    3247519,
+    5146118,
+    2302353,
+    1474596,
+    771031
+   ],
+   [
+    633059,
+    931248,
+    472843,
+    284082,
+    312645,
+    234152,
+    253563,
+    411657,
+    453876,
+    425497,
+    325504,
+    375902,
+    462198,
+    1346157,
+    707349,
+    437037,
+    328646,
+    258082,
+    294695,
+    214028,
+    193260,
+    306301,
+    194725,
+    254485
+   ],
+   [
+    163758,
+    206022,
+    158005,
+    163457,
+    103668,
+    102086,
+    124690,
+    103366,
+    123165,
+    156029,
+    163995,
+    279690,
+    241035,
+    372267,
+    374986,
+    423427,
+    2160234,
+    1277841,
+    485870,
+    218568,
+    490317,
+    297489,
+    577111,
+    191376
+   ]
+  ],
+  "closedShareOfAll": 0.8272542479702409,
+  "daily": [
+   {
+    "d": "2026-09-11",
+    "allinu": 8920612,
+    "rest": 34517216
+   },
+   {
+    "d": "2026-09-12",
+    "allinu": 3753912,
+    "rest": 9369518
+   },
+   {
+    "d": "2026-09-13",
+    "allinu": 1888351,
+    "rest": 3280554
+   },
+   {
+    "d": "2026-09-14",
+    "allinu": 1431506,
+    "rest": 2346777
+   },
+   {
+    "d": "2026-09-15",
+    "allinu": 4184120,
+    "rest": 5732953
+   },
+   {
+    "d": "2026-09-16",
+    "allinu": 4155730,
+    "rest": 8583543
+   },
+   {
+    "d": "2026-09-17",
+    "allinu": 1701954,
+    "rest": 3543876
+   },
+   {
+    "d": "2026-09-18",
+    "allinu": 549970,
+    "rest": 1665076
+   },
+   {
+    "d": "2026-09-19",
+    "allinu": 697189,
+    "rest": 1123680
+   },
+   {
+    "d": "2026-09-20",
+    "allinu": 717858,
+    "rest": 1333486
+   },
+   {
+    "d": "2026-09-21",
+    "allinu": 589832,
+    "rest": 1600489
+   },
+   {
+    "d": "2026-09-22",
+    "allinu": 561259,
+    "rest": 1474564
+   },
+   {
+    "d": "2026-09-23",
+    "allinu": 464829,
+    "rest": 780245
+   },
+   {
+    "d": "2026-09-24",
+    "allinu": 386818,
+    "rest": 1309264
+   },
+   {
+    "d": "2026-09-25",
+    "allinu": 304064,
+    "rest": 873605
+   },
+   {
+    "d": "2026-09-26",
+    "allinu": 1051475,
+    "rest": 1293563
+   },
+   {
+    "d": "2026-09-27",
+    "allinu": 258495,
+    "rest": 477466
+   },
+   {
+    "d": "2026-09-28",
+    "allinu": 230519,
+    "rest": 510475
+   },
+   {
+    "d": "2026-09-29",
+    "allinu": 290150,
+    "rest": 571611
+   },
+   {
+    "d": "2026-09-30",
+    "allinu": 455574,
+    "rest": 1082193
+   },
+   {
+    "d": "2026-10-01",
+    "allinu": 1205525,
+    "rest": 1947463
+   },
+   {
+    "d": "2026-10-02",
+    "allinu": 134997,
+    "rest": 1452008
+   },
+   {
+    "d": "2026-10-03",
+    "allinu": 119873,
+    "rest": 1447108
+   },
+   {
+    "d": "2026-10-04",
+    "allinu": 166111,
+    "rest": 228611
+   },
+   {
+    "d": "2026-10-05",
+    "allinu": 199807,
+    "rest": 579096
+   }
+  ],
+  "computedAt": "2026-10-05T20:39:35.699Z"
+ },
+ "solanaRpc": [
+  "a private endpoint (SOLANA_RPC_URL)"
+ ],
+ "payoutPace": {
+  "sources": [
+   "Solana RPC: getTransactionsForAddress (100 whole transactions per call), for StonkFun's DKNG accounts"
+  ],
+  "since": "2026-10-03T20:04:38.390Z",
+  "windowDays": 2,
+  "transactionsRead": 746,
+  "unreadable": 0,
+  "payoutTransactions": 730,
+  "payments": 11769,
+  "dkngPaid": 1008.2942399999994,
+  "uniqueRecipients": 2230,
+  "paymentsPerDay": 5884.5,
+  "dkngPerDay": 504.1471199999997,
+  "roundsPerDay": 4.5,
+  "paymentsPerRound": 1262,
+  "daily": [
+   {
+    "d": "2026-10-03",
+    "dkng": 79.403631,
+    "payments": 1289
+   },
+   {
+    "d": "2026-10-04",
+    "dkng": 583.692346,
+    "payments": 6475
+   },
+   {
+    "d": "2026-10-05",
+    "dkng": 345.198263,
+    "payments": 4005
+   }
+  ],
+  "computedAt": "2026-10-05T20:04:40.391Z"
+ },
+ "supply": {
+  "sources": [
+   "Solana RPC: getAccountInfo (the DKNG mint)",
+   "Solana RPC: getTransactionsForAddress (100 whole transactions per call), for the mint authority mHRjfhQqbuPZcHk1YSoNSQmZWFqj2Yc3om1UTQgQJef",
+   "Solana RPC: getTokenAccountBalance (the ALLINU/DKNG pool's DKNG vault 7FKr3zbx3jGByStgNSkiB5SBE71RNaMNPR1f9xpNi15D)",
+   "Solana RPC: getTokenLargestAccounts (DKNG) and getMultipleAccounts (who owns each)"
+  ],
+  "mintAuthority": "mHRjfhQqbuPZcHk1YSoNSQmZWFqj2Yc3om1UTQgQJef",
+  "transactionsRead": 4286,
+  "unreadable": 0,
+  "supplyNow": 29482.90223,
+  "allinuPoolVault": "7FKr3zbx3jGByStgNSkiB5SBE71RNaMNPR1f9xpNi15D",
+  "allinuPoolDkng": 5528.61221,
+  "allinuHoldingRank": 1,
+  "largestHoldings": [
+   {
+    "account": "7FKr3zbx3jGByStgNSkiB5SBE71RNaMNPR1f9xpNi15D",
+    "owner": "GpMZbSM2GgvTKHJirzeGfMFoaZ8UR2X7F4v8vHTvxFbL",
+    "dkng": 5528.61221
+   },
+   {
+    "account": "DuxVpLCTXFwzykAJCW12xN6VCdkS2qH9deU8xmmaGwQW",
+    "owner": "f2qSBho9ZzGxAxMbbXwc74PbfTH5F3ZYHJTXC5LuyZ7",
+    "dkng": 4203.063997
+   },
+   {
+    "account": "2W7VNXhDeB48kDwHNMMRxKirJFh7CvWWrBM5sn2tM9wy",
+    "owner": "BCxu8Rp2qVjcXxu7jja5FAyTTXkY8SmYuxrm1vsMTre6",
+    "dkng": 2517.636004
+   },
+   {
+    "account": "78oAHcFXy4ZSjBELWumfUdmyawvF8M3cQ54pyDUUiQMY",
+    "owner": "431km7QTYnrbSMJqLqbaDKdsHsSB24v22w9qXYooVjDz",
+    "dkng": 1228.96296
+   },
+   {
+    "account": "E35fcSUwkUzbRmmH1dFbKH8Vmibfdyu5U75ffAk4gPfN",
+    "owner": "EcU3SJ1qtWRowT11ZuZYLSeqDTydxnwHRHyBhE1QHLZC",
+    "dkng": 1076.161353
+   },
+   {
+    "account": "DA5iRzWqRGAfAJb8AKHVq8Ed7fR3S1xCzmWSXvxr71zG",
+    "owner": "GCtAZG6f43w1Nsyzj6WxTR9hxjCxvptcC2ydCQrV7afG",
+    "dkng": 998.903687
+   },
+   {
+    "account": "DaACkbe6EHGiNUU88f2mNWnceV3gyFz4pimt1Rbx243j",
+    "owner": "dWayhjG6YnURZQqWTpB2pYmQXm67kHNrcnUAsXWwDqh",
+    "dkng": 875.391724
+   },
+   {
+    "account": "HsjUjvD4VD6MUjH59F2WFrL2pE9EJfiy6o7MrdenjoMf",
+    "owner": "7KroP5fiGnjDu3zaTxC3PRScyWS3NN9KAFqnaePsFieq",
+    "dkng": 489.717824
+   }
+  ],
+  "startSupply": -13.94083,
+  "firstMintAt": "2026-09-11T19:54:09.000Z",
+  "mintedSinceLaunch": 128722.61067,
+  "burnedSinceLaunch": 99225.76761,
+  "daily": [
+   {
+    "d": "2026-09-11",
+    "minted": 41989.474911,
+    "burned": 5955.96595,
+    "supply": 36019.568131
+   },
+   {
+    "d": "2026-09-12",
+    "minted": 0.747824,
+    "burned": 1300.002178,
+    "supply": 34720.313777
+   },
+   {
+    "d": "2026-09-13",
+    "minted": 1459.910178,
+    "burned": 5317.612551,
+    "supply": 30862.611404
+   },
+   {
+    "d": "2026-09-14",
+    "minted": 1733.981174,
+    "burned": 16144.320465,
+    "supply": 16452.272113
+   },
+   {
+    "d": "2026-09-15",
+    "minted": 11585.817215,
+    "burned": 4305.923229,
+    "supply": 23732.166099
+   },
+   {
+    "d": "2026-09-16",
+    "minted": 15817.493605,
+    "burned": 7535.816403,
+    "supply": 32013.843301
+   },
+   {
+    "d": "2026-09-17",
+    "minted": 9869.492782,
+    "burned": 5780.749336,
+    "supply": 36102.586747
+   },
+   {
+    "d": "2026-09-18",
+    "minted": 4926.198856,
+    "burned": 5397.015311,
+    "supply": 35631.770292
+   },
+   {
+    "d": "2026-09-21",
+    "minted": 4557.099654,
+    "burned": 4239.64315,
+    "supply": 35949.226796
+   },
+   {
+    "d": "2026-09-22",
+    "minted": 3770.815299,
+    "burned": 7339.194281,
+    "supply": 32380.847814
+   },
+   {
+    "d": "2026-09-23",
+    "minted": 1079.74831,
+    "burned": 1681.660969,
+    "supply": 31778.935155
+   },
+   {
+    "d": "2026-09-24",
+    "minted": 1847.568794,
+    "burned": 2103.216676,
+    "supply": 31523.287273
+   },
+   {
+    "d": "2026-09-25",
+    "minted": 1123.204057,
+    "burned": 3646.594024,
+    "supply": 28999.897306
+   },
+   {
+    "d": "2026-09-28",
+    "minted": 2578.311267,
+    "burned": 2491.33908,
+    "supply": 29086.869493
+   },
+   {
+    "d": "2026-09-29",
+    "minted": 2213.967697,
+    "burned": 1125.198532,
+    "supply": 30175.638658
+   },
+   {
+    "d": "2026-09-30",
+    "minted": 4657.566491,
+    "burned": 4266.597546,
+    "supply": 30566.607603
+   },
+   {
+    "d": "2026-10-01",
+    "minted": 5554.295765,
+    "burned": 4925.515586,
+    "supply": 31195.387782
+   },
+   {
+    "d": "2026-10-02",
+    "minted": 10737.157116,
+    "burned": 9043.461425,
+    "supply": 32889.083473
+   },
+   {
+    "d": "2026-10-05",
+    "minted": 3219.759675,
+    "burned": 6625.940918,
+    "supply": 29482.90223
+   }
+  ],
+  "computedAt": "2026-10-05T20:04:44.005Z"
+ },
+ "run": null,
+ "origins": {
+  "sources": [
+   "Solana RPC: getTokenAccountsByOwner, getSignaturesForAddress and getTransaction for every wallet holding DKNG (oldest first, until its DKNG goes up); each wallet is traced once"
+  ],
+  "size": 15236,
+  "traced": 15236,
+  "reused": 0,
+  "errors": 0,
+  "shares": {
+   "Reward airdrop": 0.8952480966132843,
+   "ALLINU trade": 0.00013126804935678657,
+   "Another memecoin trade": 0.02284064058808086,
+   "Bought DKNG directly": 0.029863481228668942,
+   "Transfer from another wallet": 0.03426096088212129,
+   "Not resolved": 0.017655552638487792
+  },
+  "medianDkng": 0.020779,
+  "underTenthOfShare": 0.8037542662116041,
+  "atLeastOneShare": 0.0508007351010764,
+  "airdropCheck": {
+   "wallets": 13640,
+   "shares": {
+    "Holds ALLINU only": 0.21642228739002933,
+    "Holds ALLINU and another DKNG reward token": 0.00967741935483871,
+    "Holds another DKNG reward token, not ALLINU": 0.038636363636363635,
+    "Holds no DKNG reward token": 0.7352639296187683
+   },
+   "allinuAmongHolders": 0.8540570479091665
+  },
+  "computedAt": "2026-10-05T18:52:12.866Z"
+ },
+ "reach": {
+  "sources": [
+   "Solana RPC: getTransactionsForAddress (100 whole transactions per call), for StonkFun's DKNG accounts"
+  ],
+  "since": "2026-09-11T00:00:00Z",
+  "windowDays": 24.84,
+  "transactionsRead": 55343,
+  "unreadable": 0,
+  "payoutTransactions": 50712,
+  "payments": 849918,
+  "dkngPaid": 58602.37066500037,
+  "uniqueRecipients": 27211,
+  "paymentsPerDay": 34220.25189764488,
+  "dkngPerDay": 2359.5074889053617,
+  "roundsPerDay": 19.56781998058096,
+  "paymentsPerRound": 1460,
+  "daily": [
+   {
+    "d": "2026-09-11",
+    "dkng": 11940.553114,
+    "payments": 57328
+   },
+   {
+    "d": "2026-09-12",
+    "dkng": 3983.365444,
+    "payments": 75321
+   },
+   {
+    "d": "2026-09-13",
+    "dkng": 1168.161598,
+    "payments": 26229
+   },
+   {
+    "d": "2026-09-14",
+    "dkng": 1097.747674,
+    "payments": 14102
+   },
+   {
+    "d": "2026-09-15",
+    "dkng": 3356.505802,
+    "payments": 22403
+   },
+   {
+    "d": "2026-09-16",
+    "dkng": 6273.553865,
+    "payments": 29648
+   },
+   {
+    "d": "2026-09-17",
+    "dkng": 4705.416525,
+    "payments": 22807
+   },
+   {
+    "d": "2026-09-18",
+    "dkng": 2529.844643,
+    "payments": 8978
+   },
+   {
+    "d": "2026-09-19",
+    "dkng": 2450.83627,
+    "payments": 9902
+   },
+   {
+    "d": "2026-09-20",
+    "dkng": 1565.95845,
+    "payments": 11959
+   },
+   {
+    "d": "2026-09-21",
+    "dkng": 2745.435748,
+    "payments": 43439
+   },
+   {
+    "d": "2026-09-22",
+    "dkng": 2727.804274,
+    "payments": 236072
+   },
+   {
+    "d": "2026-09-23",
+    "dkng": 1912.158404,
+    "payments": 116550
+   },
+   {
+    "d": "2026-09-24",
+    "dkng": 1596.357612,
+    "payments": 9835
+   },
+   {
+    "d": "2026-09-25",
+    "dkng": 1321.547719,
+    "payments": 16837
+   },
+   {
+    "d": "2026-09-26",
+    "dkng": 2129.394474,
+    "payments": 33356
+   },
+   {
+    "d": "2026-09-27",
+    "dkng": 761.527159,
+    "payments": 15580
+   },
+   {
+    "d": "2026-09-28",
+    "dkng": 497.139359,
+    "payments": 10321
+   },
+   {
+    "d": "2026-09-29",
+    "dkng": 613.069225,
+    "payments": 11337
+   },
+   {
+    "d": "2026-09-30",
+    "dkng": 1024.473399,
+    "payments": 13723
+   },
+   {
+    "d": "2026-10-01",
+    "dkng": 1646.297116,
+    "payments": 24695
+   },
+   {
+    "d": "2026-10-02",
+    "dkng": 770.682193,
+    "payments": 13047
+   },
+   {
+    "d": "2026-10-03",
+    "dkng": 855.649989,
+    "payments": 15969
+   },
+   {
+    "d": "2026-10-04",
+    "dkng": 583.692346,
+    "payments": 6475
+   },
+   {
+    "d": "2026-10-05",
+    "dkng": 345.198263,
+    "payments": 4005
+   }
+  ],
+  "computedAt": "2026-10-05T20:05:28.435Z"
+ },
+ "routed": {
+  "sources": [
+   "Solana RPC: getTransactionsForAddress (the ALLINU/DKNG pool), DKNG balance changes outside its vault 7FKr3zbx3jGByStgNSkiB5SBE71RNaMNPR1f9xpNi15D",
+   "https://api.geckoterminal.com/api/v2/networks/solana/pools/{the largest other DKNG pool}/ohlcv/hour (hourly DKNG price)"
+  ],
+  "from": "2026-09-11T20:00:00.000Z",
+  "transactions": 1165136,
+  "routedTransactions": 168353,
+  "routedUsd": 33220539.91390418,
+  "allinuPoolUsd": 34420533.947442025,
+  "total": 121544974.6743183,
+  "share": 0.5565106582365213,
+  "routedClosedUsd": 27041049.886291813,
+  "shareWhileClosed": 0.547724320881636,
+  "daily": [
+   {
+    "d": "2026-09-11",
+    "usd": 8417691
+   },
+   {
+    "d": "2026-09-12",
+    "usd": 3708429
+   },
+   {
+    "d": "2026-09-13",
+    "usd": 1797870
+   },
+   {
+    "d": "2026-09-14",
+    "usd": 1401830
+   },
+   {
+    "d": "2026-09-15",
+    "usd": 4124002
+   },
+   {
+    "d": "2026-09-16",
+    "usd": 4147362
+   },
+   {
+    "d": "2026-09-17",
+    "usd": 1715999
+   },
+   {
+    "d": "2026-09-18",
+    "usd": 548426
+   },
+   {
+    "d": "2026-09-19",
+    "usd": 693082
+   },
+   {
+    "d": "2026-09-20",
+    "usd": 694138
+   },
+   {
+    "d": "2026-09-21",
+    "usd": 541615
+   },
+   {
+    "d": "2026-09-22",
+    "usd": 495801
+   },
+   {
+    "d": "2026-09-23",
+    "usd": 417697
+   },
+   {
+    "d": "2026-09-24",
+    "usd": 353939
+   },
+   {
+    "d": "2026-09-25",
+    "usd": 273162
+   },
+   {
+    "d": "2026-09-26",
+    "usd": 1000175
+   },
+   {
+    "d": "2026-09-27",
+    "usd": 239925
+   },
+   {
+    "d": "2026-09-28",
+    "usd": 212678
+   },
+   {
+    "d": "2026-09-29",
+    "usd": 277290
+   },
+   {
+    "d": "2026-09-30",
+    "usd": 444162
+   },
+   {
+    "d": "2026-10-01",
+    "usd": 1154743
+   },
+   {
+    "d": "2026-10-02",
+    "usd": 118937
+   },
+   {
+    "d": "2026-10-03",
+    "usd": 106717
+   },
+   {
+    "d": "2026-10-04",
+    "usd": 152375
+   },
+   {
+    "d": "2026-10-05",
+    "usd": 182495
+   }
+  ],
+  "computedAt": "2026-10-05T20:39:47.822Z"
+ }
+}
