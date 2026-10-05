@@ -246,6 +246,8 @@ function FirstDkng({ d, origins: o }: { d: Snapshot; origins: NonNullable<Snapsh
   const trade = o.shares["ALLINU trade"] + o.shares["Another memecoin trade"] + o.shares["Bought DKNG directly"];
   const airdropSquares = Math.round(airdrop * 100), tradeSquares = Math.round(trade * 100);
   const chainPaid = reach ? reach.daily.reduce((a, x) => a + x.dkng, 0) : 0, listPaid = r.dkngPaid / r.shareOfAllDkngPaid;
+  // ALLINU's DKNG paid against every other reward token's combined, rounded down so it never overstates
+  const timesOthers = Math.floor(r.shareOfAllDkngPaid / (1 - r.shareOfAllDkngPaid));
   return (
     <Story id="holders" label="Holders" stat={pct(airdrop)} claim="of DKNG holders on Solana got their first DKNG as a StonkFun reward airdrop."
       sources={[o, r, ...(reach ? [reach] : [])]}
@@ -259,7 +261,7 @@ function FirstDkng({ d, origins: o }: { d: Snapshot; origins: NonNullable<Snapsh
         <ul>
           <li>Airdrop rule: the first DKNG came from StonkFun's fee seller or payout wallet, or in a transfer the wallet didn't sign that paid six or more wallets at once.</li>
           <li>An airdrop doesn't say which reward token it pays for. The page does not attribute airdrop-first holders to ALLINU.</li>
-          <li>Shown beside it instead, a direct count from StonkFun's public rewards list: {pct(r.shareOfAllDkngPayouts)} of all DKNG reward payments are for ALLINU ({pct(r.shareOfAllDkngPaid)} by DKNG amount).</li>
+          <li>Shown beside it instead, a direct count from StonkFun's public rewards list: {pct(r.shareOfAllDkngPayouts)} of all DKNG reward payments are for ALLINU, and {pct(r.shareOfAllDkngPaid)} of the DKNG paid. The "{timesOthers}× all the others combined" is ALLINU's DKNG paid divided by the other reward tokens' total, rounded down.</li>
           <li>Of the airdrop-first wallets that held any DKNG reward token when traced, {pct(o.airdropCheck.allinuAmongHolders)} held ALLINU.</li>
           <li>Most hold small amounts: the median wallet holds {o.medianDkng.toFixed(2)} DKNG, and {pct(o.atLeastOneShare)} hold a full share or more.</li>
         </ul>
@@ -282,8 +284,8 @@ function FirstDkng({ d, origins: o }: { d: Snapshot; origins: NonNullable<Snapsh
         ]} />
         {reach && <PayoutsToDate d={d} reach={reach} />}
       </>}>
-      {reach
-        ? <p>StonkFun has sent DKNG rewards to <b className="num">{int(reach.uniqueRecipients)}</b> wallets; <b>{pct(r.shareOfAllDkngPayouts)}</b> of the payments are for ALLINU.</p>
+      {timesOthers >= 2
+        ? <p>StonkFun pays DKNG rewards for {int(r.dkngRewardTokens)} tokens; ALLINU has paid out <b>{timesOthers}×</b> more DKNG than all the others combined.</p>
         : <p><b>{pct(r.shareOfAllDkngPayouts)}</b> of StonkFun's DKNG reward payments are for ALLINU.</p>}
     </Story>
   );
