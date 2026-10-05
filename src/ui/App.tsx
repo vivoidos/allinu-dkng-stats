@@ -225,14 +225,14 @@ function VolumeShare({ d }: { d: Snapshot }) {
 /** The DKNG paid out each day as a running total. */
 function PayoutsToDate({ d, reach }: { d: Snapshot; reach: NonNullable<Snapshot["reach"]> }) {
   return <>
-    <FigTitle>DKNG StonkFun has paid out since Sep 11, all reward tokens, added up day by day</FigTitle>
+    <FigTitle>DKNG StonkFun has paid out since Sep 11, for every token that pays in DKNG, added up day by day</FigTitle>
     <AreaOverTime name="DKNG paid" format={int} height={240} data={runningTotal(reach.daily.map((x) => ({ d: x.d, v: x.dkng })), (sum) => `≈ $${int(sum * d.rewards.dkngPrice)} at today's price`)} />
   </>;
 }
 
 /** Its table, for the methodology dialog. */
 const payoutsTable = (reach: NonNullable<Snapshot["reach"]>) => (
-  <DataTable caption="DKNG reward payments per UTC day, all reward tokens" headers={["Day (UTC)", "DKNG paid", "Payments"]}
+  <DataTable caption="DKNG reward payments per UTC day, every token that pays in DKNG" headers={["Day (UTC)", "DKNG paid", "Payments"]}
     rows={reach.daily.map((x) => [day(x.d), int(x.dkng), int(x.payments)])} />
 );
 
@@ -243,21 +243,21 @@ function AheadOfOthers({ d }: { d: Snapshot }) {
   const top = r.topRewardTokens!.map((t, _, all) => ({ ...t, label: all.filter((o) => o.label.toLowerCase() === t.label.toLowerCase()).length > 1 ? `${t.label} (${t.mint.slice(0, 4)}…)` : t.label }));
   const times = Math.floor(r.dkngPaid / r.othersDkngPaid); // rounded down, so it never overstates
   return (
-    <Story id="lead" label="Rewards" stat={`${times}×`} claim={`more DKNG paid out by ALLINU than by all ${int(r.dkngRewardTokens - 1)} other StonkFun reward tokens combined.`}
+    <Story id="lead" label="Rewards" stat={`${times}×`} claim={`more DKNG paid out by ALLINU than by the ${int(r.dkngRewardTokens - 1)} other StonkFun tokens that pay rewards in DKNG, combined.`}
       sources={[r]}
-      data={<DataTable caption="The StonkFun reward tokens that paid out the most DKNG" headers={["Token", "DKNG paid out", "Payments"]}
+      data={<DataTable caption="The StonkFun tokens that paid out the most DKNG in rewards" headers={["Token", "DKNG paid out", "Payments"]}
         rows={top.map((t) => [t.label, int(t.dkngPaid), int(t.payouts)])} />}
       method={<ul>
-        <li>From StonkFun's public rewards list: the DKNG each reward token has paid out to its holders, as StonkFun reports it.</li>
+        <li>StonkFun tokens pay their holders rewards in many different assets; {int(r.dkngRewardTokens)} of them pay in DKNG. From StonkFun's public rewards list: the DKNG each of those has paid out, as StonkFun reports it.</li>
         <li>{times}× is ALLINU's {int(r.dkngPaid)} DKNG divided by the {int(r.othersDkngPaid)} DKNG of every other reward token together, rounded down.</li>
         <li>Tokens are named by their symbol, or by their name when the symbol is also DKNG.</li>
       </ul>}
       figure={<>
-        <FigTitle>DKNG paid out per StonkFun reward token</FigTitle>
+        <FigTitle>DKNG paid out by StonkFun tokens that pay rewards in DKNG</FigTitle>
         <HBarChart format={int} labelWidth={180}
           data={top.map((t) => ({ label: t.label, value: t.dkngPaid, highlight: t.mint === ADDR.ALLINU, tip: `${int(t.dkngPaid)} DKNG in ${int(t.payouts)} payments` }))} />
       </>}>
-      <p><b className="num">{int(r.dkngPaid)}</b> DKNG, against <span className="num">{int(r.othersDkngPaid)}</span> for every other token together.</p>
+      <p><b className="num">{int(r.dkngPaid)}</b> DKNG, against <span className="num">{int(r.othersDkngPaid)}</span> for all the others together.</p>
     </Story>
   );
 }
@@ -291,13 +291,13 @@ function FirstDkng({ d, origins: o }: { d: Snapshot; origins: NonNullable<Snapsh
           <li>Most hold small amounts: the median wallet holds {o.medianDkng.toFixed(2)} DKNG, and {pct(o.atLeastOneShare)} hold a full share or more.</li>
         </ul>
         {reach && <>
-          <p>Wallets reached: the {int(reach.uniqueRecipients)} wallets are every wallet StonkFun has paid DKNG to, for any of its {int(r.dkngRewardTokens)} reward tokens.</p>
+          <p>Wallets reached: the {int(reach.uniqueRecipients)} wallets are every wallet StonkFun has paid DKNG to, for any of the {int(r.dkngRewardTokens)} tokens that pay rewards in DKNG.</p>
           <ul>
             <li>Counted from the chain, those payouts total {int(chainPaid)} DKNG. StonkFun's list, which covers the tokens paying DKNG today, totals {int(listPaid)}: {pct(Math.abs(chainPaid - listPaid) / listPaid)} apart.</li>
             <li>In every payout checked, what StonkFun sent equals what holders received.</li>
           </ul>
         </>}
-        <p>The per-day amounts in the headline are estimates. A payout doesn't say which token it is for, so each day's DKNG payouts (all reward tokens) are scaled to add up to ALLINU's total.</p>
+        <p>The per-day amounts in the headline are estimates. A payout doesn't say which token it is for, so each day's DKNG payouts (every token that pays in DKNG) are scaled to add up to ALLINU's total.</p>
         <p><a href="holder-origins.csv">Download the list</a>: one row per wallet, with the transaction that first gave it DKNG.</p>
       </>}
       figure={<>
@@ -325,13 +325,13 @@ function RewardShare({ d }: { d: Snapshot }) {
       data={reach && payoutsTable(reach)}
       method={<>
         <p>From StonkFun's public rewards list, which covers every reward token. By DKNG amount, ALLINU's share is {pct(r.shareOfAllDkngPaid)}.</p>
-        <p>The per-day amounts in the headline are estimates. A payout doesn't say which token it is for, so each day's DKNG payouts (all reward tokens) are scaled to add up to ALLINU's total.</p>
+        <p>The per-day amounts in the headline are estimates. A payout doesn't say which token it is for, so each day's DKNG payouts (every token that pays in DKNG) are scaled to add up to ALLINU's total.</p>
       </>}
       figure={<>
         <FigTitle>Every 100 DKNG reward payments</FigTitle>
         <Waffle parts={[
           { count: Math.round(r.shareOfAllDkngPayouts * 100), label: "paid for ALLINU", tone: "allinu" },
-          { count: 100 - Math.round(r.shareOfAllDkngPayouts * 100), label: `paid for the other ${int(r.dkngRewardTokens - 1)} reward tokens`, tone: "other" },
+          { count: 100 - Math.round(r.shareOfAllDkngPayouts * 100), label: `paid for the other ${int(r.dkngRewardTokens - 1)} tokens that pay in DKNG`, tone: "other" },
         ]} />
         {reach && <PayoutsToDate d={d} reach={reach} />}
       </>}>
