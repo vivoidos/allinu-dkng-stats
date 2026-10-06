@@ -1,4 +1,4 @@
-// "Download PNG": the whole page, or any of its parts, as one image, with a preview of exactly what will be saved.
+// "Download PNG": the whole page, or any of its parts in any order, as one image, with a preview of exactly what will be saved.
 
 import { useEffect, useRef, useState } from "react";
 import { pngParts, renderPng, saveBlob, type PngPart } from "./screenshot.ts";
@@ -8,12 +8,13 @@ export function PngDialog({ open, onClose, caption, fileName }: { open: boolean;
   const [parts, setParts] = useState<PngPart[]>([]);
   const [mode, setMode] = useState<"full" | "custom">("full");
   const [picked, setPicked] = useState<Set<string>>(new Set());
+  const [order, setOrder] = useState<string[]>([]); // the stories as they go in the image; the hero is always first
   const [preview, setPreview] = useState<{ url: string; ready: boolean } | null>(null);
   const [saving, setSaving] = useState<"idle" | "busy" | "failed">("idle");
 
   const page = () => document.getElementById("top");
-  const keep = mode === "full" ? new Set(parts.map((p) => p.id)) : picked;
-  const keepKey = [...keep].sort().join();
+  const keep = mode === "full" ? parts.map((p) => p.id) : ["hero", ...order].filter((id) => picked.has(id) && parts.some((p) => p.id === id));
+  const keepKey = keep.join();
 
   // open and close with the parent's state; read the parts each time it opens, so the labels carry today's numbers
   useEffect(() => {
@@ -23,6 +24,8 @@ export function PngDialog({ open, onClose, caption, fileName }: { open: boolean;
       const found = pngParts(root);
       setParts(found);
       setPicked((prev) => (prev.size ? prev : new Set(found.map((p) => p.id))));
+      const stories = found.map((p) => p.id).filter((id) => id !== "hero");
+      setOrder((prev) => (prev.length === stories.length && prev.every((id) => stories.includes(id)) ? prev : stories));
       el.showModal();
     } else if (!open && el.open) el.close();
   }, [open]);
@@ -30,7 +33,7 @@ export function PngDialog({ open, onClose, caption, fileName }: { open: boolean;
   // a small preview of exactly what will be saved, redrawn when the choice changes
   useEffect(() => {
     const root = page();
-    if (!open || !root || !keep.size) { setPreview(null); return; }
+    if (!open || !root || !keep.length) { setPreview(null); return; }
     let live = true;
     setPreview((p) => (p ? { ...p, ready: false } : null));
     const timer = setTimeout(async () => {
@@ -46,7 +49,7 @@ export function PngDialog({ open, onClose, caption, fileName }: { open: boolean;
 
   const save = async () => {
     const root = page();
-    if (!root || !keep.size || saving === "busy") return;
+    if (!root || !keep.length || saving === "busy") return;
     setSaving("busy");
     try {
       saveBlob(await renderPng(root, keep, caption), fileName);
@@ -55,6 +58,15 @@ export function PngDialog({ open, onClose, caption, fileName }: { open: boolean;
       setSaving("failed");
     }
   };
+
+  const move = (id: string, by: -1 | 1) => setOrder((prev) => {
+    const i = prev.indexOf(id), j = i + by;
+    if (i < 0 || j < 0 || j >= prev.length) return prev;
+    const next = [...prev];
+    [next[i], next[j]] = [next[j]!, next[i]!];
+    return next;
+  });
+  const listed = [...parts.filter((p) => p.id === "hero"), ...order.flatMap((id) => parts.filter((p) => p.id === id))];
 
   const toggle = (id: string) => setPicked((prev) => { const next = new Set(prev); if (next.has(id)) next.delete(id); else next.add(id); return next; });
 
@@ -81,19 +93,34 @@ export function PngDialog({ open, onClose, caption, fileName }: { open: boolean;
             {mode === "custom" && (
               <fieldset className="pparts">
                 <legend className="sr-only">Parts to include</legend>
-                {parts.map((p) => (
-                  <label key={p.id} className="ppart"><input type="checkbox" checked={picked.has(p.id)} onChange={() => toggle(p.id)} /><span>{p.label}</span></label>
-                ))}
+                {listed.map((p) => {
+                  const i = order.indexOf(p.id);
+                  return (
+                    <div key={p.id} className="prow">
+                      <label className="ppart"><input type="checkbox" checked={picked.has(p.id)} onChange={() => toggle(p.id)} /><span>{p.label}</span></label>
+                      {i >= 0 && (
+                        <div className="pmove">
+                          <button type="button" aria-label={`Move up: ${p.label}`} disabled={i === 0} onClick={() => move(p.id, -1)}>
+                            <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3.5 8.5L7 5l3.5 3.5" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                          </button>
+                          <button type="button" aria-label={`Move down: ${p.label}`} disabled={i === order.length - 1} onClick={() => move(p.id, 1)}>
+                            <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3.5 5.5L7 9l3.5-3.5" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
               </fieldset>
             )}
-            <button type="button" className="button pdialog-save" onClick={save} disabled={!keep.size || saving === "busy"}>
-              {saving === "busy" ? "Saving…" : saving === "failed" ? "Try again" : keep.size ? "Download PNG" : "Pick at least one part"}
+            <button type="button" className="button pdialog-save" onClick={save} disabled={!keep.length || saving === "busy"}>
+              {saving === "busy" ? "Saving…" : saving === "failed" ? "Try again" : keep.length ? "Download PNG" : "Pick at least one part"}
             </button>
           </div>
           <div className="pdialog-preview" aria-live="polite">
             {preview
               ? <img src={preview.url} alt="Preview of the image" className={preview.ready ? "" : "stale"} />
-              : <p className="pdialog-wait">{keep.size ? "Drawing the preview…" : "Nothing picked yet."}</p>}
+              : <p className="pdialog-wait">{keep.length ? "Drawing the preview…" : "Nothing picked yet."}</p>}
           </div>
         </div>
       </div>

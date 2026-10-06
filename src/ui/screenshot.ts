@@ -1,4 +1,4 @@
-// The PNG download: the hero and any of the stories, in page order, as one image, with one line under them
+// The PNG download: the hero and any of the stories, in the order picked, as one image, with one line under them
 // (date, how to verify, "not financial advice"). The open-code section, the footer and dialogs are never drawn.
 // html-to-image is loaded only when someone asks for an image, so it adds nothing to opening the page.
 
@@ -32,28 +32,44 @@ let queue: Promise<unknown> = Promise.resolve();
 let fonts: Promise<string | undefined> | undefined;
 
 /**
- * Draws the parts in `keep` as one PNG. The other parts are hidden while it draws (the page is put back right after),
- * so the image is exactly what the browser renders, charts and the bulb-lit amount included.
+ * Draws the parts in `keep` as one PNG, in that order (the hero, if kept, always comes first). The other parts are
+ * hidden and the kept stories reordered while it draws, with CSS only (the page is put back right after), so the
+ * image is exactly what the browser renders, charts and the bulb-lit amount included.
  */
-export function renderPng(page: HTMLElement, keep: ReadonlySet<string>, caption: string, maxPixelRatio = 2): Promise<Blob> {
+export function renderPng(page: HTMLElement, keep: readonly string[], caption: string, maxPixelRatio = 2): Promise<Blob> {
   const job = queue.then(() => draw(page, keep, caption, maxPixelRatio));
   queue = job.catch(() => undefined);
   return job;
 }
 
-async function draw(page: HTMLElement, keep: ReadonlySet<string>, caption: string, maxPixelRatio: number): Promise<Blob> {
+async function draw(page: HTMLElement, keep: readonly string[], caption: string, maxPixelRatio: number): Promise<Blob> {
   const { toBlob, getFontEmbedCSS } = await import("html-to-image");
   fonts ??= getFontEmbedCSS(page).catch(() => { fonts = undefined; return undefined; });
   const fontEmbedCSS = await fonts;
   const scrollY = window.scrollY;
-  const hidden: HTMLElement[] = [];
-  const hide = (el: HTMLElement | null | undefined) => { if (el && el.style.display !== "none") { el.style.display = "none"; hidden.push(el); } };
-  for (const part of pngParts(page)) if (!keep.has(part.id)) hide(partElement(page, part.id));
+  // every inline style changed while drawing, with its old value, to put back afterwards
+  const changed: [HTMLElement, string, string][] = [];
+  const set = (el: HTMLElement | null | undefined, prop: string, value: string) => {
+    if (!el) return;
+    changed.push([el, prop, el.style.getPropertyValue(prop)]);
+    el.style.setProperty(prop, value);
+  };
+  for (const part of pngParts(page)) if (!keep.includes(part.id)) set(partElement(page, part.id), "display", "none");
   const stories = page.querySelector<HTMLElement>(".stories");
-  if (stories && ![...stories.querySelectorAll<HTMLElement>("section.story")].some((s) => s.style.display !== "none")) hide(stories);
+  const kept = keep.filter((id) => id !== "hero").map((id) => partElement(page, id)).filter((el): el is HTMLElement => !!el);
+  // the stories in the picked order, still zigzagging left and right: the page alternates them by their place in it,
+  // which no longer matches once some are left out or moved (on a narrow page they are stacked, nothing to alternate)
+  set(stories, "display", kept.length ? "flex" : "none");
+  set(stories, "flex-direction", "column");
+  const wide = matchMedia("(min-width: 961px)").matches;
+  kept.forEach((el, i) => {
+    set(el, "order", String(i));
+    if (!wide) return;
+    set(el, "grid-template-columns", i % 2 ? "minmax(0, 7fr) minmax(0, 5fr)" : "minmax(0, 5fr) minmax(0, 7fr)");
+    set(el.querySelector<HTMLElement>(".story-text"), "order", i % 2 ? "2" : "0");
+  });
   // without the hero, the stories' top margin would sit outside what is measured and push the image down
-  const storiesMargin = stories?.style.marginTop ?? "";
-  if (stories && !keep.has("hero")) stories.style.marginTop = "0";
+  if (!keep.includes("hero")) set(stories, "margin-top", "0");
   const shown = () => [...page.children].filter((c): c is HTMLElement => c instanceof HTMLElement && !c.matches(SKIP) && c.style.display !== "none");
   const line = Object.assign(document.createElement("p"), { className: "png-caption wrap", textContent: caption });
   shown().at(-1)?.after(line);
@@ -74,8 +90,7 @@ async function draw(page: HTMLElement, keep: ReadonlySet<string>, caption: strin
     return blob;
   } finally {
     line.remove();
-    for (const el of hidden) el.style.display = "";
-    if (stories) stories.style.marginTop = storiesMargin;
+    for (const [el, prop, value] of changed.reverse()) el.style.setProperty(prop, value);
     window.scrollTo({ top: scrollY, behavior: "instant" });
   }
 }

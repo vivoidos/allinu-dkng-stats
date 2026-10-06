@@ -169,7 +169,14 @@ const { GITHUB_ACTIONS, GITHUB_SERVER_URL, GITHUB_REPOSITORY, GITHUB_RUN_ID, GIT
 const actionsRun = GITHUB_ACTIONS && GITHUB_SHA
   ? { log: `${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}`, repo: `${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}`, commit: GITHUB_SHA }
   : null;
-const solanaRpc = SOLANA_RPC_URL ? ["a private endpoint (SOLANA_RPC_URL)"] : PUBLIC_RPCS.map((r) => r.url);
+// a private endpoint is named by its provider only, read from the host name (the URL's key never leaves this line)
+const RPC_PROVIDERS: [host: string, name: string][] = [["helius-rpc.com", "Helius"], ["quiknode.pro", "QuickNode"], ["alchemy.com", "Alchemy"], ["triton.one", "Triton"]];
+const rpcProvider = (url: string) => {
+  let host = "";
+  try { host = new URL(url).hostname; } catch { /* not a URL: no name */ }
+  return RPC_PROVIDERS.find(([h]) => host === h || host.endsWith(`.${h}`))?.[1] ?? "a private endpoint";
+};
+const solanaRpc = SOLANA_RPC_URL ? [rpcProvider(SOLANA_RPC_URL)] : PUBLIC_RPCS.map((r) => r.url);
 // only the blocks this code knows are carried over, so a block or field it no longer computes disappears by itself
 const KEPT: readonly string[] = [...BLOCKS, "solanaRpc", "run", "computedAt"];
 const previous = Object.fromEntries(Object.entries(readSnapshot()).filter(([k]) => KEPT.includes(k))) as Partial<S.Snapshot>;
