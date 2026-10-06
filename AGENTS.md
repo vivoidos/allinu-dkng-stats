@@ -94,16 +94,16 @@ from an earlier run.
   one by one: it needs a wallet's first one or two transactions, and a page costs more than that on metered plans.
 - **The public Solana endpoint returns 403 to browsers** (any request with an `Origin` header). That is why
   the page reads a snapshot instead of querying the chain.
-- **GeckoTerminal's free tier allows about 30 calls a minute.** The volume block takes ~10 minutes for that
-  reason, and runs alongside the Solana blocks.
+- **GeckoTerminal's free tier allows about 30 calls a minute.** Without `BIRDEYE_API_KEY` the volume block reads
+  hourly volume from GeckoTerminal and takes ~10 minutes for that reason; with it, well under a minute.
 - Some numbers are scoped deliberately: payouts and reach cover *all* DKNG reward tokens on StonkFun
-  (a payout transaction doesn't say which token it is for); holder origins reports the share that got its first DKNG as a StonkFun airdrop and does not attribute airdrops to ALLINU (ALLINU's share of payments is shown beside it, from StonkFun's list); volume
-  counts a trade routed through several pools once in each pool. Each says so in its section of the page's "Data & methodology" dialog.
+  (a payout transaction doesn't say which token it is for); holder origins reports the share that got its first DKNG as a StonkFun reward payout and does not attribute payouts to ALLINU (ALLINU's share of payments is shown beside it, from StonkFun's list); volume
+  counts a trade routed through several pools once in each pool. Each says so in its section of the page's "How it's measured" dialog.
 
 ## Adding a number
 
 1. Add a file in `src/core/stats/` with one exported function, naming its source in a header comment and in a
    `sources` list; helpers several blocks need go in `shared.ts`. Export it from `index.ts`.
 2. Add it as a block in `scripts/snapshot.ts` (and a `RESULT` log line) and to the `Snapshot` type.
-3. Show it in `src/ui/App.tsx` as a `Story`, reading only from the snapshot: its `method`, `data` and `sources` fill its section of the methodology dialog.
+3. Show it in `src/ui/App.tsx` as a `Story`, reading only from the snapshot: its `method`, `data` and `sources` fill its section of the "How it's measured" dialog.
 4. `pnpm typecheck`, then `node scripts/snapshot.ts --only <block>` and check the page with `pnpm dev`.

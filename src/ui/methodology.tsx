@@ -1,4 +1,4 @@
-// "Data & methodology": one dialog with how every number is measured, its data and where it comes from.
+// "How it's measured": one dialog with how every number is measured, its data and where it comes from.
 // Each story writes its own section into the dialog (a portal), so a number's method and data stay next to
 // its chart in App.tsx; this file only owns the dialog, its navigation and the "About this data" section.
 

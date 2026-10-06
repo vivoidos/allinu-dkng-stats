@@ -164,7 +164,7 @@ footer { background: var(--bg-deep); color: var(--text-muted); font-size: 13.5px
 footer p { margin: 0; max-width: 90ch; }
 footer p a { color: var(--text-secondary); text-underline-offset: 3px; }
 
-/* ---------- data & methodology dialog ---------- */
+/* ---------- "how it's measured" dialog ---------- */
 html:has(.mdialog[open]), html:has(.pdialog[open]) { overflow: hidden; } /* the page stays put behind it */
 .mdialog { width: min(1080px, calc(100vw - 48px)); height: min(880px, calc(100dvh - 48px)); max-width: none; max-height: none;
   padding: 0; border: 1px solid var(--line); border-radius: 14px; background: var(--bg-deep); color: var(--text-primary);

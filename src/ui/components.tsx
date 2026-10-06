@@ -11,7 +11,7 @@ export const GitHubIcon = ({ size = 16 }: { size?: number }) => (
 /**
  * One story on the page: the number is the heading, a sentence says what it measures, and the chart that
  * shows it sits beside (under, on a phone). How it's measured, its data table and its sources go to the
- * "Data & methodology" dialog, under `label`.
+ * "How it's measured" dialog, under `label`.
  */
 export function Story({ id, label, stat, claim, children, figure, method, data, sources }: {
   id: string; label: string; stat: ReactNode; claim: ReactNode; children: ReactNode; figure: ReactNode;

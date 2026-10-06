@@ -261,7 +261,7 @@ function AheadOfOthers({ d }: { d: Snapshot }) {
 }
 
 /**
- * How DraftKings holders on Solana got their first DKNG: nearly all as a StonkFun reward airdrop. An airdrop
+ * How DraftKings holders on Solana got their first DKNG: nearly all as a StonkFun reward payout. A payout
  * doesn't say which reward token it pays for, so the story shows ALLINU's share of all reward payments beside
  * it, a direct count, rather than an estimate of how many holders got their first DKNG through ALLINU.
  */
@@ -282,10 +282,10 @@ function FirstDkng({ d, origins: o }: { d: Snapshot; origins: NonNullable<Snapsh
       method={<>
         <p>Every one of the {int(o.size)} wallets holding DKNG when the trace ran ({time(o.computedAt)}), traced to the transaction that first raised its DKNG balance. A wallet's first DKNG never changes, so each wallet is traced once; later runs trace only new wallets.</p>
         <ul>
-          <li>Airdrop rule: the first DKNG came from StonkFun's fee seller or payout wallet, or in a transfer the wallet didn't sign that paid six or more wallets at once.</li>
-          <li>An airdrop doesn't say which reward token it pays for. The page does not attribute airdrop-first holders to ALLINU.</li>
+          <li>Payout rule: the first DKNG came from StonkFun's fee seller or payout wallet, or in a transfer the wallet didn't sign that paid six or more wallets at once.</li>
+          <li>A payout doesn't say which reward token it pays for. The page does not attribute payout-first holders to ALLINU.</li>
           <li>Shown beside it instead, a direct count from StonkFun's public rewards list: {pct(r.shareOfAllDkngPayouts)} of all DKNG reward payments are for ALLINU, and {pct(r.shareOfAllDkngPaid)} of the DKNG paid.</li>
-          <li>Of the airdrop-first wallets that held any DKNG reward token when traced, {pct(o.airdropCheck.allinuAmongHolders)} held ALLINU.</li>
+          <li>Of the payout-first wallets that held any DKNG reward token when traced, {pct(o.airdropCheck.allinuAmongHolders)} held ALLINU.</li>
           <li>Most hold small amounts: the median wallet holds {o.medianDkng.toFixed(2)} DKNG, and {pct(o.atLeastOneShare)} hold a full share or more.</li>
         </ul>
         {reach && <>
