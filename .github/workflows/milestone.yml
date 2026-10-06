@@ -1,0 +1,46 @@
+# Hourly: has the headline amount crossed a milestone (MILESTONE_USD, default $1,000,000) the page doesn't show yet?
+# If so, starts the snapshot workflow with every block, so the page updates without waiting for the daily run, and the
+# new number comes with its own public run log like every other. The check reads only public, keyless APIs.
+name: milestone
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 * * * *" # hourly, off the top of the hour when GitHub is busiest
+
+permissions:
+  contents: read
+  actions: write # start the snapshot workflow
+
+concurrency:
+  group: milestone
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: .node-version
+
+      - name: Compare the live amount with the page
+        id: check
+        run: node scripts/milestone.ts
+        env:
+          MILESTONE_USD: ${{ vars.MILESTONE_USD }}
+
+      - name: Update the page
+        if: steps.check.outputs.crossed == 'true'
+        run: |
+          # a snapshot run already going will publish the new amount itself
+          if [ -n "$(gh run list --workflow snapshot.yml --status in_progress --json databaseId --jq '.[]')" ] ||
+             [ -n "$(gh run list --workflow snapshot.yml --status queued --json databaseId --jq '.[]')" ]; then
+            echo "a snapshot run is already under way"; exit 0
+          fi
+          gh workflow run snapshot.yml -f extra="--with origins,reach,routed"
+          echo "::notice::Milestone crossed: started a snapshot run"
+        env:
+          GH_TOKEN: ${{ github.token }}

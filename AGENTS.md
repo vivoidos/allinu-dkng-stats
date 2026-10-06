@@ -28,11 +28,13 @@ src/core/            the data code: dependency-free, runs on bare Node
   cache.ts          saves what slow blocks read (snapshots/cache/, one file per day, written atomically)
 src/ui/             the page: React + TanStack Query, built with Vite; it only reads snapshot.json
 scripts/snapshot.ts CLI: runs the blocks, writes snapshots/snapshot.json (+ holder-origins.csv), prints RESULT lines
+scripts/milestone.ts hourly check: has the headline amount crossed MILESTONE_USD (default $1M) since the snapshot?
 snapshots/          the output: snapshot.json (the numbers the page shows, with when and by which code they
                     were computed) and holder-origins.csv, served at the site root; cache/ (not committed)
                     keeps what the slow blocks read from the chain
 public/             static images (favicon, hero photos, social preview)
 .github/workflows/snapshot.yml   computes the snapshot on GitHub Actions, checks the page builds, commits it
+.github/workflows/milestone.yml  runs that check hourly; on a crossing it starts snapshot.yml once (the daily run carries on)
 ```
 
 ## Commands
