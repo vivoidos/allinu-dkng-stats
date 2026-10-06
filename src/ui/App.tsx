@@ -131,7 +131,7 @@ function AroundTheClock({ d }: { d: Snapshot }) {
   return (
     <Story id="clock" label="Trading hours"
       stat={pct(through ?? v.closedShareOfAll)}
-      claim={through != null ? "of DraftKings trading on Solana while Nasdaq was closed went through ALLINU." : "of DraftKings trading on Solana so far happened while Nasdaq was closed."}
+      claim={through != null ? "of DraftKings volume on Solana while Nasdaq was closed went through ALLINU." : "of DraftKings volume on Solana so far happened while Nasdaq was closed."}
       sources={through != null ? [v, d.routed!] : [v]}
       data={<DataTable caption="DKNG volume on Solana by weekday and hour, New York time" headers={["Hour (New York)", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]}
         rows={Array.from({ length: 24 }, (_, h) => [`${h}:00`, ...v.byHourNewYork.map((week) => `$${int(week[h] ?? 0)}`)])} />}
@@ -141,7 +141,7 @@ function AroundTheClock({ d }: { d: Snapshot }) {
           <li>Nasdaq open: 9:30–16:00 New York time, weekdays. Pre-market, after-hours, weekends and holidays count as closed. Since Sep 11, Nasdaq was closed for {pct(v.closedHoursShare)} of all hours.</li>
           <li>{pct(v.closedShareOfAll)} of all DKNG trading on Solana happened while Nasdaq was closed.</li>
           <li>Launch day weighs heavily. DKNG began trading on Friday, Sep 11, in Nasdaq's last hour of the week, so nearly all of its busy first day fell after the close. That day carried {pct(launch.share)} of all volume so far. Without it, {pct(launch.closedWithout)} traded while Nasdaq was closed.</li>
-          {through != null && <li>"Through ALLINU" is the ALLINU/DKNG pool plus the legs of ALLINU trades routed through other DKNG pools (see Volume), each split into open or closed by the hour it traded. The ALLINU/DKNG pool alone: {pct(v.allinuShareWhileClosed)}.</li>}
+          {through != null && <li>"Through ALLINU" is the ALLINU/DKNG pool plus the legs of ALLINU trades routed through other DKNG pools (see Volume), each split into open or closed by the hour it traded. The ALLINU/DKNG pool alone: {pct(v.allinuShareWhileClosed)}. Counting each trade once instead: {pct(v.closedAllinu / (v.closedSinceAllinu - d.routed!.routedClosedUsd))}.</li>}
         </ul>
       </>}
       figure={<><FigTitle>DKNG volume on Solana by weekday and hour, New York time</FigTitle><WeekHeatmap grid={v.byHourNewYork} money={(x) => usd(x, 1)} /></>}>
@@ -182,7 +182,7 @@ function VolumeShare({ d }: { d: Snapshot }) {
   });
   const through = (x: (typeof rows)[number]) => pct((x.allinu + (x.routed ?? 0)) / (x.allinu + (x.routed ?? 0) + x.rest || 1));
   return (
-    <Story id="volume" label="Volume" stat={pct(r ? r.share : v.share)} claim={r ? "of DraftKings trading on Solana has gone through ALLINU since launch." : "of all DraftKings volume on Solana has gone through the ALLINU pool since launch."}
+    <Story id="volume" label="Volume" stat={pct(r ? r.share : v.share)} claim={r ? "of DraftKings volume on Solana has gone through ALLINU since launch." : "of all DraftKings volume on Solana has gone through the ALLINU pool since launch."}
       sources={r ? [v, r] : [v]}
       data={<DataTable caption="DKNG volume on Solana per UTC day (the last row is today so far)" headers={r ? ["Day (UTC)", "ALLINU pool", "Routed by ALLINU trades", "Everything else", "Through ALLINU"] : ["Day (UTC)", "ALLINU pool", "Other pools", "ALLINU share"]}
         rows={rows.map((x) => r ? [day(x.d), `$${int(x.allinu)}`, x.routed === undefined ? "–" : `$${int(x.routed)}`, `$${int(x.rest)}`, x.routed === undefined ? "–" : through(x)] : [day(x.d), `$${int(x.allinu)}`, `$${int(x.rest)}`, through(x)])} />}
@@ -198,6 +198,7 @@ function VolumeShare({ d }: { d: Snapshot }) {
           <ul>
             <li>All {int(r.transactions)} transactions that touched the ALLINU/DKNG pool were read. {int(r.routedTransactions)} moved DKNG through other DKNG pools; that DKNG is valued at the hour's DKNG price.</li>
             <li>Arbitrage passing through the ALLINU/DKNG pool counts.</li>
+            <li>Volume counts a trade once in every pool it passes through, as DEX volume always does. Counting each trade once instead, ALLINU's share is {pct(r.allinuPoolUsd / (r.total - r.routedUsd))}.</li>
             <li>ALLINU's own SOL and USDC pools are not part of any number here.</li>
             {r.total !== v.total && <li>Measured up to {time(r.computedAt)}, against the volume up to then.</li>}
           </ul>
