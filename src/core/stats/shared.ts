@@ -8,8 +8,8 @@ export const ADDR = {
   DKNG: "DKNGQFNGQmoBdXSRGKJ8tTu7uPDasw5JDcfMmWniNfow", // tokenized DraftKings, issued by Backpack Securities
   ALLINU: "4MMQY9bwkxxTtsK3W227Q5ABT6yFY8Pmn9Ze7wmAXKY8",
   ALLINU_DKNG_POOL: "5752ia7jC3ZU1c8ycytaSyi5D4nVhApSKvreGbs7pwWL", // Raydium CPMM
-  FEE_SELLER: "5KXDF6QnqhBj72hDtJNkkpFaQVUfbFXNybMsp3DiK6tD", // StonkFun: swaps collected fees into the reward token
-  PAYOUT_WALLET: "HuBMeYW3aDn8BH65fo8xxbP4oiexyup8udzKyccgi8Ga", // StonkFun: sends DKNG rewards (since Sep 22)
+  FEE_SELLER: "5KXDF6QnqhBj72hDtJNkkpFaQVUfbFXNybMsp3DiK6tD", // StonkFun: collects transfer fees and swaps them into each reward asset (paid rewards itself until Sep 22)
+  PAYOUT_WALLET: "HuBMeYW3aDn8BH65fo8xxbP4oiexyup8udzKyccgi8Ga", // StonkFun: pays rewards in every asset, DKNG included (since Sep 22)
 } as const;
 
 /** Tokenized DKNG's first trading day on Solana. */

@@ -1,5 +1,5 @@
 // The page shows snapshot.json, the numbers scripts/snapshot.ts computed (on GitHub Actions, for the
-// published page). It makes no other requests.
+// published page). It is the page's only data.
 
 import { useQuery } from "@tanstack/react-query";
 import type { Snapshot } from "../core/stats/index.ts";

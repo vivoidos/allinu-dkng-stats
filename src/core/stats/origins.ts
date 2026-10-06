@@ -22,6 +22,8 @@ const STABLES = new Set([
 
 export const ORIGINS = ["Reward airdrop", "ALLINU trade", "Another memecoin trade", "Bought DKNG directly", "Transfer from another wallet", "Not resolved"] as const;
 export type Origin = (typeof ORIGINS)[number];
+/** How a class is named on the page and in the CSV: StonkFun calls its rewards payouts ("airdrop" means a launch airdrop there). */
+export const originLabel = (o: Origin) => (o === "Reward airdrop" ? "StonkFun reward payout" : o);
 export const AIRDROP_CHECK = ["Holds ALLINU only", "Holds ALLINU and another DKNG reward token", "Holds another DKNG reward token, not ALLINU", "Holds no DKNG reward token"] as const;
 export type AirdropCheck = (typeof AIRDROP_CHECK)[number];
 

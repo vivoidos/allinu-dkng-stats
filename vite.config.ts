@@ -9,6 +9,7 @@ const DATA = ["snapshot.json", "holder-origins.csv"];
 // (the data code needs nothing but Node, so these files alone are enough to re-run every number).
 const CODE = [
   "README.md",
+  "LICENSE",
   "scripts/snapshot.ts",
   ...readdirSync("src/core", { recursive: true, encoding: "utf8" })
     .filter((f) => f.endsWith(".ts"))

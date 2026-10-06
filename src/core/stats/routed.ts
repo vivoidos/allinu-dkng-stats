@@ -56,9 +56,10 @@ function routedDkng(tx: Transaction, allinuVault: string): number {
   return toDkng(moved);
 }
 
-/** Hourly DKNG prices in USD back to `fromSec`, from the largest DKNG pool that isn't ALLINU's (GeckoTerminal). */
+/** Hourly DKNG prices in USD back to `fromSec`, from the largest actively traded DKNG pool that isn't ALLINU's (GeckoTerminal). */
 async function hourlyDkngPrice(pools: Pool[], fromSec: number): Promise<Record<string, number>> {
-  const main = pools.find((p) => p.address !== ADDR.ALLINU_DKNG_POOL);
+  // a pool that traded in the last 24 hours: an untraded pool's price can be stale
+  const main = pools.find((p) => p.address !== ADDR.ALLINU_DKNG_POOL && p.volume24h > 0);
   if (!main) throw new Error("no DKNG pool to price DKNG from");
   const thisHour = Math.floor(Date.now() / 3_600_000) * 3600;
   const prices: Record<string, number> = {};

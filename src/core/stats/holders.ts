@@ -17,21 +17,10 @@ export async function getHolders() {
     const owner = base58(bytes.subarray(0, 32));
     balances.set(owner, (balances.get(owner) ?? 0n) + amount);
   }
-  // how many wallets hold how much: one DKNG is one DraftKings share
-  const BUCKETS = [{ label: "under 0.01", max: 0.01 }, { label: "0.01–0.1", max: 0.1 }, { label: "0.1–1", max: 1 }, { label: "1–10", max: 10 }, { label: "10+", max: Infinity }];
-  const balanceBuckets = BUCKETS.map((b) => ({ label: b.label, wallets: 0, dkng: 0 }));
-  for (const raw of balances.values()) {
-    const dkng = toDkng(raw);
-    const i = BUCKETS.findIndex((b) => dkng < b.max);
-    const bucket = balanceBuckets[i]!;
-    bucket.wallets++;
-    bucket.dkng += dkng;
-  }
   return {
     sources: ["Solana RPC: getProgramAccounts (every Token-2022 account whose mint is DKNG)"],
     tokenAccounts: accounts.length,
     holders: balances.size,
-    balanceBuckets,
     list: [...balances].map(([owner, raw]) => ({ owner, dkng: toDkng(raw) })),
   };
 }

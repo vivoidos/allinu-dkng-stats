@@ -96,10 +96,7 @@ function NavItem({ id, label, active, open }: { id: string; label: string; activ
   );
 }
 
-export interface BlockSource { sources?: string[]; source?: string; computedAt: string }
-
-/** A block's sources: its `sources` list, or the single `source` string of snapshots written before it. */
-export const sourcesOf = (b: BlockSource) => b.sources ?? (b.source ? [b.source] : []);
+export interface BlockSource { sources: string[]; computedAt: string }
 const isUrl = (s: string) => /^https:\/\/[^\s{}]+$/.test(s);
 
 /** A story's section in the dialog, written into it from wherever the story renders. */
@@ -121,7 +118,7 @@ export function MethodSection({ id, label, stat, claim, method, data, sources }:
         <ul className="msources">
           {sources.map((s, i) => (
             <li key={i}>
-              {sourcesOf(s).map((src) => <code key={src}>{isUrl(src) ? <a href={src} target="_blank" rel="noopener">{src}</a> : src}</code>)}
+              {s.sources.map((src) => <code key={src}>{isUrl(src) ? <a href={src} target="_blank" rel="noopener">{src}</a> : src}</code>)}
               <span>computed <time dateTime={s.computedAt}>{time(s.computedAt)}</time></span>
             </li>
           ))}

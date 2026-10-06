@@ -22,7 +22,7 @@
 // and a Birdeye key, a few minutes; the first full holder trace and the first full routed read take ~35 and ~20 min,
 // and later runs only read what is new (snapshots/cache/).
 //
-// Blocks: rewards, holders, pools, payoutPace, supply, volume, origins, reach, routed
+// Blocks: rewards, holders, pools, supply, volume, origins, reach, routed
 // Needs Node 22.18+ (runs TypeScript directly). No install, no keys. Run it in a terminal or on a server:
 // the public Solana RPC refuses requests that come from a browser.
 
@@ -31,7 +31,7 @@ import { originsCache, routedCache } from "../src/core/cache.ts";
 import { PUBLIC_RPCS, rpcTally, useRpc } from "../src/core/solana.ts";
 import * as S from "../src/core/stats/index.ts";
 
-const BLOCKS = ["rewards", "holders", "pools", "payoutPace", "supply", "volume", "origins", "reach", "routed"] as const;
+const BLOCKS = ["rewards", "holders", "pools", "supply", "volume", "origins", "reach", "routed"] as const;
 type Block = (typeof BLOCKS)[number];
 const SLOW: Block[] = ["origins", "reach", "routed"]; // opt in with --with
 const DEFAULT: Block[] = BLOCKS.filter((b) => !SLOW.includes(b));
@@ -131,11 +131,6 @@ const geckoTerminal = async () => {
   });
 };
 const solana = async () => {
-  if (run.has("payoutPace")) await attempt("payoutPace", async () => {
-    const since = new Date(Date.now() - 2 * 86400e3).toISOString();
-    const pace = out.payoutPace = stamp(await S.getPayoutFlow({ since, wallets: [S.ADDR.PAYOUT_WALLET], onProgress: progress(250, "payout pace") }));
-    log(`payout pace: ${Math.round(pace.paymentsPerDay)} payments a day`);
-  });
   if (run.has("supply")) await attempt("supply", async () => {
     const supply = out.supply = stamp(await S.getSupply({ onProgress: progress(250, "supply") }));
     log(`supply: ${supply.supplyNow} DKNG (walk-back start ${supply.startSupply}, should be near 0)`);
@@ -175,8 +170,9 @@ const actionsRun = GITHUB_ACTIONS && GITHUB_SHA
   ? { log: `${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}`, repo: `${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}`, commit: GITHUB_SHA }
   : null;
 const solanaRpc = SOLANA_RPC_URL ? ["a private endpoint (SOLANA_RPC_URL)"] : PUBLIC_RPCS.map((r) => r.url);
-const { by: _by, code: _code, ...previous } = readSnapshot() as Partial<S.Snapshot> & { by?: unknown; code?: unknown }; // dropped fields
-if (previous.origins && "viaAllinu" in previous.origins) delete (previous.origins as { viaAllinu?: unknown }).viaAllinu; // an estimate older code made
+// only the blocks this code knows are carried over, so a block or field it no longer computes disappears by itself
+const KEPT: readonly string[] = [...BLOCKS, "solanaRpc", "run", "computedAt"];
+const previous = Object.fromEntries(Object.entries(readSnapshot()).filter(([k]) => KEPT.includes(k))) as Partial<S.Snapshot>;
 const fresh = Object.keys(out).length > 0; // a run where every block failed leaves the snapshot's run and time as they were
 writeAtomic(file, redact(JSON.stringify({ ...previous, ...out, ...(fresh ? { solanaRpc, run: actionsRun, computedAt: new Date().toISOString() } : {}) }, null, 1)) + "\n");
 if (failed.length) log(`done, but these blocks FAILED and kept their previous numbers: ${failed.join(", ")}`);
@@ -187,7 +183,7 @@ if (traced) {
     return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
   };
   const header = "wallet,dkng_balance,first_dkng_inflow,first_inflow_time,first_inflow_tx,airdrop_check,note";
-  const lines = traced.map((r) => [r.owner, r.dkng, r.origin, r.firstTime, r.firstTx && `https://solscan.io/tx/${r.firstTx}`, r.airdropCheck, r.note].map(cell).join(","));
+  const lines = traced.map((r) => [r.owner, r.dkng, S.originLabel(r.origin), r.firstTime, r.firstTx && `https://solscan.io/tx/${r.firstTx}`, r.airdropCheck, r.note].map(cell).join(","));
   writeAtomic(new URL("../snapshots/holder-origins.csv", import.meta.url), redact([header, ...lines].join("\n")) + "\n");
 }
 log(`wrote snapshot.json (${Object.keys(out).join(", ")})${traced ? ` and holder-origins.csv (${traced.length} wallets)` : ""}`);
@@ -195,11 +191,10 @@ log(`wrote snapshot.json (${Object.keys(out).join(", ")})${traced ? ` and holder
 const done = { ...readSnapshot() } as Partial<S.Snapshot>;
 const carried = (block: keyof S.Snapshot) => (block in out ? "" : " (carried over from an earlier run)");
 const pct = (v: number) => `${(v * 100).toFixed(1)}%`;
-const r = done.rewards, p = done.payoutPace, sup = done.supply, v = done.volume, o = done.origins;
+const r = done.rewards, sup = done.supply, v = done.volume, o = done.origins;
 if (r) log(`RESULT rewards: ${n(r.dkngPaid)} DKNG paid to ALLINU holders = $${n(r.usdAtTodaysPrice)} at $${r.dkngPrice.toFixed(2)}; ALLINU is ${pct(r.shareOfAllDkngPayouts)} of DKNG reward payments (${pct(r.shareOfAllDkngPaid)} by amount)${carried("rewards")}`);
 if (done.holders) log(`RESULT holders: ${n(done.holders.holders)} wallets hold DKNG on Solana${carried("holders")}`);
 if (done.pools) log(`RESULT pools: ALLINU/DKNG is #${done.pools.allinuRank} of ${done.pools.activeCount} DKNG pools traded in the last 24 h by liquidity ($${n(done.pools.allinuLiquidity)})${carried("pools")}`);
-if (p) log(`RESULT payout pace: ~${n(p.paymentsPerDay)} payments and ${n(p.dkngPerDay)} DKNG a day over the last ${p.windowDays} days${carried("payoutPace")}`);
 if (sup) log(`RESULT supply: ${n(sup.supplyNow)} DKNG on Solana; ${n(sup.mintedSinceLaunch)} minted and ${n(sup.burnedSinceLaunch)} burned since Sep 11 (walk-back check ${sup.startSupply.toFixed(6)}, should be near 0)${carried("supply")}`);
 if (v) log(`RESULT volume: ALLINU pool ${pct(v.share)} of ${n(v.total)} since it opened (${v.allinuFrom}); ${pct(v.closedShareOfAll)} of all DKNG volume since Sep 11 traded while Nasdaq was closed${carried("volume")}`);
 if (o) log(`RESULT origins: ${pct(o.shares["Reward airdrop"])} of the ${n(o.size)} DKNG holders first got DKNG as a reward airdrop${carried("origins")}`);

@@ -12,8 +12,7 @@
   --amber: #c27f24;       /* ALLINU's data (validated against --bg) */
   --amber-bright: #ffd98a;/* bulbs and focus rings */
   --series-1: var(--amber); --series-other: #4774b0;
-  /* type: Anton (the bulb-lit amount), Space Grotesk (headings, numbers), DM Sans (text) */
-  --display: Anton, Impact, "Arial Narrow", sans-serif;
+  /* type: Space Grotesk (headings, numbers, the bulb-lit amount), DM Sans (text) */
   --head: "Space Grotesk", Arial, sans-serif;
   --body: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
@@ -36,7 +35,7 @@ b { font-weight: 600; color: var(--text-primary); }
 .status { padding: 120px 0; color: var(--text-secondary); }
 
 /* ---------- intro ---------- */
-.intro { position: relative; padding: 112px 0 8px; overflow: clip; } /* the top 68px once held a bar; kept as room */
+.intro { position: relative; padding: 112px 0 8px; overflow: clip; } /* room above the headline */
 /* the room: the same photo, blurred into bokeh across the whole width, so no side is left bare */
 /* dog-room.jpg is the photo blurred ahead of time: a live CSS blur this large can blank the page on some GPUs */
 .hero-ambient { position: absolute; inset: 0; background: 70% 40% / cover no-repeat; opacity: .42;
@@ -97,7 +96,6 @@ h1 { margin: 0; font-weight: inherit; }
 .claim { display: block; margin-top: 18px; font: 600 clamp(22px, 2.1vw, 28px)/1.2 var(--head); letter-spacing: -.02em; max-width: 24ch; text-wrap: balance; }
 .story-body { margin-top: 18px; color: var(--text-secondary); max-width: 46ch; }
 .story-body p { margin: 0 0 12px; }
-.fine { font-size: 14px; color: var(--text-muted); }
 .story-figure { min-width: 0; align-self: center; }
 .fig-title { font-size: 14px; font-weight: 600; color: var(--text-secondary); margin: 0 0 12px; }
 .story-figure > .fig-title ~ .fig-title { margin-top: 40px; }
@@ -221,7 +219,6 @@ html:has(.mdialog[open]) { overflow: hidden; } /* the page stays put behind it *
 .mfacts div { flex: 1 1 170px; background: var(--bg-deep); padding: 12px 14px; }
 .mfacts dt { font-size: 12.5px; color: var(--text-muted); }
 .mfacts dd { margin: 4px 0 0; font-weight: 600; font-variant-numeric: tabular-nums; }
-.mhashes td { font-size: 12.5px; }
 
 /* a phone: the dialog is a full-height sheet, the nav a row of tabs */
 @media (max-width: 760px) {

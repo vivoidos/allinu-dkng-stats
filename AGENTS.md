@@ -50,7 +50,7 @@ pnpm typecheck     # strict TypeScript over everything
 pnpm build         # typecheck + build the page into dist/
 ```
 
-Blocks: `rewards`, `holders`, `pools`, `payoutPace`, `supply`, `volume`, `origins`, `reach`, `routed`.
+Blocks: `rewards`, `holders`, `pools`, `supply`, `volume`, `origins`, `reach`, `routed`.
 
 `routed` reads every ALLINU-pool transaction (over a million) to find the DKNG volume ALLINU trades push through
 other pools. It needs an RPC with `getTransactionsForAddress` and saves each finished UTC day in `snapshots/cache/` (not

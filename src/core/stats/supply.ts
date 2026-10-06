@@ -14,8 +14,12 @@ import { ADDR, SINCE, allinuPoolDkngVault, toDkng, utcDay, forEachTransactionOf,
 interface MintAccount { mintAuthority: string; supply: string; decimals: number }
 
 export async function getSupply({ onProgress }: { onProgress?: Progress } = {}) {
-  const mint = await rpc<{ value: { data: { parsed: { info: MintAccount } } } }>("getAccountInfo", [ADDR.DKNG, { encoding: "jsonParsed" }]);
-  const { mintAuthority, supply } = mint.value.data.parsed.info;
+  const mint = await rpc<{ value: { data: { parsed: { info: MintAccount & { extensions?: { extension: string; state?: { multiplier?: string; newMultiplier?: string } }[] } } } } }>("getAccountInfo", [ADDR.DKNG, { encoding: "jsonParsed" }]);
+  const { mintAuthority, supply, extensions } = mint.value.data.parsed.info;
+  // DKNG's mint can rescale every balance (Token-2022 scaled UI amount, e.g. after a stock split). Every number here
+  // reads 1 raw DKNG unit as 1/1e6 share; if the multiplier ever leaves 1, stop rather than publish wrong counts.
+  const scaled = extensions?.find((e) => e.extension === "scaledUiAmountConfig")?.state;
+  if (scaled && [scaled.multiplier, scaled.newMultiplier].some((m) => m != null && Number(m) !== 1)) throw new Error(`DKNG's balance multiplier is ${scaled.multiplier}, not 1: the share counts need updating`);
   const events: { t: number; raw: bigint }[] = []; // + minted, − burned
   const { read, unreadable } = await forEachTransactionOf("supply", [mintAuthority], 0, (tx) => {
     for (const ix of allInstructions(tx)) {

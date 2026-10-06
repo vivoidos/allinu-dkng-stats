@@ -1,15 +1,14 @@
 import { useState } from "react";
-import { ADDR, ORIGINS, SINCE, type Snapshot } from "../core/stats/index.ts";
+import { ADDR, ORIGINS, SINCE, originLabel, type Snapshot } from "../core/stats/index.ts";
 import { AreaOverTime, CumulativeVolumeChart, DataTable, HBarChart, Waffle, WeekHeatmap, useCountUp } from "./charts.tsx";
 import { FigTitle, GitHubIcon, Story } from "./components.tsx";
-import { MethodologyDialog, sourcesOf, useMethodology } from "./methodology.tsx";
+import { MethodologyDialog, useMethodology } from "./methodology.tsx";
 import { downloadPagePng } from "./screenshot.ts";
 import { useSnapshot } from "./data.ts";
 import { DotNumber } from "./dot-number.tsx";
 import { day, int, pct, time, usd } from "./format.ts";
 
 /** Tokenized DKNG's first trading day on Solana (SINCE in src/core/stats/shared.ts). */
-const LAUNCH_DAY = SINCE.slice(0, 10);
 
 /** Day-by-day values added up, as chart points. */
 function runningTotal(days: { d: string; v: number }[], note: (sum: number) => string) {
@@ -32,7 +31,7 @@ export function App() {
           <VolumeShare d={d} />
           <DeepestPool d={d} />
           <AroundTheClock d={d} />
-          {d.rewards.topRewardTokens && <AheadOfOthers d={d} />}
+          <AheadOfOthers d={d} />
           {d.supply && <Supply d={d} supply={d.supply} />}
         </div>
         <Proof d={d} />
@@ -123,48 +122,45 @@ function Updated({ d }: { d: Snapshot }) {
 // ---------- the stories ----------
 
 /** Whose hourly pool volume the run used: Birdeye when it had a key, GeckoTerminal otherwise. */
-const volumeSource = (v: Snapshot["volume"]) => (sourcesOf(v).some((s) => s.includes("birdeye")) ? "Birdeye" : "GeckoTerminal");
+const volumeSource = (v: Snapshot["volume"]) => (v.sources.some((s) => s.includes("birdeye")) ? "Birdeye" : "GeckoTerminal");
 
 function AroundTheClock({ d }: { d: Snapshot }) {
   const v = d.volume, through = d.routed?.shareWhileClosed;
   // launch day weighs on the closed share: the method says how much, and what the share is without it
-  const launch = v.launchDayTotal != null ? { share: v.launchDayTotal / v.marketTotal, closedWithout: (v.closedTotal - v.launchDayClosed) / (v.marketTotal - v.launchDayTotal) } : null;
+  const launch = { share: v.launchDayTotal / v.marketTotal, closedWithout: (v.closedTotal - v.launchDayClosed) / (v.marketTotal - v.launchDayTotal) };
   return (
     <Story id="clock" label="Trading hours"
       stat={pct(through ?? v.closedShareOfAll)}
       claim={through != null ? "of DraftKings trading on Solana while Nasdaq was closed went through ALLINU." : "of DraftKings trading on Solana so far happened while Nasdaq was closed."}
       sources={through != null ? [v, d.routed!] : [v]}
-      data={v.byHourNewYork && <DataTable caption="DKNG volume on Solana by weekday and hour, New York time" headers={["Hour (New York)", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]}
-        rows={Array.from({ length: 24 }, (_, h) => [`${h}:00`, ...v.byHourNewYork!.map((week) => `$${int(week[h] ?? 0)}`)])} />}
+      data={<DataTable caption="DKNG volume on Solana by weekday and hour, New York time" headers={["Hour (New York)", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]}
+        rows={Array.from({ length: 24 }, (_, h) => [`${h}:00`, ...v.byHourNewYork.map((week) => `$${int(week[h] ?? 0)}`)])} />}
       method={<>
-        <p>{volumeSource(v)}'s hourly volume for every DKNG pool GeckoTerminal lists on Solana{v.unlistedPools?.length ? <>, plus {v.unlistedPools.join(", ")}, which it doesn't</> : null}, since Sep 11.</p>
+        <p>{volumeSource(v)}'s hourly volume for every DKNG pool GeckoTerminal lists on Solana{v.unlistedPools.length ? <>, plus {v.unlistedPools.join(", ")}, which it doesn't</> : null}, since Sep 11.</p>
         <ul>
-          <li>Nasdaq open: 9:30–16:00 New York time, weekdays. Pre-market, after-hours, weekends and holidays count as closed.{v.closedHoursShare != null && <> Since Sep 11, Nasdaq was closed for {pct(v.closedHoursShare)} of all hours.</>}</li>
+          <li>Nasdaq open: 9:30–16:00 New York time, weekdays. Pre-market, after-hours, weekends and holidays count as closed. Since Sep 11, Nasdaq was closed for {pct(v.closedHoursShare)} of all hours.</li>
           <li>{pct(v.closedShareOfAll)} of all DKNG trading on Solana happened while Nasdaq was closed.</li>
-          <li>Launch day weighs heavily. DKNG began trading on Friday, Sep 11, in Nasdaq's last hour of the week, so nearly all of its busy first day fell after the close.{launch && <> That day carried {pct(launch.share)} of all volume so far. Without it, {pct(launch.closedWithout)} traded while Nasdaq was closed.</>}</li>
+          <li>Launch day weighs heavily. DKNG began trading on Friday, Sep 11, in Nasdaq's last hour of the week, so nearly all of its busy first day fell after the close. That day carried {pct(launch.share)} of all volume so far. Without it, {pct(launch.closedWithout)} traded while Nasdaq was closed.</li>
           {through != null && <li>"Through ALLINU" is the ALLINU/DKNG pool plus the legs of ALLINU trades routed through other DKNG pools (see Volume), each split into open or closed by the hour it traded. The ALLINU/DKNG pool alone: {pct(v.allinuShareWhileClosed)}.</li>}
         </ul>
       </>}
-      figure={v.byHourNewYork && <><FigTitle>DKNG volume on Solana by weekday and hour, New York time</FigTitle><WeekHeatmap grid={v.byHourNewYork} money={(x) => usd(x, 1)} /></>}>
+      figure={<><FigTitle>DKNG volume on Solana by weekday and hour, New York time</FigTitle><WeekHeatmap grid={v.byHourNewYork} money={(x) => usd(x, 1)} /></>}>
       <p>Onchain, DraftKings never closes: {pct(v.closedShareOfAll)} of DKNG volume so far traded outside Nasdaq hours.</p>
     </Story>
   );
 }
 
-/** A pool's other token; snapshots from before `pair` existed fall back to the pool name without "DKNG". */
-const pairOf = (pool: { name: string; pair?: string }) => pool.pair ?? pool.name.replace(/\s*DKNG\s*\/\s*|\s*\/\s*DKNG\s*/, "").trim();
-
 const versusUsdc = (ratio: number) => (ratio >= 1.1 ? "more than" : ratio >= 0.9 ? "about as much as" : `${pct(ratio)} of`);
 
 function DeepestPool({ d }: { d: Snapshot }) {
   const p = d.pools;
-  const label = (pool: (typeof p.top)[number]) => (pool.address === ADDR.ALLINU_DKNG_POOL ? "ALLINU" : `${pairOf(pool)} (${pool.address.slice(0, 4)}…)`);
+  const label = (pool: (typeof p.top)[number]) => (pool.address === ADDR.ALLINU_DKNG_POOL ? "ALLINU" : `${pool.pair} (${pool.address.slice(0, 4)}…)`);
   return (
     <Story id="pool" label="Liquidity" stat={p.allinuRank ? `#${p.allinuRank}` : "–"} claim="DraftKings pool on Solana by liquidity is ALLINU/DKNG."
       sources={[p]}
       data={<DataTable caption={`The ${p.top.length} largest of ${int(p.count)} DKNG pools on Solana`} headers={["Pool", "DEX", "Liquidity"]}
         rows={p.top.map((pool) => [label(pool), pool.dex, `$${int(pool.liquidity)}`])} />}
-      method={<p>GeckoTerminal's liquidity for each of the {int(p.count)} DKNG pools it lists on Solana. Liquidity is the dollar value of both tokens in a pool: ALLINU/DKNG counts its ALLINU side as a DKNG/USDC pool counts its USDC. All DKNG/USDC pools together hold {usd(p.usdcPoolsLiquidity, 0)}. Pools with no trading in the last 24 hours are left out of the ranking{p.activeCount != null && <> ({int(p.count - p.activeCount)} of them)</>}: GeckoTerminal values an untraded pool's other token at its last price, which can be far off.</p>}
+      method={<p>GeckoTerminal's liquidity for each of the {int(p.count)} DKNG pools it lists on Solana. Liquidity is the dollar value of both tokens in a pool: ALLINU/DKNG counts its ALLINU side as a DKNG/USDC pool counts its USDC. All DKNG/USDC pools together hold {usd(p.usdcPoolsLiquidity, 0)}. Pools with no trading in the last 24 hours are left out of the ranking ({int(p.count - p.activeCount)} of them): GeckoTerminal values an untraded pool's other token at its last price, which can be far off.</p>}
       figure={<>
         <FigTitle>The largest DKNG pools on Solana, by liquidity</FigTitle>
         <HBarChart format={(x) => usd(x, 0)} labelWidth={180}
@@ -191,7 +187,7 @@ function VolumeShare({ d }: { d: Snapshot }) {
       data={<DataTable caption="DKNG volume on Solana per UTC day (the last row is today so far)" headers={r ? ["Day (UTC)", "ALLINU pool", "Routed by ALLINU trades", "Everything else", "Through ALLINU"] : ["Day (UTC)", "ALLINU pool", "Other pools", "ALLINU share"]}
         rows={rows.map((x) => r ? [day(x.d), `$${int(x.allinu)}`, x.routed === undefined ? "–" : `$${int(x.routed)}`, `$${int(x.rest)}`, x.routed === undefined ? "–" : through(x)] : [day(x.d), `$${int(x.allinu)}`, `$${int(x.rest)}`, through(x)])} />}
       method={<>
-        <p>Pool volume is {volumeSource(v)}'s hourly volume for every DKNG pool GeckoTerminal lists on Solana{v.unlistedPools?.length ? <>, plus {v.unlistedPools.join(", ")}, which it doesn't</> : null}, from the ALLINU pool's first trading hour ({time(v.allinuFrom)}).</p>
+        <p>Pool volume is {volumeSource(v)}'s hourly volume for every DKNG pool GeckoTerminal lists on Solana{v.unlistedPools.length ? <>, plus {v.unlistedPools.join(", ")}, which it doesn't</> : null}, from the ALLINU pool's first trading hour ({time(v.allinuFrom)}).</p>
         <ul>
           <li>A trade routed through several DKNG pools counts once in each.</li>
           <li>Not counted: hundreds of tiny launchpad curves of other tokens paired with DKNG, about 0.5% of all DKNG volume when checked against Birdeye on Oct 5.</li>
@@ -241,10 +237,10 @@ const payoutsTable = (reach: NonNullable<Snapshot["reach"]>) => (
 function AheadOfOthers({ d }: { d: Snapshot }) {
   const r = d.rewards;
   // two tokens can share a ticker (casinu, CASINU): those get their address too
-  const top = r.topRewardTokens!.map((t, _, all) => ({ ...t, label: all.filter((o) => o.label.toLowerCase() === t.label.toLowerCase()).length > 1 ? `${t.label} (${t.mint.slice(0, 4)}…)` : t.label }));
+  const top = r.topRewardTokens.map((t, _, all) => ({ ...t, label: all.filter((o) => o.label.toLowerCase() === t.label.toLowerCase()).length > 1 ? `${t.label} (${t.mint.slice(0, 4)}…)` : t.label }));
   const times = Math.floor(r.dkngPaid / r.othersDkngPaid); // rounded down, so it never overstates
   return (
-    <Story id="lead" label="Rewards" stat={`${times}×`} claim="more DKNG paid out by ALLINU than by every other DKNG-paired StonkFun token combined."
+    <Story id="lead" label="Rewards" stat={`${times}×`} claim="as much DKNG paid out for ALLINU as for every other DKNG-paired StonkFun token combined."
       sources={[r]}
       data={<DataTable caption="The StonkFun tokens that paid out the most DKNG in rewards" headers={["Token", "DKNG paid out", "Payments"]}
         rows={top.map((t) => [t.label, int(t.dkngPaid), int(t.payouts)])} />}
@@ -275,11 +271,11 @@ function FirstDkng({ d, origins: o }: { d: Snapshot; origins: NonNullable<Snapsh
   const airdropSquares = Math.round(airdrop * 100), tradeSquares = Math.round(trade * 100);
   const chainPaid = reach ? reach.daily.reduce((a, x) => a + x.dkng, 0) : 0, listPaid = r.dkngPaid / r.shareOfAllDkngPaid;
   return (
-    <Story id="holders" label="Holders" stat={pct(airdrop)} claim="of DKNG holders on Solana got their first DKNG as a StonkFun reward airdrop."
+    <Story id="holders" label="Holders" stat={pct(airdrop)} claim="of DKNG holders on Solana got their first DKNG as a StonkFun reward payout."
       sources={[o, r, ...(reach ? [reach] : [])]}
       data={<>
         <DataTable caption={`How the ${int(o.size)} wallets holding DKNG first got it`} headers={["First DKNG came from", "Wallets", "Share"]}
-          rows={ORIGINS.map((k) => [k, int(o.shares[k] * o.size), pct(o.shares[k])])} />
+          rows={ORIGINS.map((k) => [originLabel(k), int(o.shares[k] * o.size), pct(o.shares[k])])} />
         {reach && payoutsTable(reach)}
       </>}
       method={<>
@@ -304,7 +300,7 @@ function FirstDkng({ d, origins: o }: { d: Snapshot; origins: NonNullable<Snapsh
       figure={<>
         <FigTitle>Every 100 DKNG holders on Solana, by how they first got DKNG</FigTitle>
         <Waffle parts={[
-          { count: airdropSquares, label: "a StonkFun reward airdrop", tone: "allinu" },
+          { count: airdropSquares, label: "a StonkFun reward payout", tone: "allinu" },
           { count: tradeSquares, label: "a trade", tone: "other" },
           { count: Math.max(0, 100 - airdropSquares - tradeSquares), label: "a transfer, or not resolved", tone: "allinu-soft" },
         ]} />
@@ -345,62 +341,35 @@ function RewardShare({ d }: { d: Snapshot }) {
 const holdingName = (d: Snapshot, s: NonNullable<Snapshot["supply"]>) => (h: { account: string; owner: string | null }) => {
   if (h.account === s.allinuPoolVault) return "ALLINU";
   const pool = d.pools.top.find((p) => p.address === h.owner);
-  if (pool) return `${pairOf(pool)} (${pool.address.slice(0, 4)}…)`;
+  if (pool) return `${pool.pair} (${pool.address.slice(0, 4)}…)`;
   return `holder (${(h.owner ?? h.account).slice(0, 4)}…)`;
 };
 
 function Supply({ d, supply: s }: { d: Snapshot; supply: NonNullable<Snapshot["supply"]> }) {
   const holdingLabel = holdingName(d, s);
-  // one point per calendar day, carrying the supply through days without mints or burns
-  const byDay = new Map(s.daily.map((x) => [x.d, x]));
-  const points: typeof s.daily = [];
-  const first = s.daily[0], last = s.daily.at(-1);
-  if (first && last) {
-    for (let t = Date.parse(`${first.d}T00:00:00Z`); t <= Date.parse(`${last.d}T00:00:00Z`); t += 86400e3) {
-      const date = new Date(t).toISOString().slice(0, 10);
-      points.push(byDay.get(date) ?? { d: date, supply: points.at(-1)?.supply ?? 0, minted: 0, burned: 0 });
-    }
-  }
   return (
-    <Story id="supply" label="Supply"
-      stat={s.allinuPoolDkng != null ? pct(s.allinuPoolDkng / s.supplyNow) : int(s.mintedSinceLaunch)}
-      claim={s.allinuPoolDkng != null ? "of all tokenized DraftKings on Solana sits in the ALLINU/DKNG pool." : "tokenized DraftKings shares created on Solana since Sep 11."}
+    <Story id="supply" label="Supply" stat={pct(s.allinuPoolDkng / s.supplyNow)} claim="of all tokenized DraftKings on Solana sits in the ALLINU/DKNG pool."
       sources={[s]}
       data={<>
-        {s.largestHoldings && <DataTable caption="The largest DKNG holdings on Solana (pools named by their pair)" headers={["Holding", "DKNG", "Of all DKNG"]}
-          rows={s.largestHoldings.map((h) => [holdingLabel(h), int(h.dkng), pct(h.dkng / s.supplyNow)])} />}
+        <DataTable caption="The largest DKNG holdings on Solana (pools named by their pair)" headers={["Holding", "DKNG", "Of all DKNG"]}
+          rows={s.largestHoldings.map((h) => [holdingLabel(h), int(h.dkng), pct(h.dkng / s.supplyNow)])} />
         <DataTable caption="DKNG mints and burns per UTC day" headers={["Day (UTC)", "Minted", "Burned", "Supply, end of day"]} rows={s.daily.map((x) => [day(x.d), int(x.minted), int(x.burned), int(x.supply)])} />
       </>}
       method={<>
-        {s.allinuPoolDkng != null && <p>A pool's DKNG sits in its vault account. The ALLINU/DKNG pool's vault held {int(s.allinuPoolDkng)} of the {int(s.supplyNow)} DKNG on Solana, read in the same run as the supply.</p>}
+        <p>A pool's DKNG sits in its vault account. The ALLINU/DKNG pool's vault held {int(s.allinuPoolDkng)} of the {int(s.supplyNow)} DKNG on Solana, read in the same run as the supply.</p>
         <ul>
-          {s.allinuPoolDkng != null && <li>The largest holdings are Solana's largest DKNG token accounts. A holding is named as a pool when its vault's owner is a pool GeckoTerminal lists.</li>}
+          <li>The largest holdings are Solana's largest DKNG token accounts. A holding is named as a pool when its vault's owner is a pool GeckoTerminal lists.</li>
           <li>Per <a href="https://support.backpack.exchange/backpack-securities/tokenized-securities" target="_blank" rel="noopener">Backpack</a>, eligible users can redeem each token 1:1 for the underlying share. Tokens are minted when shares come onchain and burned when they leave.</li>
           <li>Since Sep 11: {int(s.mintedSinceLaunch)} minted, {int(s.burnedSinceLaunch)} burned, counted from every mint and burn in the mint authority's transactions.</li>
           <li>Check: walking back from today's supply through those mints and burns lands at {s.startSupply.toFixed(1)} DKNG before the first mint, not exactly 0, because holders can burn their own tokens without the issuer.</li>
         </ul>
       </>}
-      figure={s.largestHoldings
-        ? <>
-          <FigTitle>The largest DKNG holdings on Solana, in DKNG</FigTitle>
-          <HBarChart format={int} labelWidth={150}
-            data={s.largestHoldings.slice(0, 5).map((h) => ({ label: holdingLabel(h), value: h.dkng, highlight: h.account === s.allinuPoolVault, tip: `${int(h.dkng)} DKNG, ${pct(h.dkng / s.supplyNow)} of all DKNG on Solana` }))} />
-        </>
-        : s.allinuPoolDkng != null ? <>
-          <FigTitle>Every 100 DKNG on Solana, by where it sits</FigTitle>
-          <Waffle parts={[
-            { count: Math.round((s.allinuPoolDkng / s.supplyNow) * 100), label: "in the ALLINU/DKNG pool", tone: "allinu" },
-            { count: 100 - Math.round((s.allinuPoolDkng / s.supplyNow) * 100), label: "everywhere else", tone: "other" },
-          ]} />
-        </>
-        : <>
-          <FigTitle>DKNG minted on Solana since Sep 11, added up day by day</FigTitle>
-          <AreaOverTime name="DKNG minted" format={int}
-            data={runningTotal(points.filter((x) => x.d >= LAUNCH_DAY).map((x) => ({ d: x.d, v: x.minted })), (sum) => `${int(sum)} tokenized shares created`)} />
-        </>}>
-      {s.allinuPoolDkng != null
-        ? <p>{s.allinuHoldingRank === 1 ? "The largest single holding, ahead of every other pool." : s.allinuHoldingRank ? `The #${s.allinuHoldingRank} DKNG holding on Solana.` : <><b className="num">{int(s.allinuPoolDkng)}</b> of <span className="num">{int(s.supplyNow)}</span> DKNG.</>}</p>
-        : <p>Issued by Backpack Securities, 1:1 with DraftKings shares. <b className="num">{int(s.supplyNow)}</b> are on Solana today.</p>}
+      figure={<>
+        <FigTitle>The largest DKNG holdings on Solana, in DKNG</FigTitle>
+        <HBarChart format={int} labelWidth={150}
+          data={s.largestHoldings.slice(0, 5).map((h) => ({ label: holdingLabel(h), value: h.dkng, highlight: h.account === s.allinuPoolVault, tip: `${int(h.dkng)} DKNG, ${pct(h.dkng / s.supplyNow)} of all DKNG on Solana` }))} />
+      </>}>
+      <p>{s.allinuHoldingRank === 1 ? "The largest single holding, ahead of every other pool." : <><b className="num">{int(s.allinuPoolDkng)}</b> of <span className="num">{int(s.supplyNow)}</span> DKNG{s.allinuHoldingRank ? `, the #${s.allinuHoldingRank} DKNG holding on Solana` : ""}.</>}</p>
     </Story>
   );
 }
@@ -426,8 +395,8 @@ function Proof({ d }: { d: Snapshot }) {
     ["DKNG, tokenized DraftKings", ADDR.DKNG, "token"],
     ["ALLINU", ADDR.ALLINU, "token"],
     ["ALLINU/DKNG pool", ADDR.ALLINU_DKNG_POOL, "account"],
-    ["StonkFun fee seller", ADDR.FEE_SELLER, "account"],
-    ["StonkFun DKNG payout wallet", ADDR.PAYOUT_WALLET, "account"],
+    ["StonkFun fee collector and seller", ADDR.FEE_SELLER, "account"],
+    ["StonkFun payout wallet (all reward assets)", ADDR.PAYOUT_WALLET, "account"],
     ...(d.supply ? [["DKNG mint authority", d.supply.mintAuthority, "account"] as const] : []),
   ];
   return (

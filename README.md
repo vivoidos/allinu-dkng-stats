@@ -29,7 +29,7 @@ GitHub Actions, daily at 00:00 UTC
 Holder origins, wallets reached and routed volume read hundreds of thousands to millions of transactions, so the
 Monday run recomputes them too (`--with origins,reach,routed`); every block in `snapshot.json` records when it was computed.
 
-The page is static: it reads `snapshot.json` and makes no other requests. Each run's public log shows this code
+The page is static: its only data is `snapshot.json` (fonts load from Google Fonts). Each run's public log shows this code
 fetching every source and printing the headline numbers (`RESULT …` lines), and the page links to the run that
 produced what it shows.
 
@@ -46,7 +46,7 @@ The data code needs only Node 22.18+ (it runs TypeScript directly): no install, 
 
 ```sh
 node scripts/snapshot.ts                  # every number except the three slow blocks below (about an hour on the free endpoints)
-node scripts/snapshot.ts --only supply    # one block (rewards, holders, pools, payoutPace, supply, volume, origins, reach, routed)
+node scripts/snapshot.ts --only supply    # one block (rewards, holders, pools, supply, volume, origins, reach, routed)
 node scripts/snapshot.ts --with origins   # also how every holder first got DKNG (traces new wallets only; the rest are cached)
 node scripts/snapshot.ts --with reach     # also every wallet ever paid (~50,000 transactions, hours on the free endpoints)
 node scripts/snapshot.ts --with routed    # also ALLINU-routed volume in other pools (needs an RPC with

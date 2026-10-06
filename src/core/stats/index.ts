@@ -10,7 +10,7 @@
 import type { Holders } from "./holders.ts";
 import type { HolderOrigins } from "./origins.ts";
 import type { PayoutFlow } from "./payouts.ts";
-import type { Pool, Pools } from "./pools.ts";
+import type { Pools } from "./pools.ts";
 import type { Rewards } from "./rewards.ts";
 import type { RoutedVolume } from "./routed.ts";
 import type { Supply } from "./supply.ts";
@@ -28,8 +28,8 @@ export * from "./origins.ts";
 export * from "./routed.ts";
 
 // What scripts/snapshot.ts writes to snapshots/snapshot.json (each block stamped with when it was computed).
-/** A block, with when it was computed. Snapshots written before `sources` lists have one `source` string instead. */
-export type Stamped<T> = T & { computedAt: string; source?: string };
+/** A block, with when it was computed. */
+export type Stamped<T> = T & { computedAt: string };
 export interface SnapshotRun {
   log: string; // the run's public log
   repo: string;
@@ -41,8 +41,7 @@ export interface Snapshot {
   run: SnapshotRun | null; // the GitHub Actions run that computed it (null for a run on someone's own machine)
   rewards: Stamped<Rewards>;
   holders: Stamped<Omit<Holders, "list">>;
-  pools: Stamped<Omit<Pools, "all">> & { all?: Pool[] };
-  payoutPace?: Stamped<PayoutFlow>; // absent until a run has computed them
+  pools: Stamped<Omit<Pools, "all">>;
   supply?: Stamped<Supply>;
   volume: Stamped<Volume>;
   origins?: Stamped<Omit<HolderOrigins, "rows">>; // optional blocks: scripts/snapshot.ts --with origins,reach
