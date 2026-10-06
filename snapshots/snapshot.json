@@ -1,5 +1,5 @@
 {
- "computedAt": "2026-10-05T20:55:12.709Z",
+ "computedAt": "2026-10-06T01:55:38.746Z",
  "rewards": {
   "sources": [
    "https://www.stonkfun.xyz/api/public/v1/rewards",
@@ -9,8 +9,8 @@
   "dkngPaid": 49373.349032,
   "payouts": 748182,
   "lastPayoutAt": "2026-10-05T18:55:19.012Z",
-  "dkngPrice": 19.6074576663,
-  "usdAtTodaysPrice": 968085.8509883941,
+  "dkngPrice": 19.5984208079,
+  "usdAtTodaysPrice": 967639.671024458,
   "shareOfAllDkngPayouts": 0.8802400070590312,
   "shareOfAllDkngPaid": 0.8619459595129173,
   "dkngRewardTokens": 247,
@@ -296,95 +296,95 @@
     "payouts": 5244
    }
   ],
-  "computedAt": "2026-10-05T20:55:12.704Z"
+  "computedAt": "2026-10-06T01:51:45.038Z"
  },
  "holders": {
   "sources": [
    "Solana RPC: getProgramAccounts (every Token-2022 account whose mint is DKNG)"
   ],
-  "tokenAccounts": 32349,
-  "holders": 15594,
+  "tokenAccounts": 32188,
+  "holders": 15445,
   "balanceBuckets": [
    {
     "label": "under 0.01",
-    "wallets": 5651,
-    "dkng": 21.057877000000047
+    "wallets": 5642,
+    "dkng": 21.019894000000082
    },
    {
     "label": "0.01–0.1",
-    "wallets": 6838,
-    "dkng": 252.5841549999995
+    "wallets": 6804,
+    "dkng": 250.9465559999993
    },
    {
     "label": "0.1–1",
-    "wallets": 2294,
-    "dkng": 741.6964880000008
+    "wallets": 2230,
+    "dkng": 718.8529980000013
    },
    {
     "label": "1–10",
-    "wallets": 663,
-    "dkng": 1912.6799299999998
+    "wallets": 622,
+    "dkng": 1791.9024499999998
    },
    {
     "label": "10+",
-    "wallets": 148,
-    "dkng": 26554.883779999993
+    "wallets": 147,
+    "dkng": 26466.680035999998
    }
   ],
-  "computedAt": "2026-10-05T20:04:33.201Z"
+  "computedAt": "2026-10-06T01:51:45.702Z"
  },
  "pools": {
   "sources": [
    "https://api.geckoterminal.com/api/v2/networks/solana/tokens/DKNGQFNGQmoBdXSRGKJ8tTu7uPDasw5JDcfMmWniNfow/pools"
   ],
   "count": 50,
-  "activeCount": 16,
+  "activeCount": 17,
   "top": [
    {
     "address": "5752ia7jC3ZU1c8ycytaSyi5D4nVhApSKvreGbs7pwWL",
     "name": "ALLINU / DKNG",
     "pair": "ALLINU",
     "dex": "raydium",
-    "liquidity": 216728.2635,
-    "volume24h": 213947.087095411
+    "liquidity": 217981.8694,
+    "volume24h": 201065.087768292
    },
    {
     "address": "f2qSBho9ZzGxAxMbbXwc74PbfTH5F3ZYHJTXC5LuyZ7",
     "name": "DKNG / USDC",
     "pair": "USDC",
     "dex": "raydium-clmm",
-    "liquidity": 86369.1042,
-    "volume24h": 56840.3815161982
+    "liquidity": 86625.983,
+    "volume24h": 55327.2338224242
    },
    {
     "address": "BCxu8Rp2qVjcXxu7jja5FAyTTXkY8SmYuxrm1vsMTre6",
     "name": "DKNG / USDC",
     "pair": "USDC",
     "dex": "raydium-clmm",
-    "liquidity": 84327.014,
-    "volume24h": 155902.148908725
+    "liquidity": 84828.203,
+    "volume24h": 125379.930086099
    },
    {
     "address": "431km7QTYnrbSMJqLqbaDKdsHsSB24v22w9qXYooVjDz",
     "name": "DKNG / USDC",
     "pair": "USDC",
     "dex": "raydium-clmm",
-    "liquidity": 38716.1118,
-    "volume24h": 379246.314643159
+    "liquidity": 36384.3695,
+    "volume24h": 374797.17553043
    },
    {
     "address": "6zCSdnTE8c3KXWuosxSnBt4wWsN9zTA73umKijP2p6au",
     "name": "DKNG / DKNG",
     "pair": "donkey kong",
     "dex": "raydium",
-    "liquidity": 12297.3719,
-    "volume24h": 397.187000547
+    "liquidity": 11926.5984,
+    "volume24h": 325.5012952193
    }
   ],
-  "allinuLiquidity": 216728.2635,
+  "allinuLiquidity": 217981.8694,
   "allinuRank": 1,
-  "usdcPoolsLiquidity": 209412.22999999998,
-  "computedAt": "2026-10-05T20:39:24.237Z"
+  "usdcPoolsLiquidity": 207838.5555,
+  "computedAt": "2026-10-06T01:52:52.864Z"
  },
  "volume": {
   "sources": [
@@ -396,18 +396,18 @@
    "DKNG / USDC (Denali)"
   ],
   "allinuFrom": "2026-09-11T20:00:00.000Z",
-  "total": 121544974.6743183,
-  "allinu": 34420533.947442025,
-  "share": 0.28319174889519205,
+  "total": 121588037.08409724,
+  "allinu": 34436312.99676459,
+  "share": 0.28322122654999743,
   "weekendShare": 0.3180499424233899,
-  "allinuShareWhileClosed": 0.2788432437066712,
-  "closedSinceAllinu": 100568809.7146971,
-  "closedAllinu": 28042933.116565123,
-  "marketTotal": 121569408.6327797,
-  "closedTotal": 100568809.7146971,
+  "allinuShareWhileClosed": 0.27888072822234855,
+  "closedSinceAllinu": 100611872.12447606,
+  "closedAllinu": 28058712.165887695,
+  "marketTotal": 121612471.04255867,
+  "closedTotal": 100611872.12447606,
   "launchDayTotal": 43462262.390579455,
   "launchDayClosed": 43437828.43211805,
-  "closedHoursShare": 0.8145973154362416,
+  "closedHoursShare": 0.8161397670549085,
   "byHourNewYork": [
    [
     159479,
@@ -426,12 +426,12 @@
     618232,
     449474,
     492674,
-    228338,
-    274211,
-    155992,
-    292913,
-    374219,
-    170934,
+    229809,
+    290741,
+    159217,
+    295583,
+    379440,
+    184881,
     181875,
     178440
    ],
@@ -592,7 +592,7 @@
     191376
    ]
   ],
-  "closedShareOfAll": 0.8272542479702409,
+  "closedShareOfAll": 0.8273154164367453,
   "daily": [
    {
     "d": "2026-09-11",
@@ -716,11 +716,16 @@
    },
    {
     "d": "2026-10-05",
-    "allinu": 199807,
-    "rest": 579096
+    "allinu": 207656,
+    "rest": 595143
+   },
+   {
+    "d": "2026-10-06",
+    "allinu": 7930,
+    "rest": 11237
    }
   ],
-  "computedAt": "2026-10-05T20:39:35.699Z"
+  "computedAt": "2026-10-06T01:53:08.620Z"
  },
  "solanaRpc": [
   "a private endpoint (SOLANA_RPC_URL)"
@@ -729,24 +734,19 @@
   "sources": [
    "Solana RPC: getTransactionsForAddress (100 whole transactions per call), for StonkFun's DKNG accounts"
   ],
-  "since": "2026-10-03T20:04:38.390Z",
+  "since": "2026-10-04T01:52:52.865Z",
   "windowDays": 2,
-  "transactionsRead": 746,
+  "transactionsRead": 667,
   "unreadable": 0,
-  "payoutTransactions": 730,
-  "payments": 11769,
-  "dkngPaid": 1008.2942399999994,
-  "uniqueRecipients": 2230,
-  "paymentsPerDay": 5884.5,
-  "dkngPerDay": 504.1471199999997,
-  "roundsPerDay": 4.5,
+  "payoutTransactions": 653,
+  "payments": 10480,
+  "dkngPaid": 928.8906089999997,
+  "uniqueRecipients": 2200,
+  "paymentsPerDay": 5239.999969678124,
+  "dkngPerDay": 464.4453018124325,
+  "roundsPerDay": 3.9999999768535295,
   "paymentsPerRound": 1262,
   "daily": [
-   {
-    "d": "2026-10-03",
-    "dkng": 79.403631,
-    "payments": 1289
-   },
    {
     "d": "2026-10-04",
     "dkng": 583.692346,
@@ -758,7 +758,7 @@
     "payments": 4005
    }
   ],
-  "computedAt": "2026-10-05T20:04:40.391Z"
+  "computedAt": "2026-10-06T01:52:53.536Z"
  },
  "supply": {
   "sources": [
@@ -768,32 +768,27 @@
    "Solana RPC: getTokenLargestAccounts (DKNG) and getMultipleAccounts (who owns each)"
   ],
   "mintAuthority": "mHRjfhQqbuPZcHk1YSoNSQmZWFqj2Yc3om1UTQgQJef",
-  "transactionsRead": 4286,
+  "transactionsRead": 4298,
   "unreadable": 0,
-  "supplyNow": 29482.90223,
+  "supplyNow": 29249.401934,
   "allinuPoolVault": "7FKr3zbx3jGByStgNSkiB5SBE71RNaMNPR1f9xpNi15D",
-  "allinuPoolDkng": 5528.61221,
+  "allinuPoolDkng": 5609.317732,
   "allinuHoldingRank": 1,
   "largestHoldings": [
    {
     "account": "7FKr3zbx3jGByStgNSkiB5SBE71RNaMNPR1f9xpNi15D",
     "owner": "GpMZbSM2GgvTKHJirzeGfMFoaZ8UR2X7F4v8vHTvxFbL",
-    "dkng": 5528.61221
+    "dkng": 5609.317732
    },
    {
     "account": "DuxVpLCTXFwzykAJCW12xN6VCdkS2qH9deU8xmmaGwQW",
     "owner": "f2qSBho9ZzGxAxMbbXwc74PbfTH5F3ZYHJTXC5LuyZ7",
-    "dkng": 4203.063997
+    "dkng": 4201.845011
    },
    {
     "account": "2W7VNXhDeB48kDwHNMMRxKirJFh7CvWWrBM5sn2tM9wy",
     "owner": "BCxu8Rp2qVjcXxu7jja5FAyTTXkY8SmYuxrm1vsMTre6",
-    "dkng": 2517.636004
-   },
-   {
-    "account": "78oAHcFXy4ZSjBELWumfUdmyawvF8M3cQ54pyDUUiQMY",
-    "owner": "431km7QTYnrbSMJqLqbaDKdsHsSB24v22w9qXYooVjDz",
-    "dkng": 1228.96296
+    "dkng": 2605.927161
    },
    {
     "account": "E35fcSUwkUzbRmmH1dFbKH8Vmibfdyu5U75ffAk4gPfN",
@@ -806,9 +801,14 @@
     "dkng": 998.903687
    },
    {
+    "account": "78oAHcFXy4ZSjBELWumfUdmyawvF8M3cQ54pyDUUiQMY",
+    "owner": "431km7QTYnrbSMJqLqbaDKdsHsSB24v22w9qXYooVjDz",
+    "dkng": 997.749941
+   },
+   {
     "account": "DaACkbe6EHGiNUU88f2mNWnceV3gyFz4pimt1Rbx243j",
     "owner": "dWayhjG6YnURZQqWTpB2pYmQXm67kHNrcnUAsXWwDqh",
-    "dkng": 875.391724
+    "dkng": 875.401326
    },
    {
     "account": "HsjUjvD4VD6MUjH59F2WFrL2pE9EJfiy6o7MrdenjoMf",
@@ -816,175 +816,179 @@
     "dkng": 489.717824
    }
   ],
-  "startSupply": -13.94083,
+  "startSupply": -13.947522,
   "firstMintAt": "2026-09-11T19:54:09.000Z",
   "mintedSinceLaunch": 128722.61067,
-  "burnedSinceLaunch": 99225.76761,
+  "burnedSinceLaunch": 99459.261214,
   "daily": [
    {
     "d": "2026-09-11",
     "minted": 41989.474911,
     "burned": 5955.96595,
-    "supply": 36019.568131
+    "supply": 36019.561439
    },
    {
     "d": "2026-09-12",
     "minted": 0.747824,
     "burned": 1300.002178,
-    "supply": 34720.313777
+    "supply": 34720.307085
    },
    {
     "d": "2026-09-13",
     "minted": 1459.910178,
     "burned": 5317.612551,
-    "supply": 30862.611404
+    "supply": 30862.604712
    },
    {
     "d": "2026-09-14",
     "minted": 1733.981174,
     "burned": 16144.320465,
-    "supply": 16452.272113
+    "supply": 16452.265421
    },
    {
     "d": "2026-09-15",
     "minted": 11585.817215,
     "burned": 4305.923229,
-    "supply": 23732.166099
+    "supply": 23732.159407
    },
    {
     "d": "2026-09-16",
     "minted": 15817.493605,
     "burned": 7535.816403,
-    "supply": 32013.843301
+    "supply": 32013.836609
    },
    {
     "d": "2026-09-17",
     "minted": 9869.492782,
     "burned": 5780.749336,
-    "supply": 36102.586747
+    "supply": 36102.580055
    },
    {
     "d": "2026-09-18",
     "minted": 4926.198856,
     "burned": 5397.015311,
-    "supply": 35631.770292
+    "supply": 35631.7636
    },
    {
     "d": "2026-09-21",
     "minted": 4557.099654,
     "burned": 4239.64315,
-    "supply": 35949.226796
+    "supply": 35949.220104
    },
    {
     "d": "2026-09-22",
     "minted": 3770.815299,
     "burned": 7339.194281,
-    "supply": 32380.847814
+    "supply": 32380.841122
    },
    {
     "d": "2026-09-23",
     "minted": 1079.74831,
     "burned": 1681.660969,
-    "supply": 31778.935155
+    "supply": 31778.928463
    },
    {
     "d": "2026-09-24",
     "minted": 1847.568794,
     "burned": 2103.216676,
-    "supply": 31523.287273
+    "supply": 31523.280581
    },
    {
     "d": "2026-09-25",
     "minted": 1123.204057,
     "burned": 3646.594024,
-    "supply": 28999.897306
+    "supply": 28999.890614
    },
    {
     "d": "2026-09-28",
     "minted": 2578.311267,
     "burned": 2491.33908,
-    "supply": 29086.869493
+    "supply": 29086.862801
    },
    {
     "d": "2026-09-29",
     "minted": 2213.967697,
     "burned": 1125.198532,
-    "supply": 30175.638658
+    "supply": 30175.631966
    },
    {
     "d": "2026-09-30",
     "minted": 4657.566491,
     "burned": 4266.597546,
-    "supply": 30566.607603
+    "supply": 30566.600911
    },
    {
     "d": "2026-10-01",
     "minted": 5554.295765,
     "burned": 4925.515586,
-    "supply": 31195.387782
+    "supply": 31195.38109
    },
    {
     "d": "2026-10-02",
     "minted": 10737.157116,
     "burned": 9043.461425,
-    "supply": 32889.083473
+    "supply": 32889.076781
    },
    {
     "d": "2026-10-05",
     "minted": 3219.759675,
-    "burned": 6625.940918,
-    "supply": 29482.90223
+    "burned": 6859.434522,
+    "supply": 29249.401934
    }
   ],
-  "computedAt": "2026-10-05T20:04:44.005Z"
+  "computedAt": "2026-10-06T01:52:56.534Z"
  },
- "run": null,
+ "run": {
+  "log": "https://github.com/vivoidos/allinu-dkng-stats/actions/runs/37401269124",
+  "repo": "https://github.com/vivoidos/allinu-dkng-stats",
+  "commit": "519946b2a5befc95a124f621cf5b12d7f1d9f1cf"
+ },
  "origins": {
   "sources": [
    "Solana RPC: getTokenAccountsByOwner, getSignaturesForAddress and getTransaction for every wallet holding DKNG (oldest first, until its DKNG goes up); each wallet is traced once"
   ],
-  "size": 15236,
-  "traced": 15236,
-  "reused": 0,
+  "size": 15445,
+  "traced": 627,
+  "reused": 14818,
   "errors": 0,
   "shares": {
-   "Reward airdrop": 0.8952480966132843,
-   "ALLINU trade": 0.00013126804935678657,
-   "Another memecoin trade": 0.02284064058808086,
-   "Bought DKNG directly": 0.029863481228668942,
-   "Transfer from another wallet": 0.03426096088212129,
-   "Not resolved": 0.017655552638487792
+   "Reward airdrop": 0.8966008416963419,
+   "ALLINU trade": 0.00012949174490126255,
+   "Another memecoin trade": 0.02246681774036905,
+   "Bought DKNG directly": 0.029265134347685334,
+   "Transfer from another wallet": 0.03418582065393331,
+   "Not resolved": 0.01735189381676918
   },
-  "medianDkng": 0.020779,
-  "underTenthOfShare": 0.8037542662116041,
-  "atLeastOneShare": 0.0508007351010764,
+  "medianDkng": 0.020229,
+  "underTenthOfShare": 0.8058271285205568,
+  "atLeastOneShare": 0.04978957591453545,
   "airdropCheck": {
-   "wallets": 13640,
+   "wallets": 13848,
    "shares": {
-    "Holds ALLINU only": 0.21642228739002933,
-    "Holds ALLINU and another DKNG reward token": 0.00967741935483871,
-    "Holds another DKNG reward token, not ALLINU": 0.038636363636363635,
-    "Holds no DKNG reward token": 0.7352639296187683
+    "Holds ALLINU only": 0.23158578856152512,
+    "Holds ALLINU and another DKNG reward token": 0.009459849797804737,
+    "Holds another DKNG reward token, not ALLINU": 0.03776718659734258,
+    "Holds no DKNG reward token": 0.7211871750433275
    },
-   "allinuAmongHolders": 0.8540570479091665
+   "allinuAmongHolders": 0.8645428645428646
   },
-  "computedAt": "2026-10-05T18:52:12.866Z"
+  "computedAt": "2026-10-06T01:55:08.355Z"
  },
  "reach": {
   "sources": [
    "Solana RPC: getTransactionsForAddress (100 whole transactions per call), for StonkFun's DKNG accounts"
   ],
   "since": "2026-09-11T00:00:00Z",
-  "windowDays": 24.84,
-  "transactionsRead": 55343,
+  "windowDays": 25.08,
+  "transactionsRead": 55364,
   "unreadable": 0,
   "payoutTransactions": 50712,
   "payments": 849918,
   "dkngPaid": 58602.37066500037,
   "uniqueRecipients": 27211,
-  "paymentsPerDay": 34220.25189764488,
-  "dkngPerDay": 2359.5074889053617,
-  "roundsPerDay": 19.56781998058096,
+  "paymentsPerDay": 33888.334516112634,
+  "dkngPerDay": 2336.62158059102,
+  "roundsPerDay": 19.378023026728155,
   "paymentsPerRound": 1460,
   "daily": [
    {
@@ -1113,7 +1117,7 @@
     "payments": 4005
    }
   ],
-  "computedAt": "2026-10-05T20:05:28.435Z"
+  "computedAt": "2026-10-06T01:55:33.341Z"
  },
  "routed": {
   "sources": [
@@ -1121,14 +1125,14 @@
    "https://api.geckoterminal.com/api/v2/networks/solana/pools/{the largest other DKNG pool}/ohlcv/hour (hourly DKNG price)"
   ],
   "from": "2026-09-11T20:00:00.000Z",
-  "transactions": 1165136,
-  "routedTransactions": 168353,
-  "routedUsd": 33220539.91390418,
-  "allinuPoolUsd": 34420533.947442025,
-  "total": 121544974.6743183,
-  "share": 0.5565106582365213,
-  "routedClosedUsd": 27041049.886291813,
-  "shareWhileClosed": 0.547724320881636,
+  "transactions": 1165265,
+  "routedTransactions": 168430,
+  "routedUsd": 33236176.23750037,
+  "allinuPoolUsd": 34436312.99676459,
+  "total": 121588037.08409724,
+  "share": 0.5565719363283972,
+  "routedClosedUsd": 27056686.20988799,
+  "shareWhileClosed": 0.5478021351952126,
   "daily": [
    {
     "d": "2026-09-11",
@@ -1220,17 +1224,21 @@
    },
    {
     "d": "2026-10-03",
-    "usd": 106717
+    "usd": 106730
    },
    {
     "d": "2026-10-04",
-    "usd": 152375
+    "usd": 152336
    },
    {
     "d": "2026-10-05",
-    "usd": 182495
+    "usd": 189415
+   },
+   {
+    "d": "2026-10-06",
+    "usd": 8742
    }
   ],
-  "computedAt": "2026-10-05T20:39:47.822Z"
+  "computedAt": "2026-10-06T01:55:38.745Z"
  }
 }
