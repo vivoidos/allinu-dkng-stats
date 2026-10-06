@@ -1,8 +1,8 @@
 # Recomputes every number on GitHub's servers, from public sources only, and commits the new snapshot.
 # The site's host builds and deploys the page on every push to main, so that commit is what publishes it.
-# Runs daily, and by hand (Actions → snapshot → Run workflow). On Mondays, when the SOLANA_RPC_URL secret is set,
-# the scheduled run also recomputes the slow blocks (holder origins, wallets reached, routed volume), so every number
-# on the page comes from a public run. The repository variable SNAPSHOT_EXTRA overrides the extra blocks.
+# Runs daily, and by hand (Actions → snapshot → Run workflow). When the SOLANA_RPC_URL secret is set, the scheduled run
+# also recomputes the slow blocks (holder origins, wallets reached, routed volume): with the cache warm they read only
+# what is new, so every number on the page comes from the same daily public run. SNAPSHOT_EXTRA overrides the extra blocks.
 # Each run's log is public: it shows this repository's code producing the numbers the page displays.
 name: snapshot
 
@@ -47,8 +47,8 @@ jobs:
         # the extra flags arrive as an environment variable, never pasted into the script itself
         run: |
           extra="$EXTRA_BLOCKS"
-          if [ -z "$extra" ] && [ "$GITHUB_EVENT_NAME" = schedule ] && [ "$(date -u +%u)" = 1 ] && [ -n "$SOLANA_RPC_URL" ]; then
-            extra="--with origins,reach,routed" # Mondays: the slow blocks too
+          if [ -z "$extra" ] && [ "$GITHUB_EVENT_NAME" = schedule ] && [ -n "$SOLANA_RPC_URL" ]; then
+            extra="--with origins,reach,routed" # the slow blocks too, every day
           fi
           echo "extra blocks: ${extra:-none}"
           node scripts/snapshot.ts $extra

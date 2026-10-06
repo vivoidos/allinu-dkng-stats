@@ -27,7 +27,8 @@ GitHub Actions, daily at 00:00 UTC
 ```
 
 Holder origins, wallets reached and routed volume read hundreds of thousands to millions of transactions, so the
-Monday run recomputes them too (`--with origins,reach,routed`); every block in `snapshot.json` records when it was computed.
+daily run recomputes them too (`--with origins,reach,routed`), reading only what is new since the last run; every block
+in `snapshot.json` records when it was computed.
 
 The page is static: its only data is `snapshot.json` (fonts load from Google Fonts). Each run's public log shows this code
 fetching every source and printing the headline numbers (`RESULT …` lines), and the page links to the run that

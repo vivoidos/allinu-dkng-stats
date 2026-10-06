@@ -40,7 +40,7 @@ public/             static images (favicon, hero photos, social preview)
 ```sh
 node scripts/snapshot.ts                   # compute every default block (Node 22.18+, no install, no keys)
 node scripts/snapshot.ts --only supply     # one or more blocks; the rest of snapshot.json is kept
-node scripts/snapshot.ts --with origins,reach,routed   # also the slow blocks (the Monday run does this)
+node scripts/snapshot.ts --with origins,reach,routed   # also the slow blocks (the daily run does this)
 SOLANA_RPC_URL=<any Solana RPC> node scripts/snapshot.ts   # one faster endpoint instead of the public rotation (or .env)
                                                            # with getTransactionsForAddress: minutes once the cache is warm
 
