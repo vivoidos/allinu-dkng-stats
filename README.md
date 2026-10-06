@@ -5,7 +5,7 @@ An independent, unofficial community page with onchain stats for **$ALLINU**, a 
 **Live page: https://allinu-dkng-stats.pages.dev**
 
 > Not affiliated with ALLINU, DraftKings, Backpack, StonkFun or anyone else named here. Not financial advice.
-> The numbers are computed automatically and may be wrong. See the [disclaimer](#disclaimer).
+> See the [disclaimer](#disclaimer).
 
 ## What it shows
 

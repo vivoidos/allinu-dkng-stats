@@ -264,5 +264,7 @@ html:has(.mdialog[open]), html:has(.pdialog[open]) { overflow: hidden; } /* the 
 @media (max-width: 760px) {
   .pdialog { width: 100vw; height: 100dvh; border: 0; border-radius: 0; }
   .pdialog-body { grid-template-columns: 1fr; grid-template-rows: auto minmax(0, 1fr); }
-  .pdialog-pick { border-right: 0; border-bottom: 1px solid var(--line); max-height: 45dvh; }
+  .pdialog-pick { border-right: 0; border-bottom: 1px solid var(--line); max-height: 45dvh; padding-bottom: 0; }
+  /* the list scrolls, the button stays in reach */
+  .pdialog-save { position: sticky; bottom: 0; flex: none; margin-bottom: 0; box-shadow: 0 -16px 16px var(--bg-deep), 0 12px 0 var(--bg-deep); }
 }

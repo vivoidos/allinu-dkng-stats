@@ -40,7 +40,7 @@ export function App() {
         <div className="wrap">
           <Updated d={d} />
           <p>
-            An independent community project. Most numbers are recomputed automatically every day; the code is
+            An independent community project. Every number is recomputed automatically every day; the code is
             on <a href={REPO} target="_blank" rel="noopener">GitHub</a>. Not affiliated with ALLINU, DraftKings, Backpack Securities or StonkFun.
             Not financial advice.
           </p>
@@ -96,7 +96,7 @@ function Intro({ d }: { d: Snapshot }) {
           <div><dt>payments to ALLINU holders</dt><dd className="num">{int(r.payouts * k)}</dd></div>
           <div><dt>since DKNG went live on Solana</dt><dd>{daysLive} days</dd></div>
         </dl>
-        <p className="hero-note">ALLINU is a memecoin launched on StonkFun. DKNG is tokenized DraftKings stock, issued on Solana by Backpack Securities.</p>
+        <p className="hero-note">ALLINU is a memecoin launched on StonkFun, a Solana launchpad whose tokens pay holders in tokenized stocks. DKNG is tokenized DraftKings stock, issued on Solana by Backpack Securities.</p>
       </div>
     </section>
   );
@@ -145,26 +145,31 @@ function AroundTheClock({ d }: { d: Snapshot }) {
         </ul>
       </>}
       figure={<><FigTitle>DKNG volume on Solana by weekday and hour, New York time</FigTitle><WeekHeatmap grid={v.byHourNewYork} money={(x) => usd(x, 1)} /></>}>
-      <p>Onchain, DraftKings never closes: {pct(v.closedShareOfAll)} of DKNG volume so far traded outside Nasdaq hours.</p>
+      <p>Onchain, DraftKings never closes: {pct(v.closedShareOfAll)} of DKNG volume so far traded outside Nasdaq hours, which were {pct(v.closedHoursShare)} of the clock.</p>
     </Story>
   );
 }
+
+/** A pool's other token as a pair: "DKNG/USDC" for a ticker, the name as it is otherwise ("donkey kong"). */
+const pairLabel = (pair: string) => (/^[A-Z0-9]+$/.test(pair) ? `DKNG/${pair}` : pair);
+/** GeckoTerminal's DEX id as a name: "raydium-clmm" → "Raydium CLMM". */
+const dexName = (id: string) => id.split("-").map((w) => (/^(amm|clmm|cpmm|dlmm|amp|v\d+)$/.test(w) ? w.toUpperCase() : w[0]!.toUpperCase() + w.slice(1))).join(" ");
 
 const versusUsdc = (ratio: number) => (ratio >= 1.1 ? "more than" : ratio >= 0.9 ? "about as much as" : `${pct(ratio)} of`);
 
 function DeepestPool({ d }: { d: Snapshot }) {
   const p = d.pools;
-  const label = (pool: (typeof p.top)[number]) => (pool.address === ADDR.ALLINU_DKNG_POOL ? "ALLINU" : `${pool.pair} (${pool.address.slice(0, 4)}…)`);
+  const label = (pool: (typeof p.top)[number]) => (pool.address === ADDR.ALLINU_DKNG_POOL ? "ALLINU" : `${pairLabel(pool.pair)} (${pool.address.slice(0, 4)}…)`);
   return (
     <Story id="pool" label="Liquidity" stat={p.allinuRank ? `#${p.allinuRank}` : "–"} claim="DraftKings pool on Solana by liquidity is ALLINU/DKNG."
       sources={[p]}
-      data={<DataTable caption={`The ${p.top.length} largest of ${int(p.count)} DKNG pools on Solana`} headers={["Pool", "DEX", "Liquidity"]}
-        rows={p.top.map((pool) => [label(pool), pool.dex, `$${int(pool.liquidity)}`])} />}
+      data={<DataTable caption={`The ${p.top.length} largest of the ${int(p.activeCount)} DKNG pools on Solana traded in the last 24 hours (${int(p.count)} listed)`} headers={["Pool", "DEX", "Liquidity"]}
+        rows={p.top.map((pool) => [label(pool), dexName(pool.dex), `${int(pool.liquidity)}`])} />}
       method={<p>GeckoTerminal's liquidity for each of the {int(p.count)} DKNG pools it lists on Solana. Liquidity is the dollar value of both tokens in a pool: ALLINU/DKNG counts its ALLINU side as a DKNG/USDC pool counts its USDC. All DKNG/USDC pools together hold {usd(p.usdcPoolsLiquidity, 0)}. Pools with no trading in the last 24 hours are left out of the ranking ({int(p.count - p.activeCount)} of them): GeckoTerminal values an untraded pool's other token at its last price, which can be far off.</p>}
       figure={<>
         <FigTitle>The largest DKNG pools on Solana, by liquidity</FigTitle>
         <HBarChart format={(x) => usd(x, 0)} labelWidth={180}
-          data={p.top.map((pool) => ({ label: label(pool), value: pool.liquidity, highlight: pool.address === ADDR.ALLINU_DKNG_POOL, tip: `${pool.name} on ${pool.dex}` }))} />
+          data={p.top.map((pool) => ({ label: label(pool), value: pool.liquidity, highlight: pool.address === ADDR.ALLINU_DKNG_POOL, tip: `${pool.name} on ${dexName(pool.dex)}` }))} />
       </>}>
       <p><b className="num">{usd(p.allinuLiquidity, 0)}</b> of liquidity, {versusUsdc(p.allinuLiquidity / p.usdcPoolsLiquidity)} all DKNG/USDC pools combined.</p>
     </Story>
@@ -191,7 +196,7 @@ function VolumeShare({ d }: { d: Snapshot }) {
         <ul>
           <li>A trade routed through several DKNG pools counts once in each.</li>
           <li>Not counted: hundreds of tiny launchpad curves of other tokens paired with DKNG, about 0.5% of all DKNG volume when checked against Birdeye on Oct 5.</li>
-          <li>Birdeye and GeckoTerminal differ by a few percent in total, and by over 20% on the two busiest days.</li>
+          <li>Birdeye and GeckoTerminal differ by a few percent in total, and by up to 22% on a single day (Sep 15), checked day by day from Sep 11 to Oct 2.</li>
         </ul>
         {r && <>
           <p>Routed volume: a trade can reach the ALLINU/DKNG pool through another DKNG pool. SOL or USDC buys DKNG there, then that DKNG buys ALLINU (or the reverse). Both legs are DKNG volume from one trade.</p>
@@ -214,7 +219,7 @@ function VolumeShare({ d }: { d: Snapshot }) {
         <CumulativeVolumeChart money={(x) => usd(x, 0)} data={rows.map((x) => ({ label: day(x.d), allinu: x.allinu, routed: x.routed, rest: x.rest }))} />
       </>}>
       {r
-        ? <p><b className="num">{usd(r.allinuPoolUsd)}</b> in the ALLINU pool and <b className="num">{usd(r.routedUsd)}</b> routed through other pools, of <span className="num">{usd(r.total)}</span> in total.</p>
+        ? <p><b className="num">{usd(r.allinuPoolUsd)}</b> traded in the ALLINU pool, and ALLINU trades moved another <b className="num">{usd(r.routedUsd)}</b> through other DKNG pools, of <span className="num">{usd(r.total)}</span> in total.</p>
         : <p><b className="num">{usd(v.allinu)}</b> of <span className="num">{usd(v.total)}</span> since ALLINU launched. On weekends, <b>{pct(v.weekendShare)}</b>.</p>}
     </Story>
   );
@@ -342,7 +347,7 @@ function RewardShare({ d }: { d: Snapshot }) {
 const holdingName = (d: Snapshot, s: NonNullable<Snapshot["supply"]>) => (h: { account: string; owner: string | null }) => {
   if (h.account === s.allinuPoolVault) return "ALLINU";
   const pool = d.pools.top.find((p) => p.address === h.owner);
-  if (pool) return `${pool.pair} (${pool.address.slice(0, 4)}…)`;
+  if (pool) return `${pairLabel(pool.pair)} (${pool.address.slice(0, 4)}…)`;
   return `holder (${(h.owner ?? h.account).slice(0, 4)}…)`;
 };
 
@@ -362,7 +367,7 @@ function Supply({ d, supply: s }: { d: Snapshot; supply: NonNullable<Snapshot["s
           <li>The largest holdings are Solana's largest DKNG token accounts. A holding is named as a pool when its vault's owner is a pool GeckoTerminal lists.</li>
           <li>Per <a href="https://support.backpack.exchange/backpack-securities/tokenized-securities" target="_blank" rel="noopener">Backpack</a>, eligible users can redeem each token 1:1 for the underlying share. Tokens are minted when shares come onchain and burned when they leave.</li>
           <li>Since Sep 11: {int(s.mintedSinceLaunch)} minted, {int(s.burnedSinceLaunch)} burned, counted from every mint and burn in the mint authority's transactions.</li>
-          <li>Check: walking back from today's supply through those mints and burns lands at {s.startSupply.toFixed(1)} DKNG before the first mint, not exactly 0, because holders can burn their own tokens without the issuer.</li>
+          <li>Check: walking back from today's supply through those mints and burns lands {Math.abs(s.startSupply).toFixed(1)} DKNG {s.startSupply < 0 ? "short of" : "above"} zero before the first mint, not exactly at it, because holders can burn their own tokens without the issuer.</li>
         </ul>
       </>}
       figure={<>

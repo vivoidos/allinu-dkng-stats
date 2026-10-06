@@ -170,7 +170,7 @@ const actionsRun = GITHUB_ACTIONS && GITHUB_SHA
   ? { log: `${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}`, repo: `${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}`, commit: GITHUB_SHA }
   : null;
 // a private endpoint is named by its provider only, read from the host name (the URL's key never leaves this line)
-const RPC_PROVIDERS: [host: string, name: string][] = [["helius-rpc.com", "Helius"], ["quiknode.pro", "QuickNode"], ["alchemy.com", "Alchemy"], ["triton.one", "Triton"]];
+const RPC_PROVIDERS: [host: string, name: string][] = [["helius-rpc.com", "Helius"], ["quiknode.pro", "QuickNode"], ["alchemy.com", "Alchemy"], ["rpcpool.com", "Triton"]];
 const rpcProvider = (url: string) => {
   let host = "";
   try { host = new URL(url).hostname; } catch { /* not a URL: no name */ }

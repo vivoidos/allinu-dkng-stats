@@ -36,16 +36,22 @@ let fonts: Promise<string | undefined> | undefined;
  * hidden and the kept stories reordered while it draws, with CSS only (the page is put back right after), so the
  * image is exactly what the browser renders, charts and the bulb-lit amount included.
  */
-export function renderPng(page: HTMLElement, keep: readonly string[], caption: string, maxPixelRatio = Math.max(2, window.devicePixelRatio || 1)): Promise<Blob> {
-  const job = queue.then(() => draw(page, keep, caption, maxPixelRatio));
+export function renderPng(page: HTMLElement, keep: readonly string[], caption: string,
+  { maxPixelRatio = Math.max(2, window.devicePixelRatio || 1), signal }: { maxPixelRatio?: number; signal?: AbortSignal } = {}): Promise<Blob> {
+  const job = queue.then(() => draw(page, keep, caption, maxPixelRatio, signal));
   queue = job.catch(() => undefined);
   return job;
 }
 
-async function draw(page: HTMLElement, keep: readonly string[], caption: string, maxPixelRatio: number): Promise<Blob> {
+/** Settles once every image asked for so far is drawn and the page is put back. */
+export const pngIdle = (): Promise<unknown> => queue;
+
+async function draw(page: HTMLElement, keep: readonly string[], caption: string, maxPixelRatio: number, signal?: AbortSignal): Promise<Blob> {
   const { toSvg, getFontEmbedCSS } = await import("html-to-image");
   fonts ??= getFontEmbedCSS(page).catch(() => { fonts = undefined; return undefined; });
   const fontEmbedCSS = await fonts;
+  // an image nobody wants any more (a preview overtaken by a newer choice, or the dialog closed) never touches the page
+  signal?.throwIfAborted();
   const scrollY = window.scrollY;
   // every inline style changed while drawing, with its old value, to put back afterwards
   const changed: [HTMLElement, string, string][] = [];

@@ -137,7 +137,7 @@ function About({ d, repo }: { d: Snapshot; repo: string }) {
       <div className="mprose">
         <p>Every number here is computed from public onchain data and public APIs by open-source code, and published as one file, <code>snapshot.json</code>. The page shows nothing else.</p>
         <ul>
-          <li>Every number is recomputed daily at 00:00 UTC, in one public run.</li>
+          <li>Every number is recomputed daily, in one public run starting at 00:00 UTC.</li>
           <li>Holder origins, wallets reached and routed volume read hundreds of thousands to millions of transactions; each run reads only what is new since the last.</li>
           <li>Each section names its sources and when they ran.</li>
         </ul>

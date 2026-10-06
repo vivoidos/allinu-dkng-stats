@@ -10,8 +10,8 @@ import { getPools, type Pool } from "./pools.ts";
 import { nasdaqOpenShare, newYorkHour } from "./nasdaq.ts";
 
 // Hourly pool volume can come from Birdeye instead (BIRDEYE_API_KEY): one call per pool, no 30-calls-a-minute wait.
-// Checked against GeckoTerminal day by day (Sep 11 – Oct 2): most days agree within ~1%; Birdeye counts more on the two
-// busiest days (Sep 15 +22%, Sep 16 +8%), so +4.3% on the ALLINU pool and +1.7% elsewhere in all. The shares the page
+// Checked against GeckoTerminal day by day (Sep 11 – Oct 2): most days agree within ~1%; Birdeye counts more on two
+// launch-week days (Sep 15 +22%, Sep 16 +8%), so +4.3% on the ALLINU pool and +1.7% elsewhere in all. The shares the page
 // shows barely move (pool share 28.2% → 28.8%, with routed legs 56.6% either way). Without a key, GeckoTerminal: keyless.
 const BIRDEYE = "https://public-api.birdeye.so";
 const birdeyePace = pacer(120);

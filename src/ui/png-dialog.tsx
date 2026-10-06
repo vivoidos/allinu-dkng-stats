@@ -1,7 +1,7 @@
 // "Download PNG": the whole page, or any of its parts in any order, as one image, with a preview of exactly what will be saved.
 
 import { useEffect, useRef, useState } from "react";
-import { pngParts, renderPng, saveBlob, type PngPart } from "./screenshot.ts";
+import { pngIdle, pngParts, renderPng, saveBlob, type PngPart } from "./screenshot.ts";
 
 export function PngDialog({ open, onClose, caption, fileName }: { open: boolean; onClose: () => void; caption: string; fileName: string }) {
   const dialog = useRef<HTMLDialogElement>(null);
@@ -34,18 +34,28 @@ export function PngDialog({ open, onClose, caption, fileName }: { open: boolean;
   useEffect(() => {
     const root = page();
     if (!open || !root || !keep.length) { setPreview(null); return; }
-    let live = true;
+    const stop = new AbortController();
     setPreview((p) => (p ? { ...p, ready: false } : null));
     const timer = setTimeout(async () => {
       try {
-        const blob = await renderPng(root, keep, caption, 0.6);
-        if (!live) return;
-        const url = URL.createObjectURL(blob);
-        setPreview((p) => { if (p) URL.revokeObjectURL(p.url); return { url, ready: true }; });
-      } catch { if (live) setPreview(null); }
+        const blob = await renderPng(root, keep, caption, { maxPixelRatio: 0.6, signal: stop.signal });
+        if (!stop.signal.aborted) setPreview({ url: URL.createObjectURL(blob), ready: true });
+      } catch { if (!stop.signal.aborted) setPreview(null); }
     }, 250);
-    return () => { live = false; clearTimeout(timer); };
+    return () => { stop.abort(); clearTimeout(timer); };
   }, [open, keepKey]);
+  // each preview's image is let go once it is replaced or the dialog closes
+  useEffect(() => () => { if (preview) URL.revokeObjectURL(preview.url); }, [preview?.url]);
+
+  // drawing rearranges the page behind the dialog for a moment: close only once it is put back
+  const [closing, setClosing] = useState(false);
+  const requestClose = async () => {
+    if (closing) return;
+    setClosing(true);
+    await pngIdle();
+    setClosing(false);
+    onClose();
+  };
 
   const save = async () => {
     const root = page();
@@ -72,14 +82,15 @@ export function PngDialog({ open, onClose, caption, fileName }: { open: boolean;
 
   return (
     <dialog ref={dialog} className="pdialog" aria-labelledby="pdialog-h" onClose={onClose}
-      onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}>
+      onCancel={(e) => { e.preventDefault(); void requestClose(); }}
+      onClick={(e) => { if (e.target === e.currentTarget) void requestClose(); }}>
       <div className="pdialog-frame">
         <header className="mdialog-head">
           <div>
             <h2 id="pdialog-h">Download as PNG</h2>
             <p>The whole page or the parts you pick, as one image.</p>
           </div>
-          <button type="button" className="mdialog-close" aria-label="Close" onClick={onClose}>
+          <button type="button" className="mdialog-close" aria-label="Close" onClick={() => void requestClose()}>
             <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M4 4l10 10M14 4L4 14" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" /></svg>
           </button>
         </header>
