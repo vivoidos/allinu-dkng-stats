@@ -197,7 +197,7 @@ if (done.holders) log(`RESULT holders: ${n(done.holders.holders)} wallets hold D
 if (done.pools) log(`RESULT pools: ALLINU/DKNG is #${done.pools.allinuRank} of ${done.pools.activeCount} DKNG pools traded in the last 24 h by liquidity ($${n(done.pools.allinuLiquidity)})${carried("pools")}`);
 if (sup) log(`RESULT supply: ${n(sup.supplyNow)} DKNG on Solana; ${n(sup.mintedSinceLaunch)} minted and ${n(sup.burnedSinceLaunch)} burned since Sep 11 (walk-back check ${sup.startSupply.toFixed(6)}, should be near 0)${carried("supply")}`);
 if (v) log(`RESULT volume: ALLINU pool ${pct(v.share)} of ${n(v.total)} since it opened (${v.allinuFrom}); ${pct(v.closedShareOfAll)} of all DKNG volume since Sep 11 traded while Nasdaq was closed${carried("volume")}`);
-if (o) log(`RESULT origins: ${pct(o.shares["Reward airdrop"])} of the ${n(o.size)} DKNG holders first got DKNG as a reward airdrop${carried("origins")}`);
+if (o) log(`RESULT origins: ${pct(o.shares["Reward airdrop"])} of the ${n(o.size)} DKNG holders first got DKNG as a StonkFun reward payout${carried("origins")}`);
 if (done.routed) log(`RESULT routed: ALLINU pool ${n(done.routed.allinuPoolUsd)} + ${n(done.routed.routedUsd)} routed through other DKNG pools = ${pct(done.routed.share)} of ${n(done.routed.total)} DKNG volume${carried("routed")}`);
 if (done.reach) log(`RESULT reach: ${n(done.reach.uniqueRecipients)} wallets have received DKNG rewards${carried("reach")}`);
 for (const t of rpcTally()) if (t.ok + t.limited + t.failed) log(`  ${t.name}: ${t.ok} answered, ${t.limited} rate-limited, ${t.failed} failed${t.refuses.length ? `, refused ${t.refuses.join(", ")}` : ""}`);
