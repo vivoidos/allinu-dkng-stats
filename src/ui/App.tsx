@@ -3,7 +3,7 @@ import { ADDR, ORIGINS, SINCE, originLabel, type Snapshot } from "../core/stats/
 import { AreaOverTime, CumulativeVolumeChart, DataTable, HBarChart, Waffle, WeekHeatmap, useCountUp } from "./charts.tsx";
 import { FigTitle, GitHubIcon, Story } from "./components.tsx";
 import { MethodologyDialog, useMethodology } from "./methodology.tsx";
-import { downloadPagePng } from "./screenshot.ts";
+import { PngDialog } from "./png-dialog.tsx";
 import { useSnapshot } from "./data.ts";
 import { DotNumber } from "./dot-number.tsx";
 import { day, int, pct, time, usd } from "./format.ts";
@@ -379,19 +379,8 @@ function Supply({ d, supply: s }: { d: Snapshot; supply: NonNullable<Snapshot["s
 
 function Proof({ d }: { d: Snapshot }) {
   const { open } = useMethodology();
-  const [png, setPng] = useState<"idle" | "busy" | "failed">("idle");
-  const savePng = async () => {
-    const page = document.getElementById("top");
-    if (!page || png === "busy") return;
-    setPng("busy");
-    try {
-      const date = new Date(d.computedAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" });
-      await downloadPagePng(page, `allinu-dkng-stats-${d.computedAt.slice(0, 10)}.png`, `Data as of ${date} · Independent community page · Computed from public data by open-source code anyone can verify · Not financial advice`);
-      setPng("idle");
-    } catch {
-      setPng("failed");
-    }
-  };
+  const [pngOpen, setPngOpen] = useState(false);
+  const date = new Date(d.computedAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" });
   const addresses: (readonly [string, string, "token" | "account"])[] = [
     ["DKNG, tokenized DraftKings", ADDR.DKNG, "token"],
     ["ALLINU", ADDR.ALLINU, "token"],
@@ -409,11 +398,13 @@ function Proof({ d }: { d: Snapshot }) {
           <div className="proof-actions">
             <a className="button" href={REPO} target="_blank" rel="noopener"><GitHubIcon /> View the code</a>
             <button type="button" className="button ghost" onClick={() => open()}>How it's measured</button>
-            <button type="button" className="button ghost" onClick={savePng} disabled={png === "busy"} aria-label="Download the page as a PNG image" title="Download the page as a PNG image">
+            <button type="button" className="button ghost" onClick={() => setPngOpen(true)} aria-label="Download the page as a PNG image" title="Download the page as a PNG image">
               <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2v8m0 0L4.5 6.5M8 10l3.5-3.5M3 13h10" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg>
-              {png === "busy" ? "Saving…" : png === "failed" ? "Try again" : "PNG"}
+              PNG
             </button>
           </div>
+          <PngDialog open={pngOpen} onClose={() => setPngOpen(false)} fileName={`allinu-dkng-stats-${d.computedAt.slice(0, 10)}.png`}
+            caption={`Data as of ${date} · Independent community page · Computed from public data by open-source code anyone can verify · Not financial advice`} />
         </div>
         <dl className="addr">
           {addresses.map(([name, a, kind]) => (
