@@ -36,14 +36,14 @@ let fonts: Promise<string | undefined> | undefined;
  * hidden and the kept stories reordered while it draws, with CSS only (the page is put back right after), so the
  * image is exactly what the browser renders, charts and the bulb-lit amount included.
  */
-export function renderPng(page: HTMLElement, keep: readonly string[], caption: string, maxPixelRatio = 2): Promise<Blob> {
+export function renderPng(page: HTMLElement, keep: readonly string[], caption: string, maxPixelRatio = Math.max(2, window.devicePixelRatio || 1)): Promise<Blob> {
   const job = queue.then(() => draw(page, keep, caption, maxPixelRatio));
   queue = job.catch(() => undefined);
   return job;
 }
 
 async function draw(page: HTMLElement, keep: readonly string[], caption: string, maxPixelRatio: number): Promise<Blob> {
-  const { toBlob, getFontEmbedCSS } = await import("html-to-image");
+  const { toSvg, getFontEmbedCSS } = await import("html-to-image");
   fonts ??= getFontEmbedCSS(page).catch(() => { fonts = undefined; return undefined; });
   const fontEmbedCSS = await fonts;
   const scrollY = window.scrollY;
@@ -73,25 +73,56 @@ async function draw(page: HTMLElement, keep: readonly string[], caption: string,
   const shown = () => [...page.children].filter((c): c is HTMLElement => c instanceof HTMLElement && !c.matches(SKIP) && c.style.display !== "none");
   const line = Object.assign(document.createElement("p"), { className: "png-caption wrap", textContent: caption });
   shown().at(-1)?.after(line);
+  const background = getComputedStyle(document.body).backgroundColor;
+  let svg: string, width: number, height: number, ratio: number;
   try {
     // as tall as what is drawn: the page's top to the bottom of its last visible part
     const top = page.getBoundingClientRect().top;
-    const height = Math.ceil(Math.max(0, ...shown().map((c) => c.getBoundingClientRect().bottom - top)));
-    const width = page.scrollWidth;
-    const blob = await toBlob(page, {
-      width,
-      height,
-      pixelRatio: Math.min(maxPixelRatio, Math.sqrt(MAX_PIXELS / (width * height))),
-      backgroundColor: getComputedStyle(document.body).backgroundColor,
+    height = Math.ceil(Math.max(0, ...shown().map((c) => c.getBoundingClientRect().bottom - top)));
+    width = page.scrollWidth;
+    ratio = Math.min(maxPixelRatio, Math.sqrt(MAX_PIXELS / (width * height)));
+    // laid out at the page's size but scaled up inside the drawing, so it is drawn at full resolution: Safari (every
+    // browser on an iPhone) draws a drawing at its own size and stretches it, which blurs one drawn at page size
+    svg = await toSvg(page, {
+      width: Math.round(width * ratio),
+      height: Math.round(height * ratio),
+      style: { width: `${width}px`, height: `${height}px`, transform: `scale(${ratio})`, transformOrigin: "0 0" },
+      backgroundColor: background,
       ...(fontEmbedCSS ? { fontEmbedCSS } : {}),
       filter: (node) => !(node instanceof HTMLElement && (node.matches(SKIP) || node.style.display === "none")),
     });
-    if (!blob) throw new Error("the browser could not draw the page");
-    return blob;
   } finally {
     line.remove();
     for (const [el, prop, value] of changed.reverse()) el.style.setProperty(prop, value);
     window.scrollTo({ top: scrollY, behavior: "instant" });
+  }
+  return paint(svg, Math.round(width * ratio), Math.round(height * ratio), background);
+}
+
+const settle = () => new Promise<void>((resolve) => requestAnimationFrame(() => setTimeout(resolve, 300)));
+
+/** Paints the drawing onto a canvas as a PNG. */
+async function paint(svg: string, width: number, height: number, background: string): Promise<Blob> {
+  const img = new Image();
+  await new Promise<void>((resolve, reject) => { img.onload = () => resolve(); img.onerror = () => reject(new Error("the browser could not draw the page")); img.src = svg; });
+  await img.decode().catch(() => undefined);
+  const canvas = Object.assign(document.createElement("canvas"), { width, height });
+  const ctx = canvas.getContext("2d");
+  if (!ctx) throw new Error("the browser could not draw the page");
+  try {
+    // Safari loads the photos inside a drawing only once it is first painted, so the first paint can miss them
+    // (the hero's dog): paint once, give it a moment, then paint the image that is kept
+    for (let pass = 0; pass < 2; pass++) {
+      if (pass) await settle();
+      ctx.fillStyle = background;
+      ctx.fillRect(0, 0, width, height);
+      ctx.drawImage(img, 0, 0, width, height);
+    }
+    const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, "image/png"));
+    if (!blob) throw new Error("the browser could not draw the page");
+    return blob;
+  } finally {
+    canvas.width = canvas.height = 0; // phones cap the memory all canvases share: give it back now, not at garbage collection
   }
 }
 
