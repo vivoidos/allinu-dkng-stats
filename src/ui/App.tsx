@@ -62,8 +62,8 @@ const previewScale = (actual: number) => {
   return paid > 0 ? paid / actual : 1;
 };
 
-/** "$1.05M", or "$899K" below a million (and "$1.00M", never "$1000K", just under it). */
-const headlineUsd = (v: number) => (Math.round(v / 1e3) >= 1000 ? `$${(v / 1e6).toFixed(2)}M` : `$${Math.round(v / 1e3)}K`);
+/** "$1.05M", or "$899K" below a million. Rounded down: the headline never claims an amount before it is reached. */
+const headlineUsd = (v: number) => (v >= 1e6 ? `$${(Math.floor(v / 1e4) / 100).toFixed(2)}M` : `$${Math.floor(v / 1e3)}K`);
 
 function Intro({ d }: { d: Snapshot }) {
   const r = d.rewards;
