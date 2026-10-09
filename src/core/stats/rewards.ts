@@ -8,41 +8,48 @@ const STONKFUN = "https://www.stonkfun.xyz/api/public/v1";
 
 interface StonkfunLaunch {
   mint: string;
-  quoteMint: string; // the token it pays rewards in
+  quoteMint?: string; // the token it pays rewards in (newer replies)
+  quote?: { mint?: string }; // the same, as older replies gave it
   distributedTokens: number;
   payoutCount: number;
   lastPayoutAt: string;
 }
 interface StonkfunPage {
-  data?: { launches?: StonkfunLaunch[]; launchesPagination?: { page: number; pageSize: number; total: number; totalPages: number } };
+  data?: { launches?: StonkfunLaunch[]; launchesPagination?: { total?: number | null } };
 }
 
 const PAGE_SIZE = 1000; // the most the API returns per page
+const MAX_PAGES = 500; // a safety stop: the list held about 54 pages in October 2026
 const stonkfunPace = pacer(300);
+const quoteOf = (x: StonkfunLaunch) => x.quoteMint ?? x.quote?.mint;
 
 /**
  * Every token on StonkFun's rewards list. The list comes in pages and has no filter by reward token, so all of it is
- * read. Tokens launched while it is read can shift entries onto the next page: entries are kept once each, by mint,
- * and the read is redone until it holds at least as many as the list said it had when the read began.
+ * read, page by page until a short one (the API has sent its total at times and null at others). Its order holds
+ * still between reads, but tokens launched mid-read could shift entries across a page edge: a token met twice means
+ * that happened, so the read is redone; so is one that ends up short of a total the API did send.
  */
 async function allLaunches(): Promise<StonkfunLaunch[]> {
   for (let attempt = 1; ; attempt++) {
     const byMint = new Map<string, StonkfunLaunch>();
-    let total = 0;
-    for (let page = 1, pages = 1; page <= pages; page++) {
+    let total: number | undefined, shifted = false;
+    for (let page = 1; ; page++) {
+      if (page > MAX_PAGES) throw new Error(`StonkFun rewards: more than ${MAX_PAGES} pages`);
       const res = await getJSON<StonkfunPage>(`${STONKFUN}/rewards?page=${page}&pageSize=${PAGE_SIZE}`, { pace: stonkfunPace, label: "StonkFun rewards" });
-      const info = res.data?.launchesPagination;
-      if (!info || !(info.totalPages >= 1) || !(info.total >= 0)) throw new Error("StonkFun rewards: unexpected response (no page count)");
-      if (page === 1) { pages = info.totalPages; total = info.total; }
-      for (const x of listIn(res.data?.launches, "StonkFun rewards")) byMint.set(x.mint, x);
+      const launches = listIn(res.data?.launches, "StonkFun rewards");
+      const t = res.data?.launchesPagination?.total;
+      if (page === 1 && typeof t === "number" && t >= 0) total = t;
+      for (const x of launches) { if (byMint.has(x.mint)) shifted = true; byMint.set(x.mint, x); }
+      if (launches.length < PAGE_SIZE) break;
     }
-    if (byMint.size >= total) return [...byMint.values()];
-    if (attempt >= 3) throw new Error(`StonkFun rewards: read ${byMint.size} of ${total} tokens three times`);
+    const complete = !shifted && (total === undefined || byMint.size >= total);
+    if (complete) return [...byMint.values()];
+    if (attempt >= 3) throw new Error(`StonkFun rewards: the list kept changing while read (${byMint.size} tokens${total === undefined ? "" : ` of ${total}`})`);
   }
 }
 
 export async function getRewards() {
-  const dkngRewardTokens = (await allLaunches()).filter((x) => x.quoteMint === ADDR.DKNG);
+  const dkngRewardTokens = (await allLaunches()).filter((x) => quoteOf(x) === ADDR.DKNG);
   // a field arriving as a string would add up as text and skew every share: fail instead
   if (dkngRewardTokens.some((x) => typeof x.distributedTokens !== "number" || typeof x.payoutCount !== "number")) throw new Error("StonkFun rewards: unexpected field types");
   if (!dkngRewardTokens.length) throw new Error("StonkFun rewards: no token pays rewards in DKNG (has the list changed shape?)");
