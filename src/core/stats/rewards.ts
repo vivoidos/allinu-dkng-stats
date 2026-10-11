@@ -24,27 +24,44 @@ const stonkfunPace = pacer(300);
 const quoteOf = (x: StonkfunLaunch) => x.quoteMint ?? x.quote?.mint;
 
 /**
+ * Adds one page to the tokens read so far. Tokens launched while the list is read are added at its front and push
+ * every entry down: the next page then starts with the last few of the page before, which is harmless (each token is
+ * kept once, by mint, with its newer figures) and loses no token that was listed when the read began. A token seen before anywhere else means the list was
+ * reordered, which could hide a token on a page already read: then this returns false and the read is redone.
+ */
+export function addPage(byMint: Map<string, StonkfunLaunch>, previousPage: ReadonlySet<string>, launches: readonly StonkfunLaunch[]): boolean {
+  let repeated = 0; // how many of this page's first entries repeat the previous page's last ones
+  for (const [i, x] of launches.entries()) {
+    if (byMint.has(x.mint)) {
+      if (i !== repeated || !previousPage.has(x.mint)) return false;
+      repeated++;
+    }
+    byMint.set(x.mint, x);
+  }
+  return true;
+}
+
+/**
  * Every token on StonkFun's rewards list. The list comes in pages and has no filter by reward token, so all of it is
- * read, page by page until a short one (the API has sent its total at times and null at others). Its order holds
- * still between reads, but tokens launched mid-read could shift entries across a page edge: a token met twice means
- * that happened, so the read is redone; so is one that ends up short of a total the API did send.
+ * read, page by page until a short one (the API has sent its total at times and null at others). See addPage for
+ * tokens launched mid-read; a read that ends short of a total the API did send is redone too.
  */
 async function allLaunches(): Promise<StonkfunLaunch[]> {
   for (let attempt = 1; ; attempt++) {
     const byMint = new Map<string, StonkfunLaunch>();
-    let total: number | undefined, shifted = false;
-    for (let page = 1; ; page++) {
+    let total: number | undefined, consistent = true, previousPage = new Set<string>();
+    for (let page = 1; consistent; page++) {
       if (page > MAX_PAGES) throw new Error(`StonkFun rewards: more than ${MAX_PAGES} pages`);
       const res = await getJSON<StonkfunPage>(`${STONKFUN}/rewards?page=${page}&pageSize=${PAGE_SIZE}`, { pace: stonkfunPace, label: "StonkFun rewards" });
       const launches = listIn(res.data?.launches, "StonkFun rewards");
       const t = res.data?.launchesPagination?.total;
       if (page === 1 && typeof t === "number" && t >= 0) total = t;
-      for (const x of launches) { if (byMint.has(x.mint)) shifted = true; byMint.set(x.mint, x); }
+      consistent = addPage(byMint, previousPage, launches);
+      previousPage = new Set(launches.map((x) => x.mint));
       if (launches.length < PAGE_SIZE) break;
     }
-    const complete = !shifted && (total === undefined || byMint.size >= total);
-    if (complete) return [...byMint.values()];
-    if (attempt >= 3) throw new Error(`StonkFun rewards: the list kept changing while read (${byMint.size} tokens${total === undefined ? "" : ` of ${total}`})`);
+    if (consistent && (total === undefined || byMint.size >= total)) return [...byMint.values()];
+    if (attempt >= 3) throw new Error(`StonkFun rewards: the list was reordered or came up short while read, three times (${byMint.size} tokens${total === undefined ? "" : ` of ${total}`})`);
   }
 }
 
